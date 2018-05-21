@@ -14,7 +14,7 @@
     <string name="nav_tv_calender">Calender</string>
     <string name="nav_tv_taketest">Take Test</string>
     <string name="nav_tv_facility">Facility</string>
-    <string name="nav_tv_achievments">Achievments</string>
+    <string name="nav_tv_achievements">Achievements</string>
     <string name="nav_tv_lunch_menu">Lunch Menu</string>
     <string name="nav_tv_forms">Forms</string>
     <string name="nav_tv_exam_timetable">Exam Time Table</string>
@@ -26,4 +26,39 @@
 
     <string name="navigation_drawer_open">Drawer Open</string>
     <string name="navigation_drawer_close">Drawer Close</string>
+    <string name="nav_tv_student">Student</string>
+    <string name="nav_tv_parents">Parents</string>
+    <string name="nav_tv_attendants">Attendants</string>
+    <string name="nav_tv_assignments">Assignments</string>
+    <string name="nav_tv_mail_sms">Mail/SMS</string>
+    <string name="nav_tv_marks">Marks</string>
+    <string name="nav_tv_materials">Materials</string>
+    <string name="nav_tv_notifications">Notifications</string>
+    <string name="user_icon_logo">User Icon Logo</string>
+    <string name="img_divider">Image Dividers</string>
+    <string name="menu_icon">Home Menu Icon</string>
+    <string name="app_icon_desc">App Icon Description</string>
+
+    <string-array name="stud_parent_dashboard_titles">
+
+        <item>Attendant</item>
+        <item>Assignments</item>
+        <item>Marks</item>
+        <item>Materials</item>
+        <item>Notifications</item>
+    </string-array>
+
+    <string-array name="teacher_dashboard_titles">
+
+        <item>Student</item>
+        <item>Parents</item>
+        <item>Attendants</item>
+        <item>Assignments</item>
+        <item>Mail/SMS</item>
+        <item>Marks</item>
+        <item>Materials</item>
+        <item>Notifications</item>
+    </string-array>
+
+
 </resources>

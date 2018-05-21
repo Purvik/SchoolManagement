@@ -16,47 +16,47 @@
                     android:visible="true" />
 
                 <item
-                    android:id="@+id/nav_calender"
-                    android:icon="@drawable/ic_calender"
-                    android:title="@string/nav_tv_calender" />
+                    android:id="@+id/nav_student"
+                    android:icon="@drawable/ic_student"
+                    android:title="@string/nav_tv_student" />
 
 
                 <item
-                    android:id="@+id/nav_taketest"
-                    android:icon="@drawable/ic_test"
-                    android:title="@string/nav_tv_taketest" />
+                    android:id="@+id/nav_parents"
+                    android:icon="@drawable/ic_parents"
+                    android:title="@string/nav_tv_parents" />
 
                 <item
-                    android:id="@+id/nav_facility"
-                    android:icon="@drawable/ic_facility"
-                    android:title="@string/nav_tv_facility" />
+                    android:id="@+id/nav_attendants"
+                    android:icon="@drawable/ic_attendants"
+                    android:title="@string/nav_tv_attendants" />
 
                 <item
-                    android:id="@+id/nav_achievments"
-                    android:icon="@drawable/ic_achievements"
-                    android:title="@string/nav_tv_achievments" />
+                    android:id="@+id/nav_assignments"
+                    android:icon="@drawable/ic_assignment"
+                    android:title="@string/nav_tv_assignments" />
 
                 <item
-                    android:id="@+id/nav_lunchmenu"
-                    android:icon="@drawable/ic_lunchmenu"
-                    android:title="@string/nav_tv_lunch_menu" />
-
-
-                <item
-                    android:id="@+id/nav_forms"
-                    android:icon="@drawable/ic_forms"
-                    android:title="@string/nav_tv_forms" />
+                    android:id="@+id/nav_mail_sms"
+                    android:icon="@drawable/ic_mail"
+                    android:title="@string/nav_tv_mail_sms" />
 
 
                 <item
-                    android:id="@+id/nav_exam_timetable"
-                    android:icon="@drawable/ic_exam_timetable"
-                    android:title="@string/nav_tv_exam_timetable" />
+                    android:id="@+id/nav_marks"
+                    android:icon="@drawable/ic_marks"
+                    android:title="@string/nav_tv_marks" />
+
 
                 <item
-                    android:id="@+id/nav_exam_paper"
-                    android:icon="@drawable/ic_exam_paper"
-                    android:title="@string/nav_tv_exam_paper" />
+                    android:id="@+id/nav_materials"
+                    android:icon="@drawable/ic_materials"
+                    android:title="@string/nav_tv_materials" />
+
+                <item
+                    android:id="@+id/nav_notifications"
+                    android:icon="@drawable/ic_notifications"
+                    android:title="@string/nav_tv_notifications" />
 
                 <item
                     android:id="@+id/nav_about_us"

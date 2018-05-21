@@ -6,6 +6,6 @@
     <color name="app_bg">#121c40</color>
     <color name="tv_lbl_color">#435689</color>
     <color name="light_blue_text_color" >#1bcaef</color>
-    <color name="navDrawerBackground">#01a9e4</color>
+    <color name="navDrawerBackground">#EE01a9e4</color>
     <color name="searchview_bg">#049ed6</color>
 </resources>

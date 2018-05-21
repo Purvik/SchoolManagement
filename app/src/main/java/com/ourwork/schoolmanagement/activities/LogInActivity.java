@@ -92,7 +92,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     private void startMainActivity(AccountUser accountUser) {
 
         Intent mainIntent = new Intent(LogInActivity.this, MainActivity.class);
-        mainIntent.putExtra("loggedinuser", accountUser);
+        mainIntent.putExtra("loggedInUser", accountUser);
         startActivity(mainIntent);
 
     }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/navDrawerBackground"
@@ -13,22 +12,23 @@
     android:paddingTop="20dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <android.support.v7.widget.SearchView
+    <!--<android.support.v7.widget.SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/searchview_bg"
-        app:queryHint="Type something..." />
+        app:queryHint="Type something..." />-->
 
     <ImageView
         android:id="@+id/headerAppIcon"
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
         android:layout_weight="0"
-        android:src="@mipmap/ic_launcher_round" />
+        android:contentDescription="@string/user_icon_logo"
+        android:src="@drawable/ic_login" />
 
     <TextView
         android:id="@+id/navigationDrawerTitle"
@@ -38,6 +38,7 @@
         android:text="@string/profile_name"
         android:textSize="16sp"
         android:textColor="@android:color/white"
+        android:visibility="invisible"
         android:textStyle="bold" />
 
     <TextView
@@ -46,6 +47,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/profile_designation"
+        android:visibility="invisible"
         android:textSize="12sp"
         android:textColor="@android:color/white"/>
 
@@ -55,6 +57,7 @@
         android:layout_height="2dp"
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
+        android:contentDescription="@string/img_divider"
         android:layout_marginTop="10dp"
         android:background="@color/searchview_bg" />
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="teacher_img_icons">
+
+        <item>@drawable/ic_student</item>
+        <item>@drawable/ic_parents</item>
+        <item>@drawable/ic_attendants</item>
+        <item>@drawable/ic_assignment</item>
+        <item>@drawable/ic_mail</item>
+        <item>@drawable/ic_marks</item>
+        <item>@drawable/ic_materials</item>
+        <item>@drawable/ic_notifications</item>
+
+    </array>
+
+    <array name="student_img_icons">
+
+
+        <item>@drawable/ic_attendants</item>
+        <item>@drawable/ic_assignment</item>
+        <item>@drawable/ic_marks</item>
+        <item>@drawable/ic_materials</item>
+        <item>@drawable/ic_notifications</item>
+
+    </array>
+
+</resources>

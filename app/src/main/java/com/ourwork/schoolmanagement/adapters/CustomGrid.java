@@ -1,6 +1,9 @@
 package com.ourwork.schoolmanagement.adapters;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,20 +13,23 @@ import android.widget.TextView;
 
 import com.ourwork.schoolmanagement.R;
 
+import java.lang.reflect.Type;
+
 /**
  * Created by Purvik Rana on 19-05-2018.
  */
 
 public class CustomGrid extends BaseAdapter {
 
+    private static final String TAG = "CustomGrid.java";
     private Context mContext;
     private final String[] titles;
-    private final int[] Imageids;
+    private final TypedArray Imageids;
 
-    public CustomGrid(Context mContext, String[] titles, int[] imageids) {
+    public CustomGrid(Context mContext, String[] titles, TypedArray imageids) {
         this.mContext = mContext;
         this.titles = titles;
-        Imageids = imageids;
+        this.Imageids = imageids;
     }
 
 
@@ -52,12 +58,14 @@ public class CustomGrid extends BaseAdapter {
 
         if (convertView == null) {
 
-            grid = new View(mContext);
+            //grid = new View(mContext);
             grid = inflater.inflate(R.layout.grid_single_item, null);
             TextView textView = grid.findViewById(R.id.grid_text);
             ImageView imageView = grid.findViewById(R.id.grid_image);
             textView.setText(titles[position]);
-            imageView.setImageResource(Imageids[position]);
+
+            Log.d(TAG, "getView: " + Imageids.getString(position));
+            imageView.setImageDrawable(Imageids.getDrawable(position));
 
         } else {
             grid = convertView;

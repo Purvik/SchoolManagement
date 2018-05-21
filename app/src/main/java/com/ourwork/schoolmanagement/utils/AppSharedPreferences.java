@@ -33,6 +33,12 @@ public class AppSharedPreferences {
         Log.d(TAG, json + "getAppPreferences: " + accountUser);
         return accountUser;
     }
+    public static void removeStoredUserAccount(SharedPreferences mPrf){
+
+        SharedPreferences.Editor prefsEditor = mPrf.edit();
+        prefsEditor.remove("LoggedInAccountUser").apply();
+
+    }
 
 
 
