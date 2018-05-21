@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Pro School</string>
+    <string name="lbl_username">USERNAME</string>
+    <string name="hint_username">ENTER USERNAME</string>
+    <string name="hint_password">ENTER PASSWORD</string>
+    <string name="lbl_password">PASSWORD</string>
+    <string name="btn_login_label">LOG IN</string>
+    <string name="bt_lbl_forgot_pwd">Forgot Password ?</string>
+    <string name="bt_lbl_create_account">Create Account</string>
+    <string name="lbl_school_name">Pro School</string>
+    <string name="lbl_school_subtitle">AFFILIATED TO GSHSEB, GUJARAT</string>
+    <string name="profile_name">Dr. P V Ramanna</string>
+    <string name="profile_designation">PRINCIPAL OF SCHOOL</string>
+    <string name="nav_tv_calender">Calender</string>
+    <string name="nav_tv_taketest">Take Test</string>
+    <string name="nav_tv_facility">Facility</string>
+    <string name="nav_tv_achievments">Achievments</string>
+    <string name="nav_tv_lunch_menu">Lunch Menu</string>
+    <string name="nav_tv_forms">Forms</string>
+    <string name="nav_tv_exam_timetable">Exam Time Table</string>
+    <string name="nav_tv_exam_paper">Exam Paper</string>
+    <string name="nav_tv_about_us">About Us</string>
+    <string name="nav_tv_settings">Settings</string>
+    <string name="nav_tv_logout">Logout</string>
+    <string name="nav_tv_login">Login</string>
+
+    <string name="navigation_drawer_open">Drawer Open</string>
+    <string name="navigation_drawer_close">Drawer Close</string>
+</resources>

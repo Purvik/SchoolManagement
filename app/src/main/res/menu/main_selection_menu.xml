@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <!--<item
+            android:id="@+id/menu_selections"
+            android:title="">-->
+
+           <!-- <menu>-->
+
+                <item
+                    android:id="@+id/nav_login"
+                    android:icon="@drawable/ic_login"
+                    android:title="@string/nav_tv_login"
+                    android:visible="true" />
+
+                <item
+                    android:id="@+id/nav_calender"
+                    android:icon="@drawable/ic_calender"
+                    android:title="@string/nav_tv_calender" />
+
+
+                <item
+                    android:id="@+id/nav_taketest"
+                    android:icon="@drawable/ic_test"
+                    android:title="@string/nav_tv_taketest" />
+
+                <item
+                    android:id="@+id/nav_facility"
+                    android:icon="@drawable/ic_facility"
+                    android:title="@string/nav_tv_facility" />
+
+                <item
+                    android:id="@+id/nav_achievments"
+                    android:icon="@drawable/ic_achievements"
+                    android:title="@string/nav_tv_achievments" />
+
+                <item
+                    android:id="@+id/nav_lunchmenu"
+                    android:icon="@drawable/ic_lunchmenu"
+                    android:title="@string/nav_tv_lunch_menu" />
+
+
+                <item
+                    android:id="@+id/nav_forms"
+                    android:icon="@drawable/ic_forms"
+                    android:title="@string/nav_tv_forms" />
+
+
+                <item
+                    android:id="@+id/nav_exam_timetable"
+                    android:icon="@drawable/ic_exam_timetable"
+                    android:title="@string/nav_tv_exam_timetable" />
+
+                <item
+                    android:id="@+id/nav_exam_paper"
+                    android:icon="@drawable/ic_exam_paper"
+                    android:title="@string/nav_tv_exam_paper" />
+
+                <item
+                    android:id="@+id/nav_about_us"
+                    android:icon="@drawable/ic_about_us"
+                    android:title="@string/nav_tv_about_us" />
+
+                <item
+                    android:id="@+id/nav_settings"
+                    android:icon="@drawable/ic_settings"
+                    android:title="@string/nav_tv_settings" />
+
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/ic_logout"
+                    android:title="@string/nav_tv_logout"
+                    android:visible="false" />
+           <!-- </menu>-->
+
+
+        <!--</item>-->
+    </group>
+
+</menu>

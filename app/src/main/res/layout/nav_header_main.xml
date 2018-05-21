@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/navDrawerBackground"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:paddingBottom="0dp"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:id="@+id/search_edit_frame"
+    android:paddingTop="20dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <android.support.v7.widget.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/searchview_bg"
+        app:queryHint="Type something..." />
+
+    <ImageView
+        android:id="@+id/headerAppIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0"
+        android:src="@mipmap/ic_launcher_round" />
+
+    <TextView
+        android:id="@+id/navigationDrawerTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/profile_name"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/navigationDrawerSubTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/profile_designation"
+        android:textSize="12sp"
+        android:textColor="@android:color/white"/>
+
+    <ImageView
+        android:id="@+id/imgview_divider_1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/searchview_bg" />
+
+</LinearLayout>

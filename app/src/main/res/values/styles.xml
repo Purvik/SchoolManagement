@@ -1,0 +1,26 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--App Activity Theme-->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!--ActionBar Theme-->
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!--andorid:textColorPrimary used to chagne display Text Color-->
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+
+    <!--Toolbar Theme-->
+    <style name="AppTheme.PopupOverlay" parent="Theme.AppCompat.Light.DarkActionBar" />
+
+</resources>

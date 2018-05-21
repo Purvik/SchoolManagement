@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ourwork.schoolmanagement">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:supportsRtl">
+
+        <!--splash screen activity-->
+        <activity android:name=".activities.Splash"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:noHistory="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <!--log in activity-->
+        <activity android:name=".activities.LogInActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:noHistory="true"/>
+
+        <!--main home screen activity-->
+        <activity android:name=".activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            android:noHistory="true"/>
+
+    </application>
+
+</manifest>
