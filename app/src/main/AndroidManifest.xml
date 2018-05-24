@@ -35,7 +35,12 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
-            android:noHistory="true"/>
+            android:noHistory="false"/>
+
+        <activity android:name=".activities.UserProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
     </application>
 

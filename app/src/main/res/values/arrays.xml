@@ -3,25 +3,25 @@
 
     <array name="teacher_img_icons">
 
-        <item>@drawable/ic_student</item>
-        <item>@drawable/ic_parents</item>
-        <item>@drawable/ic_attendants</item>
-        <item>@drawable/ic_assignment</item>
-        <item>@drawable/ic_mail</item>
-        <item>@drawable/ic_marks</item>
-        <item>@drawable/ic_materials</item>
-        <item>@drawable/ic_notifications</item>
+        <item>@drawable/ic_student_male</item>
+        <item>@drawable/ic_parents_new</item>
+        <item>@drawable/ic_attendance_new</item>
+        <item>@drawable/ic_assignments_new</item>
+        <item>@drawable/ic_mail_sms_new</item>
+        <item>@drawable/ic_marks_new</item>
+        <item>@drawable/ic_materials_new</item>
+        <item>@drawable/ic_notification_new</item>
 
     </array>
 
     <array name="student_img_icons">
 
 
-        <item>@drawable/ic_attendants</item>
-        <item>@drawable/ic_assignment</item>
-        <item>@drawable/ic_marks</item>
-        <item>@drawable/ic_materials</item>
-        <item>@drawable/ic_notifications</item>
+        <item>@drawable/ic_attendance_new</item>
+        <item>@drawable/ic_assignments_new</item>
+        <item>@drawable/ic_marks_new</item>
+        <item>@drawable/ic_materials_new</item>
+        <item>@drawable/ic_notification_new</item>
 
     </array>
 

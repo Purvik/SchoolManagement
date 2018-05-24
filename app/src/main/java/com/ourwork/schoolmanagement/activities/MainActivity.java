@@ -15,21 +15,27 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.fragments.MainFragment;
 import com.ourwork.schoolmanagement.singleton.AccountUser;
+import com.ourwork.schoolmanagement.singleton.StudentUserProfile;
 import com.ourwork.schoolmanagement.utils.AppSharedPreferences;
+import com.ourwork.schoolmanagement.utils.BorderCirularTransform;
+import com.ourwork.schoolmanagement.utils.CircleTransform;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Purvik Rana on 16-05-2018.
  */
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private static final String TAG = "MainActivity.java";
     Serializable accountUserSerial;
@@ -38,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Menu navigationMenu;
     SharedPreferences mPref;
     View navHeaderView;
+    ImageView navHeaderProfileIcon;
+    Toolbar toolbar;
     TextView navigationDrawerTitle, navigationDrawerSubTitle;
 
     @Override
@@ -45,12 +53,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         navigationView = findViewById(R.id.nav_view);
         navigationMenu = navigationView.getMenu();
+
         navHeaderView = navigationView.getHeaderView(0);
+        navHeaderProfileIcon = navHeaderView.findViewById(R.id.navHeaderProfileIcon);
         navigationDrawerTitle = navHeaderView.findViewById(R.id.navigationDrawerTitle);
         navigationDrawerSubTitle = navHeaderView.findViewById(R.id.navigationDrawerSubTitle);
 
@@ -68,6 +80,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             accountUser= (AccountUser) accountUserSerial;
             navigationDrawerTitle.setText(accountUser.getUsername());
             navigationDrawerSubTitle.setText(accountUser.getUsertype());
+
+            /*Picasso.get()
+                    .load(R.drawable.ic_login)
+                    .transform(new BorderCirularTransform())
+                    .into(navHeaderProfileIcon);*/
+
+            /*"https://maxcdn.icons8.com/Share/icon/color/Users//donald_trump1600.png"*/
+            Picasso.with(getApplicationContext())
+                    .load(R.drawable.ic_login)
+                    .placeholder(R.drawable.ic_login)
+                    .into(navHeaderProfileIcon);
+
+            navHeaderProfileIcon.setOnClickListener(this);
+
+
             hideLogInMenuItem(accountUser.getUsertype());
         }
 
@@ -81,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        drawer.openDrawer(GravityCompat.START);
+        //drawer.openDrawer(GravityCompat.START);
 
         // NAVIGATION VIEW PORT
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -190,5 +217,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+
+            case R.id.navHeaderProfileIcon:
+                
+                //Toast.makeText(getApplicationContext(), "ICON CLICKER", Toast.LENGTH_SHORT).show();
+
+                if (accountUser != null) {
+                    displayUserProfileActivity(accountUser.getUsertype());
+                }
+
+
+
+                break;
+        }
+
+    }
+
+    private void displayUserProfileActivity(String userType) {
+
+        if (userType.equalsIgnoreCase("student")) {
+
+            StudentUserProfile studentUserProfile =
+                    new StudentUserProfile(1002,"Primary", "Male","Hindu","Gujarat","5555544444", accountUser.getUsername(),55,"12/03/1990","B-","p@gmail.com","Surat", "India","10-A");
+
+            Intent actIntent = new Intent(MainActivity.this, UserProfileActivity.class);
+            actIntent.putExtra("studentProfile", studentUserProfile);
+
+            startActivity(actIntent);
+        }
+
+
+
     }
 }

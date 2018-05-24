@@ -17,55 +17,55 @@
 
                 <item
                     android:id="@+id/nav_student"
-                    android:icon="@drawable/ic_student"
+                    android:icon="@drawable/ic_student_male"
                     android:title="@string/nav_tv_student" />
 
 
                 <item
                     android:id="@+id/nav_parents"
-                    android:icon="@drawable/ic_parents"
+                    android:icon="@drawable/ic_parents_new"
                     android:title="@string/nav_tv_parents" />
 
                 <item
                     android:id="@+id/nav_attendants"
-                    android:icon="@drawable/ic_attendants"
+                    android:icon="@drawable/ic_attendance_new"
                     android:title="@string/nav_tv_attendants" />
 
                 <item
                     android:id="@+id/nav_assignments"
-                    android:icon="@drawable/ic_assignment"
+                    android:icon="@drawable/ic_assignments_new"
                     android:title="@string/nav_tv_assignments" />
 
                 <item
                     android:id="@+id/nav_mail_sms"
-                    android:icon="@drawable/ic_mail"
+                    android:icon="@drawable/ic_mail_sms_new"
                     android:title="@string/nav_tv_mail_sms" />
 
 
                 <item
                     android:id="@+id/nav_marks"
-                    android:icon="@drawable/ic_marks"
+                    android:icon="@drawable/ic_marks_new"
                     android:title="@string/nav_tv_marks" />
 
 
                 <item
                     android:id="@+id/nav_materials"
-                    android:icon="@drawable/ic_materials"
+                    android:icon="@drawable/ic_materials_new"
                     android:title="@string/nav_tv_materials" />
 
                 <item
                     android:id="@+id/nav_notifications"
-                    android:icon="@drawable/ic_notifications"
+                    android:icon="@drawable/ic_notification_new"
                     android:title="@string/nav_tv_notifications" />
 
                 <item
                     android:id="@+id/nav_about_us"
-                    android:icon="@drawable/ic_about_us"
+                    android:icon="@drawable/ic_about_us_new"
                     android:title="@string/nav_tv_about_us" />
 
                 <item
                     android:id="@+id/nav_settings"
-                    android:icon="@drawable/ic_settings"
+                    android:icon="@drawable/ic_settings_new"
                     android:title="@string/nav_tv_settings" />
 
                 <item

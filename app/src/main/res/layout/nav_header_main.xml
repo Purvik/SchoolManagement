@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/navDrawerBackground"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingBottom="0dp"
@@ -12,23 +11,14 @@
     android:paddingTop="20dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <!--<android.support.v7.widget.SearchView
-        android:id="@+id/search_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/searchview_bg"
-        app:queryHint="Type something..." />-->
-
     <ImageView
-        android:id="@+id/headerAppIcon"
+        android:id="@+id/navHeaderProfileIcon"
         android:layout_width="100dp"
-        android:layout_height="0dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:layout_weight="0"
+        android:layout_marginTop="10dp"
         android:contentDescription="@string/user_icon_logo"
-        android:src="@drawable/ic_login" />
+        android:src="@drawable/ic_login"/>
 
     <TextView
         android:id="@+id/navigationDrawerTitle"
@@ -37,6 +27,7 @@
         android:gravity="center"
         android:text="@string/profile_name"
         android:textSize="16sp"
+        android:layout_marginTop="10dp"
         android:textColor="@android:color/white"
         android:visibility="invisible"
         android:textStyle="bold" />
@@ -59,6 +50,7 @@
         android:layout_marginStart="0dp"
         android:contentDescription="@string/img_divider"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:background="@color/searchview_bg" />
 
 </LinearLayout>

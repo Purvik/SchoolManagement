@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.LayoutInflaterCompat;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.activities.MainActivity;
 import com.ourwork.schoolmanagement.adapters.CustomGrid;
+import com.ourwork.schoolmanagement.adapters.HomeMenuAdapter;
 import com.ourwork.schoolmanagement.singleton.AccountUser;
 
 /**
@@ -26,8 +29,14 @@ public class MainFragment extends Fragment {
 
     View v;
     GridView mainGrid;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     AccountUser accountUser;
     static String ACCOUNT_KEY = "account_type";
+    Context mContext;
     String titles[];/*{"Calender", "Take Test", "Facility", "Achievments", "Lunch Menu", "Forms"};*/
     TypedArray imgIds;/*[] = {R.drawable.ic_calender, R.drawable.ic_test, R.drawable.ic_facility, R.drawable.ic_achievements, R.drawable.ic_lunchmenu, R.drawable.ic_forms,R.drawable.ic_forms,R.drawable.ic_forms};*/
     //TypedArray stdImg;
@@ -50,9 +59,17 @@ public class MainFragment extends Fragment {
 
         v = inflater.inflate(R.layout.fragment_grid_main, container, false);
 
+        mContext= getActivity();
+
         accountUser = (AccountUser)getArguments().getSerializable(ACCOUNT_KEY);
 
-        mainGrid = v.findViewById(R.id.grid_view);
+        //mainGrid = v.findViewById(R.id.grid_view);
+        recyclerView = v.findViewById(R.id.recycler_view);
+
+        // Define a layout for RecyclerView
+        mLayoutManager = new GridLayoutManager(mContext,3);
+        recyclerView.setLayoutManager(mLayoutManager);
+
 
         loadCustomGridAdapter(accountUser);
 
@@ -84,7 +101,7 @@ public class MainFragment extends Fragment {
 
         }
 
-        CustomGrid adapter = new CustomGrid(getActivity().getApplicationContext(), titles, imgIds);
+       /* CustomGrid adapter = new CustomGrid(getActivity().getApplicationContext(), titles, imgIds);
         mainGrid.setAdapter(adapter);
         mainGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -92,7 +109,11 @@ public class MainFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Toast.makeText(getActivity().getApplicationContext(), "You Clicked at " + titles[+position], Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
+
+       mAdapter = new HomeMenuAdapter(titles, imgIds, getActivity());
+
+       recyclerView.setAdapter(mAdapter);
 
     }
 }

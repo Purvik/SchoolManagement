@@ -38,10 +38,13 @@
     <string name="img_divider">Image Dividers</string>
     <string name="menu_icon">Home Menu Icon</string>
     <string name="app_icon_desc">App Icon Description</string>
+    <string name="tvTitleRegNo">Reg No</string>
+    <string name="tvTitleRollNo">Roll No</string>
+    <string name="tvTitleClassNo">Class</string>
 
     <string-array name="stud_parent_dashboard_titles">
 
-        <item>Attendant</item>
+        <item>Attendance</item>
         <item>Assignments</item>
         <item>Marks</item>
         <item>Materials</item>
