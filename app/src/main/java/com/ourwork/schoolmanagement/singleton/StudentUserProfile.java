@@ -9,6 +9,7 @@ import java.util.Date;
 
 public class StudentUserProfile implements Serializable{
 
+    private String name;
     private int reg_no;
     private String section;
     private String gender;
@@ -28,7 +29,8 @@ public class StudentUserProfile implements Serializable{
     public StudentUserProfile() {
     }
 
-    public StudentUserProfile(int reg_no, String section, String gender, String religion, String state, String phone_no, String username, int roll, String DOB, String blood_group, String email, String address, String country,String class_no) {
+    public StudentUserProfile(String name,int reg_no, String section, String gender, String religion, String state, String phone_no, String username, int roll, String DOB, String blood_group, String email, String address, String country,String class_no) {
+        this.name = name;
         this.reg_no = reg_no;
         this.section = section;
         this.gender = gender;
@@ -43,6 +45,14 @@ public class StudentUserProfile implements Serializable{
         this.address = address;
         this.country = country;
         this.class_no = class_no;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getReg_no() {
@@ -160,6 +170,7 @@ public class StudentUserProfile implements Serializable{
     @Override
     public String toString() {
         return "StudentUserProfile{" +
+                "name=" + name +
                 "reg_no=" + reg_no +
                 ", section='" + section + '\'' +
                 ", gender='" + gender + '\'' +

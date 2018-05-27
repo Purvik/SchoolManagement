@@ -23,6 +23,7 @@ import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.fragments.MainFragment;
 import com.ourwork.schoolmanagement.singleton.AccountUser;
 import com.ourwork.schoolmanagement.singleton.StudentUserProfile;
+import com.ourwork.schoolmanagement.singleton.TeacherUserProfile;
 import com.ourwork.schoolmanagement.utils.AppSharedPreferences;
 import com.ourwork.schoolmanagement.utils.BorderCirularTransform;
 import com.ourwork.schoolmanagement.utils.CircleTransform;
@@ -86,14 +87,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .transform(new BorderCirularTransform())
                     .into(navHeaderProfileIcon);*/
 
-            /*"https://maxcdn.icons8.com/Share/icon/color/Users//donald_trump1600.png"*/
-            Picasso.with(getApplicationContext())
+            /*uncomment when work with actual web url png for profile*/
+            /*Picasso.with(getApplicationContext())
                     .load(R.drawable.ic_login)
                     .placeholder(R.drawable.ic_login)
-                    .into(navHeaderProfileIcon);
+                    .into(navHeaderProfileIcon);*/
+
+            if (accountUser.getUsertype() .equalsIgnoreCase("teacher")  ) {
+                navHeaderProfileIcon.setImageResource(R.drawable.ic_teacher_male);
+            } else if(accountUser.getUsertype() .equalsIgnoreCase("student")){
+                navHeaderProfileIcon.setImageResource(R.drawable.ic_student_male);
+            }else{
+                navHeaderProfileIcon.setImageResource(R.drawable.ic_student_female);
+            }
 
             navHeaderProfileIcon.setOnClickListener(this);
-
 
             hideLogInMenuItem(accountUser.getUsertype());
         }
@@ -244,12 +252,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (userType.equalsIgnoreCase("student")) {
 
             StudentUserProfile studentUserProfile =
-                    new StudentUserProfile(1002,"Primary", "Male","Hindu","Gujarat","5555544444", accountUser.getUsername(),55,"12/03/1990","B-","p@gmail.com","Surat", "India","10-A");
+                    new StudentUserProfile("Krutik Patel",1002,"Primary", "Male","Hindu","Gujarat","5555544444", accountUser.getUsername(),55,"12/03/1990","B-","p@gmail.com","Surat", "India","10-A");
 
             Intent actIntent = new Intent(MainActivity.this, UserProfileActivity.class);
+            actIntent.putExtra("profileType","student");
             actIntent.putExtra("studentProfile", studentUserProfile);
-
             startActivity(actIntent);
+
+        } else if(userType.equalsIgnoreCase("teacher")){
+
+            TeacherUserProfile teacherUserProfile =
+                    new TeacherUserProfile("Ronak Roy", "Class Teacher", "Male", "Christian","5555588888","ronak@9655","25/12/1990","12/05/2015","r@yahoo.in","C-5 High Heights Bunglows, Pragati Nagar, Nadiyad","photo_url");
+
+            Intent actIntent = new Intent(MainActivity.this, UserProfileActivity.class);
+            actIntent.putExtra("profileType","teacher");
+            actIntent.putExtra("teacherProfile", teacherUserProfile);
+            startActivity(actIntent);
+
+        } else{
+
+
         }
 
 

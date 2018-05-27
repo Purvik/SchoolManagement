@@ -44,7 +44,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
     public HomeMenuAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         // Create a new View
-        View v = LayoutInflater.from(mContext).inflate(R.layout.grid_single_item,parent,false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.grid_single_item_new,parent,false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
 

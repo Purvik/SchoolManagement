@@ -1,27 +1,30 @@
 package com.ourwork.schoolmanagement.activities;
 
-import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.ourwork.schoolmanagement.R;
+import com.ourwork.schoolmanagement.adapters.ProfileListAdapter;
 import com.ourwork.schoolmanagement.singleton.StudentUserProfile;
+import com.ourwork.schoolmanagement.singleton.TeacherUserProfile;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -29,113 +32,127 @@ import java.util.Iterator;
  */
 
 
-public class UserProfileActivity extends AppCompatActivity {
+public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener{
 
     CollapsingToolbarLayout collapsingToolbarLayout;
     Toolbar toolbar;
     TableLayout tableLayout;
-    Serializable studetProfileSerializable;
+    Serializable studetProfileSerializable, teacherProfileSerializable;
     StudentUserProfile studentUserProfile;
+    TeacherUserProfile teacherUserProfile;
+    ImageView expandedImage, userTypeOverlapImageView;
+    Button btnbackArrow;
+    ArrayList<String> title_array = new ArrayList<String>();
+    ArrayList<String> values_array = new ArrayList<String>();
+    ListView listView;
+    BaseAdapter profileListAdapter;
+    TextView tvDisplayName;
+    String jsonString;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //get view instances
+        tvDisplayName = findViewById(R.id.displayName);
+        expandedImage =findViewById(R.id.expandedImage);
+        userTypeOverlapImageView =findViewById(R.id.userTypeOverlapImageView);
+        btnbackArrow = findViewById(R.id.btnBackArrow);
+        btnbackArrow.setOnClickListener(this);
+        String profileType = getIntent().getStringExtra("profileType");
 
-        if(getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setTitle("");
+        if (profileType.equalsIgnoreCase("student")) {
 
-        collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar_layout);
-        collapsingToolbarLayout.setCollapsedTitleGravity(GravityCompat.START);
+            //for student
+            expandedImage.setImageResource(R.drawable.ic_student_male);
+            userTypeOverlapImageView.setImageResource(R.drawable.ic_student_female);
+            studetProfileSerializable = getIntent().getExtras().getSerializable("studentProfile");
+            studentUserProfile = (StudentUserProfile) studetProfileSerializable;
 
-        AppBarLayout appBarLayout = findViewById(R.id.app_bar);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = true;
-            int scrollRange = -1;
 
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbarLayout.setTitle("User Name");
-                    isShow = true;
-                } else if(isShow) {
-                    collapsingToolbarLayout.setTitle(" ");//carefull there should a space between double quote otherwise it wont work
-                    isShow = false;
-                }
-            }
-        });
+            tvDisplayName.setText(studentUserProfile.getName());
 
-        tableLayout = findViewById(R.id.tableLayout);
+            Gson gson = new Gson();
+            jsonString = gson.toJson(studentUserProfile);
+            Log.d("User Details String", "onCreate: " + jsonString);
 
-        studetProfileSerializable = getIntent().getExtras().getSerializable("studentProfile");
+            buildArrayList(jsonString);
 
-        studentUserProfile = (StudentUserProfile) studetProfileSerializable;
-        Gson gson = new Gson();
-        String json = gson.toJson(studentUserProfile);
-        Log.d("User Details String", "onCreate: " + json);
+        } else if (profileType.equalsIgnoreCase("teacher")) {
+
+            //for teacher
+            expandedImage.setImageResource(R.drawable.ic_teacher_male);
+            userTypeOverlapImageView.setImageResource(R.drawable.ic_teacher_female);
+            teacherProfileSerializable = getIntent().getExtras().getSerializable("teacherProfile");
+            teacherUserProfile = (TeacherUserProfile) teacherProfileSerializable;
+
+
+            tvDisplayName.setText(teacherUserProfile.getName());
+
+            Gson gson = new Gson();
+            jsonString = gson.toJson(teacherUserProfile);
+            Log.d("User Details String", "onCreate: " + jsonString);
+
+            buildArrayList(jsonString);
+
+
+        }else{
+
+            //for admin profile
+
+        }
+
+        listView = findViewById(R.id.listView);
+        profileListAdapter = new ProfileListAdapter(UserProfileActivity.this, title_array, values_array);
+        listView.setAdapter(profileListAdapter);
+
+    }
+
+    private void buildArrayList(String jsonString) {
+
         JSONObject selectedNode = null;
-        TableRow row = new TableRow(UserProfileActivity.this);
-        TableRow.LayoutParams lp =
-                new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-        row.setLayoutParams(lp);
 
         try {
-            selectedNode = new JSONObject(json);
+            selectedNode = new JSONObject(jsonString);
 
             //parse the node and generate the TableView
             Iterator keys = selectedNode.keys();
             while (keys.hasNext()) {
 
                 String key = keys.next().toString();
-                //sb.append("\n" + key + ":\t\t" + selectedNode.getString(key));
-
-                // Add Values to Table Layout
-                TableRow row1 = new TableRow(UserProfileActivity.this);
-
-                TableRow.LayoutParams lp1 =
-                        new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-
-                lp1.setMargins(5, 1, 1, 1);
-                row.setLayoutParams(lp1);
-
-                TextView Tv1 = new TextView(UserProfileActivity.this);
-                Tv1.setText(key);
-                Tv1.setTextColor(Color.BLACK);
-
-                row1.addView(Tv1);
-
-                TextView Tv2 = new TextView(UserProfileActivity.this);
-                Tv2.setText(selectedNode.getString(key));
-                Tv2.setPadding(50, 0, 0, 0);
-                row1.addView(Tv2);
-
-                tableLayout.addView(row1);
+                title_array.add(key);
+                values_array.add(selectedNode.getString(key));
 
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
-
-
-
-
-
-
-
     }
 
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+
+            case R.id.btnBackArrow:
+
+                onBackPressed();
+
+                break;
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

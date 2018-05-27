@@ -8,6 +8,10 @@
     <color name="light_blue_text_color" >#1bcaef</color>
     <color name="navDrawerBackground">#EE01a9e4</color>
     <color name="searchview_bg">#049ed6</color>
+    <color name="peachLight">#FD8469</color>
+    <color name="peachDark">#F1543F</color>
+
+    <color name="greenPista">#90DFAA</color>
 </resources>
 
 <!--

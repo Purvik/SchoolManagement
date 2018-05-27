@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?><!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/edt_custom_background"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:layout_weight="0.5"
+        android:gravity="left|start|center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
+        android:text="Name"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/valueText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:layout_weight="1"
+        android:gravity="right|end|center_vertical"
+        android:paddingEnd="10dp"
+        android:paddingRight="10dp"
+        android:text="Purvik Rana"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>
+
+    <!--
+    </android.support.constraint.ConstraintLayout>-->

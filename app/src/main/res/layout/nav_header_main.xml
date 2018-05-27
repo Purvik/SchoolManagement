@@ -8,7 +8,7 @@
     android:paddingEnd="16dp"
     android:paddingStart="16dp"
     android:id="@+id/search_edit_frame"
-    android:paddingTop="20dp"
+    android:paddingTop="45dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
