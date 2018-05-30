@@ -1,19 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_bg">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/main_inner_logo"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:src="@drawable/ic_login"
+            android:visibility="visible"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/s"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignBottom="@+id/imageView3"
+            android:layout_alignLeft="@+id/main_inner_logo"
+            android:layout_alignStart="@+id/main_inner_logo"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="33dp"
+            android:layout_marginStart="33dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_parents_meeting" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/s"
+            android:layout_toRightOf="@+id/s"
+            app:srcCompat="@drawable/ic_student_male" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignEnd="@+id/imageView6"
+            android:layout_alignRight="@+id/imageView6"
+            android:layout_alignTop="@+id/main_inner_logo"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/ic_teacher_female" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/imageView3"
+            android:layout_marginEnd="31dp"
+            android:layout_marginRight="31dp"
+            android:layout_marginTop="8dp"
+            app:srcCompat="@drawable/ic_settings_new" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignEnd="@+id/imageView4"
+            android:layout_alignRight="@+id/imageView4"
+            android:layout_below="@+id/imageView4"
+            android:layout_marginEnd="3dp"
+            android:layout_marginTop="15dp"
+            app:srcCompat="@drawable/ic_student_female" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignLeft="@+id/imageView4"
+            android:layout_alignStart="@+id/imageView4"
+            android:layout_below="@+id/imageView5"
+            android:layout_marginTop="14dp"
+            app:srcCompat="@drawable/ic_result" />
+
+
+    </RelativeLayout>
+
+
+
     <ImageView
         android:id="@+id/app_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="110dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/main_logo"
+        android:visibility="visible"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,15 +119,16 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/lbl_school_name"
+        android:text="@string/app_name"
         android:textAlignment="center"
+        android:textColor="#8fdea9"
         android:textSize="45sp"
         android:textStyle="bold"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/tv_school_subtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        android:textColor="@color/light_blue_text_color"
         app:layout_constraintTop_toBottomOf="@+id/app_icon"
         app:layout_constraintVertical_bias="1.0" />
 
@@ -46,7 +140,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/lbl_school_subtitle"
-        android:textColor="@color/tv_lbl_color"
+        android:textColor="#2c9883"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.fragments.MainFragment;
@@ -25,15 +24,12 @@ import com.ourwork.schoolmanagement.singleton.AccountUser;
 import com.ourwork.schoolmanagement.singleton.StudentUserProfile;
 import com.ourwork.schoolmanagement.singleton.TeacherUserProfile;
 import com.ourwork.schoolmanagement.utils.AppSharedPreferences;
-import com.ourwork.schoolmanagement.utils.BorderCirularTransform;
-import com.ourwork.schoolmanagement.utils.CircleTransform;
-import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by Purvik Rana on 16-05-2018.
+ * MainActivity
  */
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -57,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         navigationView = findViewById(R.id.nav_view);
         navigationMenu = navigationView.getMenu();
@@ -68,10 +65,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationDrawerSubTitle = navHeaderView.findViewById(R.id.navigationDrawerSubTitle);
 
 
-        accountUserSerial = getIntent().getExtras().getSerializable("loggedInUser");
+        if(getIntent() != null)
+            accountUserSerial = getIntent().getExtras().getSerializable("loggedInUser");
         Log.d(TAG, "onCreate: " + accountUserSerial);
-
-        //Toast.makeText(getApplicationContext(), "" + accountUserSerial.toString(), Toast.LENGTH_LONG).show();
 
         if (accountUserSerial != null) {
 
@@ -94,11 +90,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .into(navHeaderProfileIcon);*/
 
             if (accountUser.getUsertype() .equalsIgnoreCase("teacher")  ) {
+
+                //check gender also then put the icon
                 navHeaderProfileIcon.setImageResource(R.drawable.ic_teacher_male);
+
             } else if(accountUser.getUsertype() .equalsIgnoreCase("student")){
+
+                //check gender also then put the icon
                 navHeaderProfileIcon.setImageResource(R.drawable.ic_student_male);
+
             }else{
+
+                //this is for admin
                 navHeaderProfileIcon.setImageResource(R.drawable.ic_student_female);
+
             }
 
             navHeaderProfileIcon.setOnClickListener(this);
@@ -147,9 +152,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //customize navigation menu as per user type
         if (userType.equalsIgnoreCase("student")) {
-            navigationMenu.findItem(R.id.nav_student).setVisible(false);
-            navigationMenu.findItem(R.id.nav_parents).setVisible(false);
-            navigationMenu.findItem(R.id.nav_mail_sms).setVisible(false);
+
+            navigationMenu.findItem(R.id.nav_notice_board).setVisible(false);
+            navigationMenu.findItem(R.id.nav_chat).setVisible(false);
+            //navigationMenu.findItem(R.id.nav_mail_sms).setVisible(false);
+
+        } else if (userType.equalsIgnoreCase("teacher")) {
+
+            navigationMenu.findItem(R.id.nav_notifications).setVisible(false);
+            navigationMenu.findItem(R.id.nav_sports).setVisible(false);
+
         }
     }
 
@@ -172,33 +184,57 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 break;
 
-            case R.id.nav_student:
+            case R.id.nav_syllabus:
 
                 break;
 
-            case R.id.nav_parents:
+            case R.id.nav_timetable:
+
+
+                Intent intent = new Intent(MainActivity.this, TimeTableActivity.class);
+                startActivity(intent);
 
                 break;
-            case R.id.nav_attendants:
-
-                break;
-
-            case R.id.nav_assignments:
-
-                break;
-            case R.id.nav_mail_sms:
+            case R.id.nav_homework:
 
                 break;
 
-            case R.id.nav_marks:
+            case R.id.nav_attendance:
+
+                break;
+            case R.id.nav_behaviour:
 
                 break;
 
-            case R.id.nav_materials:
+            case R.id.nav_parent_meeting:
+
+                break;
+
+            case R.id.nav_notice_board:
 
                 break;
 
             case R.id.nav_notifications:
+
+                break;
+
+            case R.id.nav_result:
+
+                break;
+
+            case R.id.nav_sports:
+
+                break;
+
+            case R.id.nav_feepayment:
+
+                break;
+
+            case R.id.nav_gallery:
+
+                break;
+
+            case R.id.nav_chat:
 
                 break;
 
@@ -215,12 +251,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //remove the app preferences from the app
                 AppSharedPreferences.removeStoredUserAccount(mPref);
 
-                startActivity(new Intent(MainActivity.this, LogInActivity.class));
+                Intent logInIntent = new Intent(MainActivity.this, LogInActivity.class);
+                logInIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(logInIntent);
+                finish();
 
                 break;
 
 
         }
+
 
         drawer.closeDrawer(GravityCompat.START);
 
@@ -262,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if(userType.equalsIgnoreCase("teacher")){
 
             TeacherUserProfile teacherUserProfile =
-                    new TeacherUserProfile("Ronak Roy", "Class Teacher", "Male", "Christian","5555588888","ronak@9655","25/12/1990","12/05/2015","r@yahoo.in","C-5 High Heights Bunglows, Pragati Nagar, Nadiyad","photo_url");
+                    new TeacherUserProfile("Ronak Roy", "SingleClass Teacher", "Male", "Christian","5555588888","ronak@9655","25/12/1990","12/05/2015","r@yahoo.in","C-5 High Heights Bunglows, Pragati Nagar, Nadiyad","photo_url");
 
             Intent actIntent = new Intent(MainActivity.this, UserProfileActivity.class);
             actIntent.putExtra("profileType","teacher");

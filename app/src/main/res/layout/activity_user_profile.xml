@@ -54,7 +54,7 @@
                 android:layout_gravity="end|bottom"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/ic_marks_new" />
+                android:src="@drawable/ic_result" />
 
 
             <TextView

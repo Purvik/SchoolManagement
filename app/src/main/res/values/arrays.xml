@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <array name="teacher_img_icons">
+    <array name="student_img_icons">
 
-        <item>@drawable/ic_student_male</item>
-        <item>@drawable/ic_parents_new</item>
+        <item>@drawable/ic_syllabus</item>
+        <item>@drawable/ic_timetable</item>
+        <item>@drawable/ic_homework</item>
         <item>@drawable/ic_attendance_new</item>
-        <item>@drawable/ic_assignments_new</item>
-        <item>@drawable/ic_mail_sms_new</item>
-        <item>@drawable/ic_marks_new</item>
-        <item>@drawable/ic_materials_new</item>
+        <item>@drawable/ic_behaviour</item>
+        <item>@drawable/ic_parents_meeting</item>
         <item>@drawable/ic_notification_new</item>
+        <item>@drawable/ic_result</item>
+        <item>@drawable/ic_sports</item>
+        <item>@drawable/ic_feepayments</item>
+        <item>@drawable/ic_gallery</item>
 
     </array>
 
-    <array name="student_img_icons">
+    <array name="teacher_img_icons">
 
 
+        <item>@drawable/ic_syllabus</item>
+        <item>@drawable/ic_timetable</item>
+        <item>@drawable/ic_homework</item>
         <item>@drawable/ic_attendance_new</item>
-        <item>@drawable/ic_assignments_new</item>
-        <item>@drawable/ic_marks_new</item>
-        <item>@drawable/ic_materials_new</item>
-        <item>@drawable/ic_notification_new</item>
+        <item>@drawable/ic_behaviour</item>
+        <item>@drawable/ic_parents_meeting</item>
+        <item>@drawable/ic_noticeboard</item>
+        <item>@drawable/ic_result</item>
+        <item>@drawable/ic_feepayments</item>
+        <item>@drawable/ic_gallery</item>
+        <item>@drawable/ic_chat</item>
 
     </array>
 

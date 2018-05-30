@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pro School</string>
+    <string name="app_name">Pro Pathshala</string>
     <string name="lbl_username">USERNAME</string>
     <string name="hint_username">ENTER USERNAME</string>
     <string name="hint_password">ENTER PASSWORD</string>
@@ -7,8 +7,8 @@
     <string name="btn_login_label">LOG IN</string>
     <string name="bt_lbl_forgot_pwd">Forgot Password ?</string>
     <string name="bt_lbl_create_account">Create Account</string>
-    <string name="lbl_school_name">Pro School</string>
-    <string name="lbl_school_subtitle">AFFILIATED TO GSHSEB, GUJARAT</string>
+    <string name="lbl_school_name">Pro Pathshala</string>
+    <string name="lbl_school_subtitle">SMART SCHOOL, SMART INDIA</string>
     <string name="profile_name">Dr. P V Ramanna</string>
     <string name="profile_designation">PRINCIPAL OF SCHOOL</string>
     <string name="nav_tv_calender">Calender</string>
@@ -28,10 +28,10 @@
     <string name="navigation_drawer_close">Drawer Close</string>
     <string name="nav_tv_student">Student</string>
     <string name="nav_tv_parents">Parents</string>
-    <string name="nav_tv_attendants">Attendants</string>
+    <string name="nav_tv_attendance">Attendance</string>
     <string name="nav_tv_assignments">Assignments</string>
     <string name="nav_tv_mail_sms">Mail/SMS</string>
-    <string name="nav_tv_marks">Marks</string>
+    <string name="nav_tv_result">Results</string>
     <string name="nav_tv_materials">Materials</string>
     <string name="nav_tv_notifications">Notifications</string>
     <string name="user_icon_logo">User Icon Logo</string>
@@ -41,26 +41,45 @@
     <string name="tvTitleRegNo">Reg No</string>
     <string name="tvTitleRollNo">Roll No</string>
     <string name="tvTitleClassNo">Class</string>
+    <string name="nav_tv_syllabus">Syllabus</string>
+    <string name="nav_tv_timetable">Time Table</string>
+    <string name="nav_tv_homework">Home Work</string>
+    <string name="nav_tv_behaviour">Behaviour</string>
+    <string name="nav_tv_parent_meeting">Parent Meeting</string>
+    <string name="nav_tv_notice_board">Notice Board</string>
+    <string name="nav_tv_sports">Sports</string>
+    <string name="nav_tv_feepayment">Fee Payments</string>
+    <string name="nav_tv_gallery">Gallery</string>
+    <string name="nav_tv_chat">Chat</string>
 
     <string-array name="stud_parent_dashboard_titles">
 
+        <item>Syllabus</item>
+        <item>Time Table</item>
+        <item>Home Work</item>
         <item>Attendance</item>
-        <item>Assignments</item>
-        <item>Marks</item>
-        <item>Materials</item>
+        <item>Behaviour</item>
+        <item>Parents Meeting</item>
         <item>Notifications</item>
+        <item>Results</item>
+        <item>Sports</item>
+        <item>Fees Payment</item>
+        <item>Gallery</item>
     </string-array>
 
     <string-array name="teacher_dashboard_titles">
 
-        <item>Student</item>
-        <item>Parents</item>
-        <item>Attendants</item>
-        <item>Assignments</item>
-        <item>Mail/SMS</item>
-        <item>Marks</item>
-        <item>Materials</item>
-        <item>Notifications</item>
+        <item>Syllabus</item>
+        <item>Time Table</item>
+        <item>Home Work</item>
+        <item>Attendance</item>
+        <item>Behaviour</item>
+        <item>Parents Meeting</item>
+        <item>Notice Board</item>
+        <item>Results</item>
+        <item>Fees Payment</item>
+        <item>Gallery</item>
+        <item>Chat</item>
     </string-array>
 
 

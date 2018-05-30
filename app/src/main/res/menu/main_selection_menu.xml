@@ -7,73 +7,105 @@
             android:id="@+id/menu_selections"
             android:title="">-->
 
-           <!-- <menu>-->
+        <!-- <menu>-->
 
-                <item
-                    android:id="@+id/nav_login"
-                    android:icon="@drawable/ic_login"
-                    android:title="@string/nav_tv_login"
-                    android:visible="true" />
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_login"
+            android:title="@string/nav_tv_login"
+            android:visible="true" />
 
-                <item
-                    android:id="@+id/nav_student"
-                    android:icon="@drawable/ic_student_male"
-                    android:title="@string/nav_tv_student" />
-
-
-                <item
-                    android:id="@+id/nav_parents"
-                    android:icon="@drawable/ic_parents_new"
-                    android:title="@string/nav_tv_parents" />
-
-                <item
-                    android:id="@+id/nav_attendants"
-                    android:icon="@drawable/ic_attendance_new"
-                    android:title="@string/nav_tv_attendants" />
-
-                <item
-                    android:id="@+id/nav_assignments"
-                    android:icon="@drawable/ic_assignments_new"
-                    android:title="@string/nav_tv_assignments" />
-
-                <item
-                    android:id="@+id/nav_mail_sms"
-                    android:icon="@drawable/ic_mail_sms_new"
-                    android:title="@string/nav_tv_mail_sms" />
+        <item
+            android:id="@+id/nav_syllabus"
+            android:icon="@drawable/ic_syllabus"
+            android:title="@string/nav_tv_syllabus" />
 
 
-                <item
-                    android:id="@+id/nav_marks"
-                    android:icon="@drawable/ic_marks_new"
-                    android:title="@string/nav_tv_marks" />
+        <item
+            android:id="@+id/nav_timetable"
+            android:icon="@drawable/ic_timetable"
+            android:title="@string/nav_tv_timetable" />
+
+        <item
+            android:id="@+id/nav_homework"
+            android:icon="@drawable/ic_homework"
+            android:title="@string/nav_tv_homework" />
+
+        <item
+            android:id="@+id/nav_attendance"
+            android:icon="@drawable/ic_attendance_new"
+            android:title="@string/nav_tv_attendance" />
 
 
-                <item
-                    android:id="@+id/nav_materials"
-                    android:icon="@drawable/ic_materials_new"
-                    android:title="@string/nav_tv_materials" />
+        <item
+            android:id="@+id/nav_behaviour"
+            android:icon="@drawable/ic_behaviour"
+            android:title="@string/nav_tv_behaviour" />
 
-                <item
-                    android:id="@+id/nav_notifications"
-                    android:icon="@drawable/ic_notification_new"
-                    android:title="@string/nav_tv_notifications" />
 
-                <item
-                    android:id="@+id/nav_about_us"
-                    android:icon="@drawable/ic_about_us_new"
-                    android:title="@string/nav_tv_about_us" />
+        <item
+            android:id="@+id/nav_parent_meeting"
+            android:icon="@drawable/ic_parents_meeting"
+            android:title="@string/nav_tv_parent_meeting" />
 
-                <item
-                    android:id="@+id/nav_settings"
-                    android:icon="@drawable/ic_settings_new"
-                    android:title="@string/nav_tv_settings" />
 
-                <item
-                    android:id="@+id/nav_logout"
-                    android:icon="@drawable/ic_logout"
-                    android:title="@string/nav_tv_logout"
-                    android:visible="false" />
-           <!-- </menu>-->
+        <item
+            android:id="@+id/nav_notice_board"
+            android:icon="@drawable/ic_noticeboard"
+            android:title="@string/nav_tv_notice_board" />
+
+        <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/ic_notification_new"
+            android:title="@string/nav_tv_notifications" />
+
+
+        <item
+            android:id="@+id/nav_result"
+            android:icon="@drawable/ic_result"
+            android:title="@string/nav_tv_result" />
+
+        <item
+            android:id="@+id/nav_sports"
+            android:icon="@drawable/ic_sports"
+            android:title="@string/nav_tv_sports" />
+
+        <item
+            android:id="@+id/nav_feepayment"
+            android:icon="@drawable/ic_feepayments"
+            android:title="@string/nav_tv_feepayment" />
+
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_gallery"
+            android:title="@string/nav_tv_gallery" />
+
+
+        <item
+            android:id="@+id/nav_chat"
+            android:icon="@drawable/ic_chat"
+            android:title="@string/nav_tv_chat" />
+
+
+
+        <!--Application Info Menu Area-->
+
+        <item
+            android:id="@+id/nav_about_us"
+            android:icon="@drawable/ic_about_us_new"
+            android:title="@string/nav_tv_about_us" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_new"
+            android:title="@string/nav_tv_settings" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/nav_tv_logout"
+            android:visible="false" />
+        <!-- </menu>-->
 
 
         <!--</item>-->
