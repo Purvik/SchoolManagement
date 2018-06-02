@@ -26,8 +26,8 @@
             android:background="@color/colorPrimary"
             app:tabGravity="fill"
             app:tabTextColor="@android:color/white"
-            app:tabSelectedTextColor="@color/colorAccent"
-            app:tabIndicatorColor="@color/colorAccent"
+            app:tabSelectedTextColor="@color/syllabus_item_bg"
+            app:tabIndicatorColor="@color/syllabus_item_bg"
             app:tabIndicatorHeight="@dimen/tab_indicator_height"/>
     </android.support.design.widget.AppBarLayout>
 

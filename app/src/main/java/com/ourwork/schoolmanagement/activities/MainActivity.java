@@ -172,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Close DrawerLayout after selection of particular item
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        Intent intent;
 
         switch (id) {
 
@@ -186,12 +187,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_syllabus:
 
+                intent = new Intent(MainActivity.this, SyllabusActivity.class);
+                startActivity(intent);
+
                 break;
 
             case R.id.nav_timetable:
 
 
-                Intent intent = new Intent(MainActivity.this, TimeTableActivity.class);
+                intent = new Intent(MainActivity.this, TimeTableActivity.class);
                 startActivity(intent);
 
                 break;
@@ -200,6 +204,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nav_attendance:
+
+                intent = new Intent(MainActivity.this, AttendanceActivity.class);
+                startActivity(intent);
 
                 break;
             case R.id.nav_behaviour:
