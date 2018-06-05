@@ -2,4 +2,5 @@
 <resources>
     <dimen name="class_item_height">74dp</dimen>
     <dimen name="tab_indicator_height">2dp</dimen>
+    <dimen name="hw_item_padding">4dp</dimen>
 </resources>

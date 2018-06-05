@@ -135,11 +135,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void loadMainGridFragment() {
 
-
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         MainFragment mainFragment = MainFragment.newInstance(accountUser);
         fragmentTransaction.replace(R.id.frame, mainFragment);
         fragmentTransaction.commit();
+
     }
 
 
@@ -200,6 +200,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 break;
             case R.id.nav_homework:
+
+                intent = new Intent(MainActivity.this, HomeworkActivity.class);
+                startActivity(intent);
 
                 break;
 

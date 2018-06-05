@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
-    android:background="@drawable/background_blue_border">
+    android:background="@drawable/background_orange_border">
 
 
     <TextView

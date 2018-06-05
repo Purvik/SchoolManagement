@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Maths Assignment",
+    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis posuere felis, a fringilla felis. Nulla ullamcorper nulla odio, sit amet molestie ligula facilisis at. Donec quis gravida arcu. Nulla id convallis mauris.",
+    "deadline": "15-02-2018",
+    "uploader": "Purvik Rana",
+    "hasAttachment": "TRUE",
+    "downloadUrl": "http://purvik.com"
+  },
+  {
+    "title": "Science Assignment",
+    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis posuere felis, a fringilla felis. Nulla ullamcorper nulla odio, sit amet molestie ligula facilisis at. Donec quis gravida arcu. Nulla id convallis mauris.",
+    "deadline": "24-03-2018",
+    "uploader": "Ronak Roy",
+    "hasAttachment": "FALSE",
+    "downloadUrl": ""
+  },
+  {
+    "title": "English Assignment",
+    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis posuere felis, a fringilla felis. Nulla ullamcorper nulla odio, sit amet molestie ligula facilisis at. Donec quis gravida arcu. Nulla id convallis mauris.",
+    "deadline": "20-10-2018",
+    "uploader": "Yamini Gupta",
+    "hasAttachment": "TRUE",
+    "downloadUrl": "http://purvik.com"
+  },
+  {
+    "title": "Sanskrit Assignment",
+    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis posuere felis, a fringilla felis. Nulla ullamcorper nulla odio, sit amet molestie ligula facilisis at. Donec quis gravida arcu. Nulla id convallis mauris.",
+    "deadline": "10-07-2018",
+    "uploader": "Keyur Suthar",
+    "hasAttachment": "TRUE",
+    "downloadUrl": "http://purvik.com"
+  },
+  {
+    "title": "Computer Assignment",
+    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis posuere felis, a fringilla felis. Nulla ullamcorper nulla odio, sit amet molestie ligula facilisis at. Donec quis gravida arcu. Nulla id convallis mauris.",
+    "deadline": "12-03-2018",
+    "uploader": "Milin Patel",
+    "hasAttachment": "FALSE",
+    "downloadUrl": ""
+  }
+]

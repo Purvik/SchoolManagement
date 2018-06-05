@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import com.ourwork.schoolmanagement.R;
@@ -26,12 +28,20 @@ public class AttendanceActivity extends AppCompatActivity {
     String sections[] = {"Primary", "Secondary"};
     RecyclerView recyclerViewClass, recyclerViewSection;
     AttendanceDataAdapter adapter;
+    Toolbar toolbar;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance);
+
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Attendance");
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         //set up classes
@@ -61,6 +71,8 @@ public class AttendanceActivity extends AppCompatActivity {
                 .datesNumberOnScreen(5)
                 .build();
 
+        horizontalCalendar.goToday(true);
+
         //horizontalCalendar.show();
 
 
@@ -72,6 +84,22 @@ public class AttendanceActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

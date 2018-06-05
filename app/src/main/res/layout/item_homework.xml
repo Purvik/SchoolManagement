@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:drawableLeft="@drawable/ic_hw_dw_title"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/colorAccent"
+            android:paddingEnd="@dimen/hw_item_padding"
+            android:paddingLeft="@dimen/hw_item_padding"
+            android:paddingRight="@dimen/hw_item_padding"
+            android:paddingStart="@dimen/hw_item_padding"
+            android:text="Maths Assignment"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:paddingEnd="@dimen/hw_item_padding"
+            android:paddingLeft="@dimen/hw_item_padding"
+            android:paddingRight="@dimen/hw_item_padding"
+            android:paddingStart="@dimen/hw_item_padding">
+
+            <TextView
+                android:id="@+id/deadline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_hw_dw_deadline"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/colorAccent"
+                android:gravity="center_vertical|start"
+                android:text="25/12/2018"
+                android:padding="2dp"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/uploader"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/ic_hw_dw_uploader"
+                android:drawableTint="@color/colorAccent"
+                android:gravity="center_vertical|end"
+                android:padding="2dp"
+                android:text="Marcus"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/descPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:padding="@dimen/hw_item_padding"
+                android:text="@string/homeworl_desc_dummy"
+                android:textAlignment="center"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/hasattachment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_hw_dw_attachment"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="@color/colorAccent"
+                    android:gravity="end|center"
+                    android:padding="2dp"
+                    android:text="Download Attachment"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btnDownload"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/btn_label_download"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
