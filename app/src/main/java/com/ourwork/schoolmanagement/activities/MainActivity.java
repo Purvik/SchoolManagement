@@ -199,9 +199,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
 
                 break;
+
             case R.id.nav_homework:
 
                 intent = new Intent(MainActivity.this, HomeworkActivity.class);
+                startActivity(intent);
+
+                break;
+
+            case R.id.nav_assignment:
+
+                intent = new Intent(MainActivity.this, AssignmentActivity.class);
                 startActivity(intent);
 
                 break;
@@ -229,6 +237,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nav_result:
+
+                intent = new Intent(MainActivity.this, MarksActivity.class);
+                startActivity(intent);
 
                 break;
 

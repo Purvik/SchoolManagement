@@ -1,0 +1,64 @@
+[
+  {
+    "examTitle": "test1",
+    "totalMarks": 150,
+    "avgMarks": 56.8,
+    "innerMarkNodeArrayList" : [
+      {
+        "subjectName": "Maths",
+        "obtainedMarks": 98,
+        "highestMarks": 99,
+        "marks": 100
+      },
+      {
+        "subjectName": "Science",
+        "obtainedMarks": 45,
+        "highestMarks": 85,
+        "marks": 100
+      },
+      {
+        "subjectName": "English",
+        "obtainedMarks": 92,
+        "highestMarks": 96,
+        "marks": 100
+      },
+      {
+        "subjectName": "Computer",
+        "obtainedMarks": 76,
+        "highestMarks": 87,
+        "marks": 100
+      }
+    ]
+  },
+  {
+    "examTitle": "test2",
+    "totalMarks": 140,
+    "avgMarks": 48.5,
+    "innerMarkNodeArrayList" : [
+      {
+        "subjectName": "Maths",
+        "obtainedMarks": 98,
+        "highestMarks": 99,
+        "marks": 100
+      },
+      {
+        "subjectName": "Science",
+        "obtainedMarks": 45,
+        "highestMarks": 85,
+        "marks": 100
+      },
+      {
+        "subjectName": "English",
+        "obtainedMarks": 92,
+        "highestMarks": 96,
+        "marks": 100
+      },
+      {
+        "subjectName": "Computer",
+        "obtainedMarks": 76,
+        "highestMarks": 87,
+        "marks": 100
+      }
+    ]
+  }
+]

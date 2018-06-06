@@ -32,6 +32,11 @@
             android:title="@string/nav_tv_homework" />
 
         <item
+            android:id="@+id/nav_assignment"
+            android:icon="@drawable/ic_assignments_new"
+            android:title="@string/nav_tv_assignments" />
+
+        <item
             android:id="@+id/nav_attendance"
             android:icon="@drawable/ic_attendance_new"
             android:title="@string/nav_tv_attendance" />

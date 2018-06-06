@@ -4,7 +4,7 @@ package com.ourwork.schoolmanagement.singleton;
  * Created by Purvik Rana on 05-06-2018.
  */
 
-public class HomeWorkNode {
+public class AssignmentNode {
 
     private String title;
     private String desc;
@@ -13,10 +13,10 @@ public class HomeWorkNode {
     private boolean hasAttachment;
     private String downloadUrl;
 
-    public HomeWorkNode() {
+    public AssignmentNode() {
     }
 
-    public HomeWorkNode(String title, String desc, String deadline, String uploader, boolean hasAttachment, String downloadUrl) {
+    public AssignmentNode(String title, String desc, String deadline, String uploader, boolean hasAttachment, String downloadUrl) {
         this.title = title;
         this.desc = desc;
         this.deadline = deadline;
@@ -65,11 +65,11 @@ public class HomeWorkNode {
         this.hasAttachment = hasAttachment;
     }
 
-    public String getDownloadUrl() {
+    public String getDonwloadUrl() {
         return downloadUrl;
     }
 
-    public void setDownloadUrl(String downloadUrl) {
+    public void setDonwloadUrl(String downloadUrl) {
         this.downloadUrl = downloadUrl;
     }
 

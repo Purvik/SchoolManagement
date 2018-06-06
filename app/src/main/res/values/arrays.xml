@@ -6,6 +6,7 @@
         <item>@drawable/ic_syllabus</item>
         <item>@drawable/ic_timetable</item>
         <item>@drawable/ic_homework</item>
+        <item>@drawable/ic_assignments_new</item>
         <item>@drawable/ic_attendance_new</item>
         <item>@drawable/ic_behaviour</item>
         <item>@drawable/ic_parents_meeting</item>
@@ -23,6 +24,7 @@
         <item>@drawable/ic_syllabus</item>
         <item>@drawable/ic_timetable</item>
         <item>@drawable/ic_homework</item>
+        <item>@drawable/ic_assignments_new</item>
         <item>@drawable/ic_attendance_new</item>
         <item>@drawable/ic_behaviour</item>
         <item>@drawable/ic_parents_meeting</item>

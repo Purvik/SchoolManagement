@@ -54,12 +54,14 @@
 
     <string name="homeworl_desc_dummy">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis posuere felis, a fringilla felis. Nulla ullamcorper nulla odio, sit amet molestie ligula facilisis at. Donec quis gravida arcu. Nulla id convallis mauris. Quisque et ipsum ultricies, blandit eros ac, condimentum leo. Phasellus sagittis tincidunt arcu, in congue erat feugiat non. Donec accumsan, risus vitae viverra rhoncus, dui purus maximus ex, ut rhoncus lectus neque ut odio. Maecenas sit amet tempor lacus. Mauris viverra tellus sapien, a aliquet odio auctor a. Nunc viverra dolor vel velit malesuada condimentum. In imperdiet porta placerat. Quisque quis erat rutrum, bibendum velit ut, lobortis dui.</string>
     <string name="btn_label_download">Download Attachment</string>
+    <string name="btn_label_no_download">No Attachment</string>
 
     <string-array name="stud_parent_dashboard_titles">
 
         <item>Syllabus</item>
         <item>Time Table</item>
         <item>Home Work</item>
+        <item>Assignments</item>
         <item>Attendance</item>
         <item>Behaviour</item>
         <item>Parents Meeting</item>
@@ -75,6 +77,7 @@
         <item>Syllabus</item>
         <item>Time Table</item>
         <item>Home Work</item>
+        <item>Assignments</item>
         <item>Attendance</item>
         <item>Behaviour</item>
         <item>Parents Meeting</item>

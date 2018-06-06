@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ourwork.schoolmanagement.R;
+import com.ourwork.schoolmanagement.activities.AssignmentActivity;
 import com.ourwork.schoolmanagement.activities.AttendanceActivity;
 import com.ourwork.schoolmanagement.activities.HomeworkActivity;
 import com.ourwork.schoolmanagement.activities.MainActivity;
@@ -104,6 +105,13 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
                 case "Home Work":
 
                     intent = new Intent(mContext, HomeworkActivity.class);
+                    mContext.startActivity(intent);
+
+                    break;
+
+                case "Assignments":
+
+                    intent = new Intent(mContext, AssignmentActivity.class);
                     mContext.startActivity(intent);
 
                     break;

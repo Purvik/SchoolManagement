@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+        <TextView
+            android:id="@+id/subjectname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Subject"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/marks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Marks"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/highestMarks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Highest"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/obtainedMarks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Obtained"
+            android:textSize="12sp"  />
+
+</LinearLayout>
