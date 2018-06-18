@@ -14,8 +14,11 @@ import android.widget.TextView;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.activities.AssignmentActivity;
 import com.ourwork.schoolmanagement.activities.AttendanceActivity;
+import com.ourwork.schoolmanagement.activities.GalleryActivity;
 import com.ourwork.schoolmanagement.activities.HomeworkActivity;
 import com.ourwork.schoolmanagement.activities.MainActivity;
+import com.ourwork.schoolmanagement.activities.MarksActivity;
+import com.ourwork.schoolmanagement.activities.NoticeActivity;
 import com.ourwork.schoolmanagement.activities.SyllabusActivity;
 import com.ourwork.schoolmanagement.activities.TimeTableActivity;
 
@@ -122,6 +125,31 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
                     mContext.startActivity(intent);
 
                     break;
+
+
+                case "Results":
+
+                    intent = new Intent(mContext, MarksActivity.class);
+                    mContext.startActivity(intent);
+
+                    break;
+
+
+                case "Notifications":
+
+                    intent = new Intent(mContext, NoticeActivity.class);
+                    mContext.startActivity(intent);
+
+                    break;
+
+                case "Gallery":
+
+                    intent = new Intent(mContext, GalleryActivity.class);
+                    mContext.startActivity(intent);
+
+                    break;
+
+
 
 
             }

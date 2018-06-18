@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--<layout >-->
 
-    <!--<data class="com.ourwork.schoolmanagement.databinding.ActivityLoginBinding">
+    <!--<loginResponsedata class="com.ourwork.schoolmanagement.databinding.ActivityLoginBinding">
 
             <import type="android.view.View" />
 
@@ -12,7 +12,7 @@
                 type="com.ourwork.schoolmanagement.utils.LoginHandler" />
 
 
-        </data>-->
+      loginResponsedata>-->
 
     <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

@@ -234,6 +234,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_notifications:
 
+                intent = new Intent(MainActivity.this, NoticeActivity.class);
+                startActivity(intent);
+
+
                 break;
 
             case R.id.nav_result:
@@ -252,6 +256,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nav_gallery:
+
+                intent = new Intent(MainActivity.this, GalleryActivity.class);
+                startActivity(intent);
+
 
                 break;
 

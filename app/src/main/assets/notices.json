@@ -1,0 +1,37 @@
+[
+  {
+    "title": "Notice 1",
+    "notice": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis posuere felis, a fringilla felis. Nulla ullamcorper nulla odio, sit amet molestie ligula facilisis at. Donec quis gravida arcu. Nulla id convallis mauris.",
+    "date": "05-01-2018"
+  },
+  {
+    "title": "Notice 2",
+    "notice": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis posuere felis, a fringilla felis. Nulla ullamcorper nulla odio, sit amet molestie ligula facilisis at. Donec quis gravida arcu. Nulla id convallis mauris.",
+    "date": "15-01-2018"
+  },
+  {
+    "title": "Notice 3",
+    "notice": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis posuere felis, a fringilla felis. Nulla ullamcorper nulla odio, sit amet molestie ligula facilisis at. Donec quis gravida arcu. Nulla id convallis mauris.",
+    "date": "10-02-2018"
+  },
+  {
+    "title": "Notice 4",
+    "notice": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis posuere felis, a fringilla felis. Nulla ullamcorper nulla odio, sit amet molestie ligula facilisis at. Donec quis gravida arcu. Nulla id convallis mauris.",
+    "date": "18-02-2018"
+  },
+  {
+    "title": "Notice 5",
+    "notice": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis posuere felis, a fringilla felis. Nulla ullamcorper nulla odio, sit amet molestie ligula facilisis at. Donec quis gravida arcu. Nulla id convallis mauris.",
+    "date": "03-03-2018"
+  },
+  {
+    "title": "Notice 6",
+    "notice": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis posuere felis, a fringilla felis. Nulla ullamcorper nulla odio, sit amet molestie ligula facilisis at. Donec quis gravida arcu. Nulla id convallis mauris.",
+    "date": "12-03-2018"
+  },
+  {
+    "title": "Notice 7",
+    "notice": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis posuere felis, a fringilla felis. Nulla ullamcorper nulla odio, sit amet molestie ligula facilisis at. Donec quis gravida arcu. Nulla id convallis mauris.",
+    "date": "18-04-2018"
+  }
+]
