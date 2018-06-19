@@ -5,14 +5,9 @@ import com.ourwork.schoolmanagement.singleton.request.LoginRequest;
 import com.ourwork.schoolmanagement.singleton.response.LoginResp;
 import com.ourwork.schoolmanagement.utils.AppConstant;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 public interface ApiCall {
 

@@ -7,7 +7,6 @@ package com.ourwork.schoolmanagement.singleton.response;
 public class LoginResp extends ParentResponse {
     LoginResponse data;
 
-    @Override
     public LoginResponse getData() {
         return data;
     }

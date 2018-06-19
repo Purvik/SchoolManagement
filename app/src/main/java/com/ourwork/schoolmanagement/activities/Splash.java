@@ -5,12 +5,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ourwork.schoolmanagement.R;
-import com.ourwork.schoolmanagement.singleton.AccountUser;
+import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 import com.ourwork.schoolmanagement.utils.AppSharedPreferences;
 
 /**
@@ -41,14 +40,14 @@ public class Splash extends AppCompatActivity {
             @Override
             public void run() {
 
-                AccountUser accountUser;
-                accountUser = AppSharedPreferences.getAppPreferences(mPrefs);
+                LoginResponse loginResponse;
+                loginResponse = AppSharedPreferences.getAppPreferences(mPrefs);
                 //Log.d(TAG, "run: " + accountUser.toString());
 
 
-                if (accountUser != null) {
+                if (loginResponse != null) {
                     Intent intent = new Intent(Splash.this, MainActivity.class);
-                    intent.putExtra("loggedInUser", accountUser);
+                    intent.putExtra("loggedInUser", loginResponse);
                     startActivity(intent);
 
                 }else{

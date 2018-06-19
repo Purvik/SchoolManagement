@@ -19,6 +19,7 @@ import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.ProfileListAdapter;
 import com.ourwork.schoolmanagement.singleton.StudentUserProfile;
 import com.ourwork.schoolmanagement.singleton.TeacherUserProfile;
+import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,14 +33,10 @@ import java.util.Iterator;
  */
 
 
-public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener{
+public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
-    CollapsingToolbarLayout collapsingToolbarLayout;
-    Toolbar toolbar;
-    TableLayout tableLayout;
-    Serializable studetProfileSerializable, teacherProfileSerializable;
-    StudentUserProfile studentUserProfile;
-    TeacherUserProfile teacherUserProfile;
+
+    Serializable loginResponseSerializable;
     ImageView expandedImage, userTypeOverlapImageView;
     Button btnbackArrow;
     ArrayList<String> title_array = new ArrayList<String>();
@@ -48,6 +45,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     BaseAdapter profileListAdapter;
     TextView tvDisplayName;
     String jsonString;
+    LoginResponse loginResponse;
 
 
     @Override
@@ -57,30 +55,43 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
         //get view instances
         tvDisplayName = findViewById(R.id.displayName);
-        expandedImage =findViewById(R.id.expandedImage);
-        userTypeOverlapImageView =findViewById(R.id.userTypeOverlapImageView);
+        expandedImage = findViewById(R.id.expandedImage);
+        userTypeOverlapImageView = findViewById(R.id.userTypeOverlapImageView);
+
         btnbackArrow = findViewById(R.id.btnBackArrow);
         btnbackArrow.setOnClickListener(this);
-        String profileType = getIntent().getStringExtra("profileType");
 
-        if (profileType.equalsIgnoreCase("student")) {
+        loginResponseSerializable = getIntent().getExtras().getSerializable("loginResponse");
+        loginResponse = (LoginResponse) loginResponseSerializable;
 
-            //for student
+        /*if (profileType.equalsIgnoreCase("student")) {*/
+
+
+        if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
+
             expandedImage.setImageResource(R.drawable.ic_student_male);
             userTypeOverlapImageView.setImageResource(R.drawable.ic_student_female);
-            studetProfileSerializable = getIntent().getExtras().getSerializable("studentProfile");
-            studentUserProfile = (StudentUserProfile) studetProfileSerializable;
+
+        } else if (loginResponse.getUsertype().equalsIgnoreCase("teacher")) {
+
+            expandedImage.setImageResource(R.drawable.ic_teacher_male);
+            userTypeOverlapImageView.setImageResource(R.drawable.ic_teacher_female);
+
+        } else {
 
 
-            tvDisplayName.setText(studentUserProfile.getName());
+        }
 
-            Gson gson = new Gson();
-            jsonString = gson.toJson(studentUserProfile);
-            Log.d("User Details String", "onCreate: " + jsonString);
 
-            buildArrayList(jsonString);
+        tvDisplayName.setText(loginResponse.getName());
 
-        } else if (profileType.equalsIgnoreCase("teacher")) {
+        Gson gson = new Gson();
+        jsonString = gson.toJson(loginResponse);
+        Log.d("User Details String", "onCreate: " + jsonString);
+
+        buildArrayList(jsonString);
+
+        /*} else if (profileType.equalsIgnoreCase("teacher")) {
 
             //for teacher
             expandedImage.setImageResource(R.drawable.ic_teacher_male);
@@ -102,7 +113,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
             //for admin profile
 
-        }
+        }*/
 
         listView = findViewById(R.id.listView);
         profileListAdapter = new ProfileListAdapter(UserProfileActivity.this, title_array, values_array);

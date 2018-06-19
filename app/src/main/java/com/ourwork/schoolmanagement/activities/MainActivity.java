@@ -20,9 +20,7 @@ import android.widget.TextView;
 
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.fragments.MainFragment;
-import com.ourwork.schoolmanagement.singleton.AccountUser;
-import com.ourwork.schoolmanagement.singleton.StudentUserProfile;
-import com.ourwork.schoolmanagement.singleton.TeacherUserProfile;
+import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 import com.ourwork.schoolmanagement.utils.AppSharedPreferences;
 
 import java.io.Serializable;
@@ -35,8 +33,8 @@ import java.io.Serializable;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private static final String TAG = "MainActivity.java";
-    Serializable accountUserSerial;
-    AccountUser accountUser;
+    Serializable loginuserSerail;
+    LoginResponse loginResponse;
     NavigationView navigationView;
     Menu navigationMenu;
     SharedPreferences mPref;
@@ -66,17 +64,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         if(getIntent() != null)
-            accountUserSerial = getIntent().getExtras().getSerializable("loggedInUser");
-        Log.d(TAG, "onCreate: " + accountUserSerial);
+            loginuserSerail = getIntent().getExtras().getSerializable("loggedInUser");
+        Log.d(TAG, "onCreate: " + loginuserSerail);
 
-        if (accountUserSerial != null) {
+        if (loginuserSerail != null) {
 
             navigationDrawerTitle.setVisibility(View.VISIBLE);
             navigationDrawerSubTitle.setVisibility(View.VISIBLE);
 
-            accountUser= (AccountUser) accountUserSerial;
-            navigationDrawerTitle.setText(accountUser.getUsername());
-            navigationDrawerSubTitle.setText(accountUser.getUsertype());
+            loginResponse= (LoginResponse) loginuserSerail;
+            navigationDrawerTitle.setText(loginResponse.getUsername());
+            navigationDrawerSubTitle.setText(loginResponse.getUsertype());
 
             /*Picasso.get()
                     .load(R.drawable.ic_login)
@@ -89,17 +87,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .placeholder(R.drawable.ic_login)
                     .into(navHeaderProfileIcon);*/
 
-            if (accountUser.getUsertype() .equalsIgnoreCase("teacher")  ) {
+            if (loginResponse.getUsertype() .equalsIgnoreCase("teacher")  ) {
 
                 //check gender also then put the icon
                 navHeaderProfileIcon.setImageResource(R.drawable.ic_teacher_male);
 
-            } else if(accountUser.getUsertype() .equalsIgnoreCase("student")){
+            } else if(loginResponse.getUsertype() .equalsIgnoreCase("student")){
 
                 //check gender also then put the icon
                 navHeaderProfileIcon.setImageResource(R.drawable.ic_student_male);
 
-            }else{
+            }else if(loginResponse.getUsertype() .equalsIgnoreCase("admin")){
+
+                //check gender also then put the icon
+                navHeaderProfileIcon.setImageResource(R.drawable.ic_teacher_female);
+
+            }
+            else{
 
                 //this is for admin
                 navHeaderProfileIcon.setImageResource(R.drawable.ic_student_female);
@@ -108,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             navHeaderProfileIcon.setOnClickListener(this);
 
-            hideLogInMenuItem(accountUser.getUsertype());
+            hideLogInMenuItem(loginResponse.getUsertype());
         }
 
         loadMainGridFragment();
@@ -136,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void loadMainGridFragment() {
 
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        MainFragment mainFragment = MainFragment.newInstance(accountUser);
+        MainFragment mainFragment = MainFragment.newInstance(loginResponse);
         fragmentTransaction.replace(R.id.frame, mainFragment);
         fragmentTransaction.commit();
 
@@ -305,8 +309,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 
                 //Toast.makeText(getApplicationContext(), "ICON CLICKER", Toast.LENGTH_SHORT).show();
 
-                if (accountUser != null) {
-                    displayUserProfileActivity(accountUser.getUsertype());
+                if (loginResponse != null) {
+                    displayUserProfileActivity(loginResponse);
                 }
 
 
@@ -316,33 +320,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void displayUserProfileActivity(String userType) {
+    private void displayUserProfileActivity(LoginResponse loginResponse) {
 
-        if (userType.equalsIgnoreCase("student")) {
+       /* if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
 
-            StudentUserProfile studentUserProfile =
-                    new StudentUserProfile("Krutik Patel",1002,"Primary", "Male","Hindu","Gujarat","5555544444", accountUser.getUsername(),55,"12/03/1990","B-","p@gmail.com","Surat", "India","10-A");
-
-            Intent actIntent = new Intent(MainActivity.this, UserProfileActivity.class);
-            actIntent.putExtra("profileType","student");
-            actIntent.putExtra("studentProfile", studentUserProfile);
-            startActivity(actIntent);
-
-        } else if(userType.equalsIgnoreCase("teacher")){
-
-            TeacherUserProfile teacherUserProfile =
-                    new TeacherUserProfile("Ronak Roy", "SingleClass Teacher", "Male", "Christian","5555588888","ronak@9655","25/12/1990","12/05/2015","r@yahoo.in","C-5 High Heights Bunglows, Pragati Nagar, Nadiyad","photo_url");
+            *//*StudentUserProfile studentUserProfile =
+                    new StudentUserProfile("Krutik Patel",1002,"Primary", "Male","Hindu","Gujarat","5555544444", loginResponse.getUsername(),55,"12/03/1990","B-","p@gmail.com","Surat", "India","10-A");*//*
 
             Intent actIntent = new Intent(MainActivity.this, UserProfileActivity.class);
-            actIntent.putExtra("profileType","teacher");
-            actIntent.putExtra("teacherProfile", teacherUserProfile);
+            actIntent.putExtra("studentProfile", loginResponse);
             startActivity(actIntent);
 
-        } else{
+        } else if(loginResponse.getUsertype().equalsIgnoreCase("teacher")){*/
+
+           /* TeacherUserProfile teacherUserProfile =
+                    new TeacherUserProfile("Ronak Roy", "SingleClass Teacher", "Male", "Christian","5555588888","ronak@9655","25/12/1990","12/05/2015","r@yahoo.in","C-5 High Heights Bunglows, Pragati Nagar, Nadiyad","photo_url");*/
+
+            Intent actIntent = new Intent(MainActivity.this, UserProfileActivity.class);
+            actIntent.putExtra("loginResponse", loginResponse);
+            startActivity(actIntent);
+
+       /* } else if(loginResponse.getUsertype() .equalsIgnoreCase("admin")){
+
+
 
 
         }
-
+*/
 
 
     }

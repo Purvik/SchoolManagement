@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.HomeMenuAdapter;
-import com.ourwork.schoolmanagement.singleton.AccountUser;
+import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 
 /**
  * Created by Purvik Rana on 19-05-2018.
@@ -28,7 +28,7 @@ public class MainFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    AccountUser accountUser;
+    LoginResponse loginResponse;
     static String ACCOUNT_KEY = "account_type";
     Context mContext;
     String titles[];/*{"Calender", "Take Test", "Facility", "Achievments", "Lunch Menu", "Forms"};*/
@@ -36,11 +36,11 @@ public class MainFragment extends Fragment {
     //TypedArray stdImg;
 
 
-    public static MainFragment newInstance(AccountUser accountUser) {
+    public static MainFragment newInstance(LoginResponse loginResponse) {
 
         MainFragment mainFragment = new MainFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ACCOUNT_KEY, accountUser);
+        bundle.putSerializable(ACCOUNT_KEY, loginResponse);
         mainFragment.setArguments(bundle);
         return mainFragment;
 
@@ -55,7 +55,7 @@ public class MainFragment extends Fragment {
 
         mContext= getActivity();
 
-        accountUser = (AccountUser)getArguments().getSerializable(ACCOUNT_KEY);
+        loginResponse = (LoginResponse) getArguments().getSerializable(ACCOUNT_KEY);
 
 
         recyclerView = v.findViewById(R.id.recycler_view);
@@ -65,26 +65,26 @@ public class MainFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
 
 
-        loadCustomGridAdapter(accountUser);
+        loadCustomGridAdapter(loginResponse);
 
 
         return v;
     }
 
-    private void loadCustomGridAdapter(AccountUser accountUser) {
+    private void loadCustomGridAdapter(LoginResponse loginResponse) {
 
-        if (accountUser.getUsertype().equalsIgnoreCase("parent" ) || accountUser.getUsertype().equalsIgnoreCase("student" )) {
+        if (loginResponse.getUsertype().equalsIgnoreCase("parent" ) || loginResponse.getUsertype().equalsIgnoreCase("student" )) {
 
             titles = getResources().getStringArray(R.array.stud_parent_dashboard_titles);
             imgIds = getResources().obtainTypedArray(R.array.student_img_icons);
 
-        } else if (accountUser.getUsertype().equalsIgnoreCase("admin" )) {
+        } else if (loginResponse.getUsertype().equalsIgnoreCase("admin" )) {
 
             titles = getResources().getStringArray(R.array.teacher_dashboard_titles);
             imgIds = getResources().obtainTypedArray(R.array.teacher_img_icons);
 
 
-        } else if (accountUser.getUsertype().equalsIgnoreCase("teacher" )) {
+        } else if (loginResponse.getUsertype().equalsIgnoreCase("teacher" )) {
 
             titles = getResources().getStringArray(R.array.teacher_dashboard_titles);
             imgIds = getResources().obtainTypedArray(R.array.teacher_img_icons);

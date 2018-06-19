@@ -1,24 +1,36 @@
 package com.ourwork.schoolmanagement.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.view.View;
 import android.widget.Toast;
 
-
 import com.ourwork.schoolmanagement.R;
-import com.ourwork.schoolmanagement.singleton.AccountUser;
+import com.ourwork.schoolmanagement.singleton.request.LoginRequest;
+import com.ourwork.schoolmanagement.singleton.response.LoginResp;
+import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
+import com.ourwork.schoolmanagement.utils.AppConstant;
 import com.ourwork.schoolmanagement.utils.AppSharedPreferences;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.ourwork.schoolmanagement.MyApplication.apiCall;
 
 public class LogInActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText edtUsername, edtPassword;
     Button btnLogin;
     SharedPreferences mPref;
+    private ProgressDialog pDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,28 +64,49 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
                 if (userName.length() != 0 && password.length() != 0) {
 
-                    if (userName.equalsIgnoreCase("admin") && password.equalsIgnoreCase("admin")) {
 
-                        AccountUser accountUser = new AccountUser("admin", "admin", "admin");
-                        AppSharedPreferences.storeAppPreferences(mPref, accountUser);
-                        startMainActivity(accountUser);
+                        pDialog = new ProgressDialog(this);
+                        pDialog.setMessage("Please Wait");
+                        pDialog.setCanceledOnTouchOutside(false);
+                        pDialog.show();
+                        final LoginRequest loginRequest = new LoginRequest();
+                        loginRequest.setUsername(userName);
+                        loginRequest.setPassword(password);
 
-                    } else if (userName.equalsIgnoreCase("student") && password.equalsIgnoreCase("student")) {
 
-                        AccountUser accountUser = new AccountUser("student", "student", "student");
-                        AppSharedPreferences.storeAppPreferences(mPref, accountUser);
-                        startMainActivity(accountUser);
+                        /*
+                        * Check the log in code
+                        * */
+                        Call<LoginResp> call = apiCall.login(loginRequest);
+                        call.enqueue(new Callback<LoginResp>() {
+                            @Override
+                            public void onResponse(Call<LoginResp> call, Response<LoginResp> response) {
+                                Log.e("Resp", response.code() +" ");
+                                pDialog.dismiss();
 
-                    } else if (userName.equalsIgnoreCase("teacher") && password.equalsIgnoreCase("teacher")) {
+                                if (response.code() == AppConstant.RESPONSE_CODE_OK) {
 
-                        AccountUser accountUser = new AccountUser("teacher", "teacher", "teacher");
-                        AppSharedPreferences.storeAppPreferences(mPref, accountUser);
-                        startMainActivity(accountUser);
+                                    //Log.d("Resp", "" + response.body());
+                                    LoginResponse loginResponse = response.body().getData();
+                                    Log.d("Resp", "" + loginResponse.toString());
 
-                    } else {
 
-                        Toast.makeText(getApplicationContext(), "Invalid User", Toast.LENGTH_LONG).show();
-                    }
+
+                                    AppSharedPreferences.storeAppPreferences(mPref, loginResponse);
+                                    startMainActivity(loginResponse);
+
+                                }
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<LoginResp> call, Throwable t) {
+
+                                Toast.makeText(getApplicationContext(), "Invalid User", Toast.LENGTH_LONG).show();
+                                pDialog.dismiss();
+
+                            }
+                        });
 
                 } else {
 
@@ -89,10 +122,10 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void startMainActivity(AccountUser accountUser) {
+    private void startMainActivity(LoginResponse loginResponse) {
 
         Intent mainIntent = new Intent(LogInActivity.this, MainActivity.class);
-        mainIntent.putExtra("loggedInUser", accountUser);
+        mainIntent.putExtra("loggedInUser", loginResponse);
         startActivity(mainIntent);
 
     }
