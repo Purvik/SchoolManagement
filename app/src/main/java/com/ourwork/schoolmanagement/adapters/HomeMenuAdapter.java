@@ -10,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.activities.AssignmentActivity;
 import com.ourwork.schoolmanagement.activities.AttendanceActivity;
+import com.ourwork.schoolmanagement.activities.ExamScheduleActivity;
 import com.ourwork.schoolmanagement.activities.GalleryActivity;
 import com.ourwork.schoolmanagement.activities.HomeworkActivity;
 import com.ourwork.schoolmanagement.activities.MainActivity;
@@ -21,6 +23,8 @@ import com.ourwork.schoolmanagement.activities.MarksActivity;
 import com.ourwork.schoolmanagement.activities.NoticeActivity;
 import com.ourwork.schoolmanagement.activities.SyllabusActivity;
 import com.ourwork.schoolmanagement.activities.TimeTableActivity;
+import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
+import com.ourwork.schoolmanagement.utils.AppConstant;
 
 /**
  * Created by Purvik Rana on 24-05-2018.
@@ -31,23 +35,13 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
     private String[] mTitles;
     private TypedArray mImgIds;
     private Context mContext;
+    private LoginResponse mLoginResponse;
 
-    public HomeMenuAdapter(String[] mTitles, TypedArray mImgIds, Context mContext) {
+    public HomeMenuAdapter(String[] mTitles, TypedArray mImgIds, Context mContext, LoginResponse mLoginResponse) {
         this.mTitles = mTitles;
         this.mImgIds = mImgIds;
         this.mContext = mContext;
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView mImageView;
-        public TextView mTextView;
-
-        public ViewHolder(View v) {
-            super(v);
-            mImageView = v.findViewById(R.id.grid_image);
-            mTextView = v.findViewById(R.id.grid_text);
-
-        }
+        this.mLoginResponse = mLoginResponse;
     }
 
     @Override
@@ -75,6 +69,18 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
         return mTitles.length;
     }
 
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView mImageView;
+        public TextView mTextView;
+
+        public ViewHolder(View v) {
+            super(v);
+            mImageView = v.findViewById(R.id.grid_image);
+            mTextView = v.findViewById(R.id.grid_text);
+
+        }
+    }
+
     public class ClickListener implements View.OnClickListener {
 
         String title;
@@ -94,6 +100,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
                 case "Syllabus":
 
                     intent = new Intent(mContext, SyllabusActivity.class);
+                    intent.putExtra("loginResponse", mLoginResponse);
                     mContext.startActivity(intent);
 
                     break;
@@ -115,6 +122,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
                 case "Assignments":
 
                     intent = new Intent(mContext, AssignmentActivity.class);
+                    intent.putExtra("loginResponse", mLoginResponse);
                     mContext.startActivity(intent);
 
                     break;
@@ -122,6 +130,15 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
                 case "Attendance":
 
                     intent = new Intent(mContext, AttendanceActivity.class);
+                    intent.putExtra("loginResponse", mLoginResponse);
+                    mContext.startActivity(intent);
+
+                    break;
+
+                case "Exam Schedule":
+
+                    intent = new Intent(mContext, ExamScheduleActivity.class);
+                    intent.putExtra("loginResponse", mLoginResponse);
                     mContext.startActivity(intent);
 
                     break;
@@ -144,12 +161,13 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
                 case "Gallery":
 
-                    intent = new Intent(mContext, GalleryActivity.class);
-                    mContext.startActivity(intent);
+                    /*intent = new Intent(mContext, GalleryActivity.class);
+                    mContext.startActivity(intent);*/
+
+
+                    Toast.makeText(mContext, ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
                     break;
-
-
 
 
             }

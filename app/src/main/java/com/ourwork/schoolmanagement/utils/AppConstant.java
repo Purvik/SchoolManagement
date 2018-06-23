@@ -13,6 +13,8 @@ public class AppConstant {
     public static final int RESPONSE_CODE_OK = 200;
     public static final int RESPONSE_CODE_FAIL = 500;
     public static final int RESPONSE_CODE_TOKEN_EXPIRED = 401;
+    public static final String API_RESPONSE_FAILURE = "API Call Response Failure";
+    public static final String APP_NOT_DEVELOPED_YET = "Not Developed Yet !";
 
     public static final String CONTENT_TYPE = "application/json";
 
@@ -41,9 +43,15 @@ public class AppConstant {
     public static final String DEPT_ID = "desp_id";
     public static final String DEPT_NAME = "desp_name";
 
-    //public static final String URL_BASE = "http://enotice.srtechtonics.com/api/";
+
     public static final String URL_BASE = "http://propathshala.vrithub.in/api/";
     public static final String URL_LOGIN="signin";
+    public static final String URL_SYLLABUS="syllabus";
+    public static final String URL_ASSIGNMENT="assignment";
+    public static final String URL_STUDENT_ATTENDANCE="student_attendance";
+    public static final String URL_EXAM_SCHEDULE= "examschedule";
+
+
     public static final String URL_FORGOT_PASSWORD="Global/ForgotPassword";
     public static final String URL_CHANGE_PASSWORD="Global/ChangePassword";
     public static final String URL_LOGOUT="Global/Logout";

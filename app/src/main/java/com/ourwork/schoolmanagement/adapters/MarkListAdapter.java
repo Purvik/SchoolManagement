@@ -7,11 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.ourwork.schoolmanagement.R;
-import com.ourwork.schoolmanagement.activities.MarksActivity;
 import com.ourwork.schoolmanagement.singleton.InnerMarkNode;
 import com.ourwork.schoolmanagement.singleton.MarkNode;
 
@@ -53,7 +51,7 @@ public class MarkListAdapter extends RecyclerView.Adapter<MarkListAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(mContext).inflate(R.layout.item_exam, parent, false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.item_marks, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }

@@ -39,7 +39,8 @@
             android:id="@+id/classListPanel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" />
+            android:orientation="horizontal"
+            android:visibility="gone"/>
             <!--android:paddingStart="8dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
@@ -49,11 +50,18 @@
             android:id="@+id/sectionListPanel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" /><!--
+            android:orientation="horizontal"
+            android:visibility="gone"/><!--
             android:paddingStart="8dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingEnd="8dp"/>-->
+
+        <fragment
+            android:id="@+id/fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"/>
 
     </LinearLayout>
 

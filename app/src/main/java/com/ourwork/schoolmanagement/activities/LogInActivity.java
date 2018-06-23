@@ -102,8 +102,9 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                             @Override
                             public void onFailure(Call<LoginResp> call, Throwable t) {
 
-                                Toast.makeText(getApplicationContext(), "Invalid User", Toast.LENGTH_LONG).show();
                                 pDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "Invalid User", Toast.LENGTH_LONG).show();
+
 
                             }
                         });

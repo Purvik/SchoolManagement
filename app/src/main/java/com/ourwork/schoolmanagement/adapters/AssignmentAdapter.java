@@ -10,10 +10,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ourwork.schoolmanagement.R;
-import com.ourwork.schoolmanagement.singleton.AssignmentNode;
-import com.ourwork.schoolmanagement.singleton.HomeWorkNode;
+import com.ourwork.schoolmanagement.singleton.response.student.AssignmentNode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Purvik Rana on 05-06-2018.
@@ -22,11 +22,11 @@ import java.util.ArrayList;
 public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.ViewHolder> {
 
     Context mContext;
-    ArrayList<AssignmentNode> assignmentNodeArrayList;
+    List<AssignmentNode> assignmentNodeList;
 
-    public AssignmentAdapter(Context mContext, ArrayList<AssignmentNode> assignmentNodeArrayList) {
+    public AssignmentAdapter(Context mContext, List<AssignmentNode> assignmentNodeList) {
         this.mContext = mContext;
-        this.assignmentNodeArrayList = assignmentNodeArrayList;
+        this.assignmentNodeList = assignmentNodeList;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -55,14 +55,14 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        final AssignmentNode assignmentNode = assignmentNodeArrayList.get(position);
+        AssignmentNode assignmentNode = assignmentNodeList.get(position);
 
         holder.title.setText(assignmentNode.getTitle());
-        holder.desc.setText(assignmentNode.getDesc());
-        holder.uploader.setText(assignmentNode.getUploader());
-        holder.deadline.setText(assignmentNode.getDeadline());
+        holder.desc.setText(assignmentNode.getDescription());
+        holder.uploader.setText(assignmentNode.getTeacherName());
+        holder.deadline.setText(assignmentNode.getDeadlinedate());
 
-        if (assignmentNode.isHasAttachment()) {
+        if (assignmentNode.getFile().length() != 0) {
             holder.btnDownload.setText(mContext.getResources().getString(R.string.btn_label_download));
             holder.btnDownload.setTextColor(mContext.getResources().getColor(R.color.green));
             holder.btnDownload.setClickable(true);
@@ -81,7 +81,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return assignmentNodeArrayList.size();
+        return assignmentNodeList.size();
     }
 
 

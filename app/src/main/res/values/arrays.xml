@@ -11,6 +11,7 @@
         <item>@drawable/ic_behaviour</item>
         <item>@drawable/ic_parents_meeting</item>
         <item>@drawable/ic_notification_new</item>
+        <item>@drawable/ic_exam</item>
         <item>@drawable/ic_result</item>
         <item>@drawable/ic_sports</item>
         <item>@drawable/ic_feepayments</item>
@@ -29,6 +30,7 @@
         <item>@drawable/ic_behaviour</item>
         <item>@drawable/ic_parents_meeting</item>
         <item>@drawable/ic_noticeboard</item>
+        <item>@drawable/ic_exam</item>
         <item>@drawable/ic_result</item>
         <item>@drawable/ic_feepayments</item>
         <item>@drawable/ic_gallery</item>

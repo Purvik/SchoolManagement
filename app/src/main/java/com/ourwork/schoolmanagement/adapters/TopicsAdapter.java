@@ -66,7 +66,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
     @Override
     public TopicsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(mContext).inflate(R.layout.item_topic, parent, false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.item_syllabus, parent, false);
         TopicsAdapter.ViewHolder vh = new TopicsAdapter.ViewHolder(v);
         return vh;
 

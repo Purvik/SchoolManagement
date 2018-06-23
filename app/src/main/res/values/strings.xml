@@ -17,7 +17,7 @@
     <string name="nav_tv_achievements">Achievements</string>
     <string name="nav_tv_lunch_menu">Lunch Menu</string>
     <string name="nav_tv_forms">Forms</string>
-    <string name="nav_tv_exam_timetable">Exam Time Table</string>
+    <string name="nav_tv_exam_timetable">Exam Schedule</string>
     <string name="nav_tv_exam_paper">Exam Paper</string>
     <string name="nav_tv_about_us">About Us</string>
     <string name="nav_tv_settings">Settings</string>
@@ -55,6 +55,11 @@
     <string name="homeworl_desc_dummy">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis posuere felis, a fringilla felis. Nulla ullamcorper nulla odio, sit amet molestie ligula facilisis at. Donec quis gravida arcu. Nulla id convallis mauris. Quisque et ipsum ultricies, blandit eros ac, condimentum leo. Phasellus sagittis tincidunt arcu, in congue erat feugiat non. Donec accumsan, risus vitae viverra rhoncus, dui purus maximus ex, ut rhoncus lectus neque ut odio. Maecenas sit amet tempor lacus. Mauris viverra tellus sapien, a aliquet odio auctor a. Nunc viverra dolor vel velit malesuada condimentum. In imperdiet porta placerat. Quisque quis erat rutrum, bibendum velit ut, lobortis dui.</string>
     <string name="btn_label_download">Download Attachment</string>
     <string name="btn_label_no_download">No Attachment</string>
+    <string name="tv_label_Class">Class</string>
+    <string name="tv_label_Subject">Subject</string>
+    <string name="tv_label_Date">Date</string>
+    <string name="tv_label_Time">Time</string>
+    <string name="tv_label_roomno">Room No :</string>
 
     <string-array name="stud_parent_dashboard_titles">
 
@@ -66,6 +71,7 @@
         <item>Behaviour</item>
         <item>Parents Meeting</item>
         <item>Notifications</item>
+        <item>Exam Schedule</item>
         <item>Results</item>
         <item>Sports</item>
         <item>Fees Payment</item>
@@ -82,6 +88,7 @@
         <item>Behaviour</item>
         <item>Parents Meeting</item>
         <item>Notice Board</item>
+        <item>Exam Schedule</item>
         <item>Results</item>
         <item>Fees Payment</item>
         <item>Gallery</item>

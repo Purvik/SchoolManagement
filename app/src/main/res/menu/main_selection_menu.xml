@@ -66,6 +66,11 @@
 
 
         <item
+            android:id="@+id/nav_exam"
+            android:icon="@drawable/ic_exam"
+            android:title="@string/nav_tv_exam_timetable" />
+
+        <item
             android:id="@+id/nav_result"
             android:icon="@drawable/ic_result"
             android:title="@string/nav_tv_result" />

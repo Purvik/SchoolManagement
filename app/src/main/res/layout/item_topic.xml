@@ -1,31 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="4dp"
     android:orientation="vertical"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:background="@drawable/background_orange_border">
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp">
 
-
-    <TextView
-        android:id="@+id/tv_topic_title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/syllabus_item_bg"
-        android:padding="5dp"
-        android:text="Topic Title"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        android:layout_margin="1dp"
+        android:background="@drawable/background_orange_border">
 
-    <TextView
-        android:id="@+id/tv_topic_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="Topic Desc"
-        android:textSize="14sp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tv_topic_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/syllabus_item_bg"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Syllabus Title"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+
+        <TextView
+            android:id="@+id/tv_topic_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Topic Desc"
+            android:textSize="12sp" />
+
+
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
 

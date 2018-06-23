@@ -17,10 +17,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.fragments.MainFragment;
 import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
+import com.ourwork.schoolmanagement.utils.AppConstant;
 import com.ourwork.schoolmanagement.utils.AppSharedPreferences;
 
 import java.io.Serializable;
@@ -192,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_syllabus:
 
                 intent = new Intent(MainActivity.this, SyllabusActivity.class);
+                intent.putExtra("loginResponse", loginResponse);
                 startActivity(intent);
 
                 break;
@@ -214,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_assignment:
 
                 intent = new Intent(MainActivity.this, AssignmentActivity.class);
+                intent.putExtra("loginResponse", loginResponse);
                 startActivity(intent);
 
                 break;
@@ -221,24 +225,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_attendance:
 
                 intent = new Intent(MainActivity.this, AttendanceActivity.class);
+                intent.putExtra("loginResponse", loginResponse);
                 startActivity(intent);
 
                 break;
             case R.id.nav_behaviour:
 
+                Toast.makeText(getApplicationContext(), ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+
                 break;
 
             case R.id.nav_parent_meeting:
 
+                Toast.makeText(getApplicationContext(), ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+
                 break;
 
             case R.id.nav_notice_board:
+
+                Toast.makeText(getApplicationContext(), ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
                 break;
 
             case R.id.nav_notifications:
 
                 intent = new Intent(MainActivity.this, NoticeActivity.class);
+                startActivity(intent);
+
+
+                break;
+
+            case R.id.nav_exam:
+
+                intent = new Intent(MainActivity.this, ExamScheduleActivity.class);
+                intent.putExtra("loginResponse", loginResponse);
                 startActivity(intent);
 
 
@@ -253,16 +273,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_sports:
 
+                Toast.makeText(getApplicationContext(), ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+
                 break;
 
             case R.id.nav_feepayment:
+
+                Toast.makeText(getApplicationContext(), ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
                 break;
 
             case R.id.nav_gallery:
 
-                intent = new Intent(MainActivity.this, GalleryActivity.class);
+                /*intent = new Intent(MainActivity.this, GalleryActivity.class);
                 startActivity(intent);
+*/
+                Toast.makeText(getApplicationContext(), ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
 
                 break;

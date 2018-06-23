@@ -57,11 +57,10 @@ public class MainFragment extends Fragment {
 
         loginResponse = (LoginResponse) getArguments().getSerializable(ACCOUNT_KEY);
 
-
         recyclerView = v.findViewById(R.id.recycler_view);
 
         // Define a layout for RecyclerView
-        mLayoutManager = new GridLayoutManager(mContext,2);
+        mLayoutManager = new GridLayoutManager(mContext,3);
         recyclerView.setLayoutManager(mLayoutManager);
 
 
@@ -96,7 +95,7 @@ public class MainFragment extends Fragment {
         }
 
 
-       mAdapter = new HomeMenuAdapter(titles, imgIds, getActivity());
+       mAdapter = new HomeMenuAdapter(titles, imgIds, getActivity(), loginResponse);
 
        recyclerView.setAdapter(mAdapter);
 

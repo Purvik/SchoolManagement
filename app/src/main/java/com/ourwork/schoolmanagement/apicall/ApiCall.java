@@ -2,7 +2,13 @@ package com.ourwork.schoolmanagement.apicall;
 
 
 import com.ourwork.schoolmanagement.singleton.request.LoginRequest;
+import com.ourwork.schoolmanagement.singleton.request.ParentStudentRequest;
 import com.ourwork.schoolmanagement.singleton.response.LoginResp;
+import com.ourwork.schoolmanagement.singleton.response.student.AssignmentResponseData;
+import com.ourwork.schoolmanagement.singleton.response.student.AttendanceResponseData;
+import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleResponseData;
+import com.ourwork.schoolmanagement.singleton.response.student.SyllabusResponse;
+import com.ourwork.schoolmanagement.singleton.response.student.SyllabusResponseData;
 import com.ourwork.schoolmanagement.utils.AppConstant;
 
 import retrofit2.Call;
@@ -13,6 +19,18 @@ public interface ApiCall {
 
     @POST(AppConstant.URL_LOGIN)
     Call<LoginResp> login(@Body LoginRequest loginRequest);
+
+    @POST(AppConstant.URL_SYLLABUS)
+    Call<SyllabusResponseData> syllabus(@Body ParentStudentRequest parentStudentRequest);
+
+    @POST(AppConstant.URL_ASSIGNMENT)
+    Call<AssignmentResponseData> assignmnet(@Body ParentStudentRequest parentStudentRequest);
+
+    @POST(AppConstant.URL_STUDENT_ATTENDANCE)
+    Call<AttendanceResponseData> student_attendance(@Body ParentStudentRequest parentStudentRequest);
+
+    @POST(AppConstant.URL_EXAM_SCHEDULE)
+    Call<ExamScheduleResponseData> exam_schedule(@Body ParentStudentRequest parentStudentRequest);
 
    /* @GET(AppConstant.URL_FORGOT_PASSWORD)
     Call<Boolean> forgotPassword(@Query("email") String email);
