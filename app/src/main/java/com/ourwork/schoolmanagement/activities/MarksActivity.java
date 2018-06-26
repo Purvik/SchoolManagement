@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -56,6 +58,11 @@ public class MarksActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: " + markNode.getExamTitle());
 
         recyclerView =findViewById(R.id.recyclerview);
+
+        int resId = R.anim.layout_animation_fall_down;
+        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(MarksActivity.this, resId);
+        recyclerView.setLayoutAnimation(animation);
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MarksActivity.this);
 
         recyclerView.setLayoutManager(mLayoutManager);

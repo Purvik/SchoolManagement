@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.animation.*;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -52,13 +53,20 @@ public class HomeworkActivity extends AppCompatActivity {
         HomeWorkNode homeWorkNode = homeWorkNodeArrayList.get(0);
         Log.d(TAG, "onCreate: " + homeWorkNode.toString());
 
-
         recyclerView = findViewById(R.id.recyclerview);
+
+        int resId = R.anim.layout_animation_fall_down;
+        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(HomeworkActivity.this, resId);
+        recyclerView.setLayoutAnimation(animation);
+
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(mLayoutManager);
 
         HomeworkAdapter homeworkAdapter = new HomeworkAdapter(this, homeWorkNodeArrayList);
         recyclerView.setAdapter(homeworkAdapter);
+
+
 
     }
 

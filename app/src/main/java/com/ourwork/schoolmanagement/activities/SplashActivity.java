@@ -16,9 +16,9 @@ import com.ourwork.schoolmanagement.utils.AppSharedPreferences;
  * Created by Purvik Rana on 15-05-2018.
  */
 
-public class Splash extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
-    private static final String TAG = "Splash.java";
+    private static final String TAG = "SplashActivity.java";
     private ImageView imgAppIcon;
     private TextView tvTitle, tvSubTitle;
     //private Animation iconAnimation, textAnimation;
@@ -36,6 +36,7 @@ public class Splash extends AppCompatActivity {
         findViewById();
         //mContext = getApplicationContext();
 
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -44,14 +45,13 @@ public class Splash extends AppCompatActivity {
                 loginResponse = AppSharedPreferences.getAppPreferences(mPrefs);
                 //Log.d(TAG, "run: " + accountUser.toString());
 
-
                 if (loginResponse != null) {
-                    Intent intent = new Intent(Splash.this, MainActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     intent.putExtra("loggedInUser", loginResponse);
                     startActivity(intent);
 
                 }else{
-                    startActivity(new Intent(Splash.this, LogInActivity.class));
+                    startActivity(new Intent(SplashActivity.this, LogInActivity.class));
                 }
                 finish();
 
@@ -65,8 +65,12 @@ public class Splash extends AppCompatActivity {
     private void findViewById() {
 
         imgAppIcon = findViewById(R.id.app_icon);
+        imgAppIcon.animate().alpha(0.9f).y(300f).setDuration(3000);
+
         tvTitle = findViewById(R.id.tv_school_title);
+        tvTitle.animate().alpha(0.9f).setDuration(2500);
         tvSubTitle = findViewById(R.id.tv_school_subtitle);
+        tvSubTitle.animate().alpha(0.9f).setDuration(2500);
         /*tvTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

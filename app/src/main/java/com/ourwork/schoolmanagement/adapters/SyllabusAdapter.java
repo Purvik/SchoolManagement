@@ -1,6 +1,7 @@
 package com.ourwork.schoolmanagement.adapters;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusNode;
@@ -23,6 +25,7 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.ViewHo
     private static final String TAG = SyllabusAdapter.class.getName();
     private List<SyllabusNode> syllabusNodeList ;
     private Context mContext;
+    int lastPosition = -1;
 
     public SyllabusAdapter(List<SyllabusNode> syllabusNodeList, Context mContext) {
         this.syllabusNodeList = syllabusNodeList;
@@ -39,10 +42,12 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.ViewHo
         TextView syllabusDate;
         TextView syllabusUploader;
         Button btnFileDownload;
+        CardView mainCardView;
 
 
         ViewHolder(View v){
             super(v);
+            mainCardView = v.findViewById(R.id.mainCardView);
             syllabusTitle= v.findViewById(R.id.tv_syllabus_title);
             syllabusDesc= v.findViewById(R.id.tv_syllabus_desc);
             syllabusDate = v.findViewById(R.id.tv_syllabus_date);
@@ -72,30 +77,7 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.ViewHo
         holder.syllabusDate.setText(syllabusNode.getDate());
         holder.syllabusUploader.setText(syllabusNode.getUsertypeID());
 
-
-
-        /*holder.name.setText(tempSingleClass.getName());
-        holder.prof.setText(tempSingleClass.getProf());
-        holder.place.setText(tempSingleClass.getPlace());
-
-        //holder.startTime.setText(tempSingleClass.getStartTime());
-        //holder.endTime.setText(tempSingleClass.getEndTime());
-
-        holder.startTime.setText(TimeUtils.getTime(tempSingleClass.getStartTime()));
-        holder.endTime.setText(TimeUtils.getTime(tempSingleClass.getEndTime()));
-
-        Log.d(TAG, "onBindViewHolder: " + tempSingleClass.getLength());
-
-
-        if (tempSingleClass.getLength() > 1) {
-
-            holder.itemView.setLayoutParams( new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, (mContext.getResources().getDimensionPixelSize(R.dimen.class_item_height)) * 2));
-
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) holder.itemView.getLayoutParams();
-            params.setMargins(0,0,0,16);
-
-            holder.itemView.setLayoutParams(params);
-        }*/
+        //holder.mainCardView.animate().alpha(1.0f).setDuration(500);
 
     }
 

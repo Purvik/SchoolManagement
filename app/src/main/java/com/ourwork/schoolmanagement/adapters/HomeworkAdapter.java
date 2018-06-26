@@ -1,6 +1,7 @@
 package com.ourwork.schoolmanagement.adapters;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,11 +31,13 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        CardView mainCardView;
         TextView title, desc, uploader, deadline;
         Button btnDownload;
 
         public ViewHolder(View v) {
             super(v);
+            mainCardView = v.findViewById(R.id.mainCardView);
             title = v.findViewById(R.id.title);
             desc = v.findViewById(R.id.desc);
             uploader = v.findViewById(R.id.uploader);
@@ -74,6 +77,10 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
             holder.btnDownload.setTextColor(mContext.getResources().getColor(R.color.red));
             holder.btnDownload.setClickable(false);
         }
+
+
+
+        //holder.mainCardView.animate().alpha(1.0f).setDuration(500);
     }
 
     @Override

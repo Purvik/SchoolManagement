@@ -25,6 +25,7 @@ import com.ourwork.schoolmanagement.activities.SyllabusActivity;
 import com.ourwork.schoolmanagement.activities.TimeTableActivity;
 import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 import com.ourwork.schoolmanagement.utils.AppConstant;
+import com.ourwork.schoolmanagement.utils.SquareCardView;
 
 /**
  * Created by Purvik Rana on 24-05-2018.
@@ -61,6 +62,8 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
         holder.mTextView.setText(mTitles[position]);
         holder.mImageView.setOnClickListener(new ClickListener(mTitles[position]));
 
+        //holder.mainCardView.animate().alpha(1.0f).setDuration(250);
+
     }
 
     @Override
@@ -72,11 +75,13 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
         public TextView mTextView;
+        public SquareCardView mainCardView;
 
         public ViewHolder(View v) {
             super(v);
             mImageView = v.findViewById(R.id.grid_image);
             mTextView = v.findViewById(R.id.grid_text);
+            mainCardView = v.findViewById(R.id.mainCardView);
 
         }
     }

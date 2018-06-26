@@ -11,6 +11,7 @@
     android:layout_gravity="center"
     android:elevation="5dp"
     android:layout_margin="2dp"
+    android:id="@+id/mainCardView"
     card_view:cardBackgroundColor="@android:color/transparent"
     card_view:cardCornerRadius="10dp"
     >

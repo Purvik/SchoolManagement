@@ -52,6 +52,10 @@ public class AppConstant {
     public static final String URL_EXAM_SCHEDULE= "examschedule";
 
 
+    public static final int[] leapYearMonthDays = new int[] {31,29,31,30,31,30,31,31,30,31,30,31};
+    public static final int[] normalYearMonthDays = new int[] {31,28,31,30,31,30,31,31,30,31,30,31};
+
+
     public static final String URL_FORGOT_PASSWORD="Global/ForgotPassword";
     public static final String URL_CHANGE_PASSWORD="Global/ChangePassword";
     public static final String URL_LOGOUT="Global/Logout";

@@ -11,25 +11,22 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.SubjectPagerAdapter;
 import com.ourwork.schoolmanagement.adapters.SyllabusAdapter;
-import com.ourwork.schoolmanagement.adapters.TopicsAdapter;
 import com.ourwork.schoolmanagement.singleton.SingleSubjectDetails;
 import com.ourwork.schoolmanagement.singleton.request.ParentStudentRequest;
 import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusNode;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusResponseData;
+import com.ourwork.schoolmanagement.utils.AlertMessage;
 import com.ourwork.schoolmanagement.utils.AppConstant;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,9 +50,8 @@ public class SyllabusActivity extends AppCompatActivity {
     TabLayout tabs;
     String userType;
     LoginResponse loginResponse;
-    private ProgressDialog pDialog;
     RecyclerView recyclerView;
-
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,9 +97,9 @@ public class SyllabusActivity extends AppCompatActivity {
                 public void onResponse(Call<SyllabusResponseData> call, Response<SyllabusResponseData> response) {
 
 
-                    Log.e("Resp", response.code() +" ");
+                    Log.e("Resp", response.code() + " ");
                     Log.d("Resp", "" + response.body().toString());
-                    if(pDialog.isShowing())
+                    if (pDialog.isShowing())
                         pDialog.dismiss();
 
                     if (response.code() == AppConstant.RESPONSE_CODE_OK) {
@@ -112,25 +108,38 @@ public class SyllabusActivity extends AppCompatActivity {
                         SyllabusResponse syllabusResponse = response.body().getData();
                         List<SyllabusNode> syllabusNodeList = syllabusResponse.getSyllabusNodes();
 
-                        recyclerView = findViewById(R.id.recycler);
-                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(SyllabusActivity.this);
-                        recyclerView.setLayoutManager(mLayoutManager);
+                        if (syllabusNodeList.size() == 0) {
 
-                        RecyclerView.Adapter adapter = new SyllabusAdapter(syllabusNodeList, SyllabusActivity.this);
-                        recyclerView.setAdapter(adapter);
+                            AlertMessage.showMessage(SyllabusActivity.this, R.mipmap.ic_launcher, "ProPathshala Says..", "No Syllabus Record Found!");
+
+                        } else {
+
+                            recyclerView = findViewById(R.id.recycler);
+
+                            int resId = R.anim.layout_animation_fall_down;
+                            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(SyllabusActivity.this, resId);
+                            recyclerView.setLayoutAnimation(animation);
+
+
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(SyllabusActivity.this);
+                            recyclerView.setLayoutManager(mLayoutManager);
+
+                            RecyclerView.Adapter adapter = new SyllabusAdapter(syllabusNodeList, SyllabusActivity.this);
+                            recyclerView.setAdapter(adapter);
+
+
+                        }
+
 
                     }
                 }
 
                 @Override
                 public void onFailure(Call<SyllabusResponseData> call, Throwable t) {
-                    if(pDialog.isShowing())
+                    if (pDialog.isShowing())
                         pDialog.dismiss();
 
                     Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_FAILURE, Toast.LENGTH_LONG).show();
-
-
-
 
 
                 }

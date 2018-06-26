@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
 import com.ourwork.schoolmanagement.R;
@@ -19,6 +21,7 @@ import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.AssignmentNode;
 import com.ourwork.schoolmanagement.singleton.response.student.AssignmentResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.AssignmentResponseData;
+import com.ourwork.schoolmanagement.utils.AlertMessage;
 import com.ourwork.schoolmanagement.utils.AppConstant;
 
 import java.util.ArrayList;
@@ -49,7 +52,7 @@ public class AssignmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homework);
 
-        loginResponse =  (LoginResponse)  getIntent().getExtras().getSerializable("loginResponse");
+        loginResponse = (LoginResponse) getIntent().getExtras().getSerializable("loginResponse");
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Assignments");
@@ -58,7 +61,7 @@ public class AssignmentActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (loginResponse.getUsertype() .equalsIgnoreCase("student")) {
+        if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
 
 
             /*
@@ -82,7 +85,7 @@ public class AssignmentActivity extends AppCompatActivity {
                 public void onResponse(Call<AssignmentResponseData> call, Response<AssignmentResponseData> response) {
 
 
-                    Log.d(TAG, "Assignment Resp Code" + response.code() );
+                    Log.d(TAG, "Assignment Resp Code" + response.code());
                     Log.d(TAG, "Resp Body:" + response.body());
 
                     if (pDialog.isShowing())
@@ -94,15 +97,27 @@ public class AssignmentActivity extends AppCompatActivity {
                         AssignmentResponse assignmentResponse = response.body().getData();
                         List<AssignmentNode> assignmentNodes = assignmentResponse.getAssignments();
 
-                        recyclerView = findViewById(R.id.recyclerview);
-                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(AssignmentActivity.this);
-                        recyclerView.setLayoutManager(mLayoutManager);
+                        if (assignmentNodes.size() == 0) {
 
-                        RecyclerView.Adapter adapter = new AssignmentAdapter(AssignmentActivity.this, assignmentNodes);
-                        recyclerView.setAdapter(adapter);
+                            AlertMessage.showMessage(AssignmentActivity.this, R.mipmap.ic_launcher, "ProPathshala Says..","No Assignment Record Found!");
+
+                        } else {
+
+                            recyclerView = findViewById(R.id.recyclerview);
+
+                            int resId = R.anim.layout_animation_fall_down;
+                            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(AssignmentActivity.this, resId);
+                            recyclerView.setLayoutAnimation(animation);
+
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(AssignmentActivity.this);
+                            recyclerView.setLayoutManager(mLayoutManager);
+
+                            RecyclerView.Adapter adapter = new AssignmentAdapter(AssignmentActivity.this, assignmentNodes);
+                            recyclerView.setAdapter(adapter);
+
+                        }
 
                     }
-
 
 
                 }
@@ -128,14 +143,12 @@ public class AssignmentActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
 
-        }else{
+        } else {
 
             Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
 
-
         }
-
 
 
     }

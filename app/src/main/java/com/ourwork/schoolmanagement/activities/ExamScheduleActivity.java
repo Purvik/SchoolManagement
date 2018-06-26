@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
 import com.ourwork.schoolmanagement.R;
@@ -20,6 +22,7 @@ import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleNode;
 import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleResponseData;
+import com.ourwork.schoolmanagement.utils.AlertMessage;
 import com.ourwork.schoolmanagement.utils.AppConstant;
 
 import java.util.ArrayList;
@@ -87,7 +90,7 @@ public class ExamScheduleActivity extends AppCompatActivity {
                     Log.e(TAG, "Exam Resp Code:" + response.code());
                     Log.e(TAG, "Exam Resp Body: " + response.body());
 
-                    if(pDialog.isShowing())
+                    if (pDialog.isShowing())
                         pDialog.dismiss();
 
                     if (response.code() == AppConstant.RESPONSE_CODE_OK) {
@@ -95,24 +98,32 @@ public class ExamScheduleActivity extends AppCompatActivity {
                         ExamScheduleResponse examScheduleResponse = response.body().getData();
                         List<ExamScheduleNode> examScheduleNodeList = examScheduleResponse.getExamschedules();
 
+                        if (examScheduleNodeList.size() == 0) {
 
-                        recyclerView = findViewById(R.id.recyclerview);
-                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
-                        recyclerView.setLayoutManager(mLayoutManager);
+                            AlertMessage.showMessage(ExamScheduleActivity.this, R.mipmap.ic_launcher, "ProPathshala Says..", "No Exam Schedule Record Found!");
 
-                        ExamScheduleAdapter examScheduleAdapter = new ExamScheduleAdapter(ExamScheduleActivity.this, examScheduleNodeList);
-                        recyclerView.setAdapter(examScheduleAdapter);
+                        } else {
+
+                            recyclerView = findViewById(R.id.recyclerview);
+
+                            int resId = R.anim.layout_animation_fall_down;
+                            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(ExamScheduleActivity.this, resId);
+                            recyclerView.setLayoutAnimation(animation);
 
 
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
+                            recyclerView.setLayoutManager(mLayoutManager);
+
+                            ExamScheduleAdapter examScheduleAdapter = new ExamScheduleAdapter(ExamScheduleActivity.this, examScheduleNodeList);
+                            recyclerView.setAdapter(examScheduleAdapter);
+                        }
                     }
-
-
                 }
 
                 @Override
                 public void onFailure(Call<ExamScheduleResponseData> call, Throwable t) {
 
-                    if(pDialog.isShowing())
+                    if (pDialog.isShowing())
                         pDialog.dismiss();
 
                     Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_FAILURE, Toast.LENGTH_LONG).show();

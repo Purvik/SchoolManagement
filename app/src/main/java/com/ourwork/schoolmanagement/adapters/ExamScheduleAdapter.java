@@ -1,6 +1,7 @@
 package com.ourwork.schoolmanagement.adapters;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,12 +33,14 @@ public class ExamScheduleAdapter extends RecyclerView.Adapter<ExamScheduleAdapte
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        CardView mainCardView;
         TextView examName, classname, subject, date, time, roomno;
 
 
         public ViewHolder(View v) {
             super(v);
 
+            mainCardView = v.findViewById(R.id.mainCardView);
             examName= v.findViewById(R.id.exam_name);
             classname = v.findViewById(R.id.classname);
             subject = v.findViewById(R.id.subject);
@@ -66,6 +69,8 @@ public class ExamScheduleAdapter extends RecyclerView.Adapter<ExamScheduleAdapte
         holder.date.setText(examScheduleNode.getEdate());
         holder.time.setText(examScheduleNode.getExamfrom() + " - " + examScheduleNode.getExamto());
         holder.roomno.setText(examScheduleNode.getRoom());
+
+        //holder.mainCardView.animate().alpha(1.0f).setDuration(500);
 
     }
 

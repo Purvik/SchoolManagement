@@ -60,6 +60,9 @@
     <string name="tv_label_Date">Date</string>
     <string name="tv_label_Time">Time</string>
     <string name="tv_label_roomno">Room No :</string>
+    <string name="tv_label_present">PRESENT</string>
+    <string name="tv_label_absent">ABSENT</string>
+    <string name="tv_label_today">TODAY</string>
 
     <string-array name="stud_parent_dashboard_titles">
 
