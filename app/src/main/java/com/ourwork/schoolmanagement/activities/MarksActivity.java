@@ -1,6 +1,6 @@
 package com.ourwork.schoolmanagement.activities;
 
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,18 +11,24 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.MarkListAdapter;
 import com.ourwork.schoolmanagement.singleton.MarkNode;
-import com.ourwork.schoolmanagement.singleton.SingleSubjectDetails;
+import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
+import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
+import com.ourwork.schoolmanagement.singleton.response.student.MarkResponseData;
+import com.ourwork.schoolmanagement.utils.AlertMessage;
+import com.ourwork.schoolmanagement.utils.AppConstant;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.ourwork.schoolmanagement.MyApplication.apiCall;
 
 /**
  * Created by Purvik Rana on 06-06-2018.
@@ -35,6 +41,8 @@ public class MarksActivity extends AppCompatActivity {
     ArrayList<MarkNode> markNodeArrayList;
     Toolbar toolbar;
     MarkListAdapter markListAdapter;
+    LoginResponse loginResponse;
+    ProgressDialog pDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,16 +58,77 @@ public class MarksActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String json = loadJSONFromAsset();
-        Type type = new TypeToken<ArrayList<MarkNode>>() {}.getType();
-        markNodeArrayList = new Gson().fromJson(json, type);
+        loginResponse = (LoginResponse) getIntent().getExtras().getSerializable("loginResponse");
 
-        MarkNode markNode = markNodeArrayList.get(0);
-        Log.d(TAG, "onCreate: " + markNode.getExamTitle());
+        if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
+
+            //for Student
+
+            pDialog = new ProgressDialog(this);
+            pDialog.setMessage("loading results ...");
+            pDialog.setCanceledOnTouchOutside(false);
+            pDialog.show();
+
+            ParentStudentRequest parentStudentRequest = new ParentStudentRequest();
+            parentStudentRequest.setDefaultschoolyearID(loginResponse.getDefaultschoolyearID());
+            parentStudentRequest.setUsername(loginResponse.getUsername());
+            parentStudentRequest.setUsertypeID(loginResponse.getUsertypeID());
+
+            Log.d(TAG, "" + parentStudentRequest.toString());
+
+            Call<MarkResponseData> call = apiCall.mark(parentStudentRequest);
+            call.enqueue(new Callback<MarkResponseData>() {
+                @Override
+                public void onResponse(Call<MarkResponseData> call, Response<MarkResponseData> response) {
+
+                    Log.e(TAG, "Result Resp Code:" + response.code());
+                    Log.e(TAG, "Result Resp Body: " + response.body());
+
+                    if (pDialog.isShowing())
+                        pDialog.dismiss();
+
+                    if (response.code() == AppConstant.RESPONSE_CODE_OK) {
+
+                        AlertMessage.showMessage(MarksActivity.this,"ProPathshala","YES");
+
+                    }
+
+
+
+                }
+
+                @Override
+                public void onFailure(Call<MarkResponseData> call, Throwable t) {
+
+                    if (pDialog.isShowing())
+                        pDialog.dismiss();
+
+                    Log.e(TAG, "Result Fail Response:" + t.getMessage());
+
+                    Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_FAILURE, Toast.LENGTH_LONG).show();
+
+                }
+            });
+
+
+
+        } else if (loginResponse.getUsertype().equalsIgnoreCase("teacher")) {
+
+            //for Teacher
+            Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+
+        }else{
+
+            //for Admin
+            Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+
+        }
+
+
 
         recyclerView =findViewById(R.id.recyclerview);
 
-        int resId = R.anim.layout_animation_fall_down;
+        int resId = R.anim.layout_animation_slide_from_right;
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(MarksActivity.this, resId);
         recyclerView.setLayoutAnimation(animation);
 
@@ -74,21 +143,6 @@ public class MarksActivity extends AppCompatActivity {
         }
     }
 
-    public String loadJSONFromAsset() {
-        String json = null;
-        try {
-            InputStream is = (MarksActivity.this.getAssets().open("marks.json"));
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

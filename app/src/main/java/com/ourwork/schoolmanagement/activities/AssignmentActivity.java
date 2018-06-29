@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.AssignmentAdapter;
-import com.ourwork.schoolmanagement.singleton.request.ParentStudentRequest;
+import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
 import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.AssignmentNode;
 import com.ourwork.schoolmanagement.singleton.response.student.AssignmentResponse;
@@ -79,7 +79,7 @@ public class AssignmentActivity extends AppCompatActivity {
 
             Log.d(TAG, "" + parentStudentRequest.toString());
 
-            Call<AssignmentResponseData> call = apiCall.assignmnet(parentStudentRequest);
+            Call<AssignmentResponseData> call = apiCall.assignment(parentStudentRequest);
             call.enqueue(new Callback<AssignmentResponseData>() {
                 @Override
                 public void onResponse(Call<AssignmentResponseData> call, Response<AssignmentResponseData> response) {
@@ -105,7 +105,7 @@ public class AssignmentActivity extends AppCompatActivity {
 
                             recyclerView = findViewById(R.id.recyclerview);
 
-                            int resId = R.anim.layout_animation_fall_down;
+                            int resId = R.anim.layout_animation_slide_from_right;
                             LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(AssignmentActivity.this, resId);
                             recyclerView.setLayoutAnimation(animation);
 

@@ -2,8 +2,8 @@
     android:duration="@integer/anim_duration_medium">
 
     <translate
-        android:fromYDelta="-10%"
-        android:toYDelta="0"
+        android:fromXDelta="20%"
+        android:toXDelta="0"
         android:interpolator="@android:anim/decelerate_interpolator"
         />
 

@@ -50,6 +50,9 @@ public class AppConstant {
     public static final String URL_ASSIGNMENT="assignment";
     public static final String URL_STUDENT_ATTENDANCE="student_attendance";
     public static final String URL_EXAM_SCHEDULE= "examschedule";
+    public static final String URL_MARKS = "mark";
+    public static final String URL_CLASS_LIST = "classes";
+    public static final String URL_SECTION_LIST = "get_section";
 
 
     public static final int[] leapYearMonthDays = new int[] {31,29,31,30,31,30,31,31,30,31,30,31};
@@ -63,4 +66,5 @@ public class AppConstant {
     public static final String URL_NOTES="Global/GetNotes";
     public static final String URL_NOTICES="Global/GetNotices";
     public static final String URL_REGISTER_TOKEN="Notification/RegisterToken";
+
 }

@@ -55,7 +55,7 @@ public class HomeworkActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerview);
 
-        int resId = R.anim.layout_animation_fall_down;
+        int resId = R.anim.layout_animation_slide_from_right;
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(HomeworkActivity.this, resId);
         recyclerView.setLayoutAnimation(animation);
 

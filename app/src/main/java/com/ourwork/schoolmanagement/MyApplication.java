@@ -2,6 +2,8 @@ package com.ourwork.schoolmanagement;
 
 import android.app.Application;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.ourwork.schoolmanagement.apicall.ApiCall;
 import com.ourwork.schoolmanagement.utils.AppConstant;
 
@@ -21,9 +23,13 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(AppConstant.URL_BASE)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         apiCall = retrofit.create(ApiCall.class);

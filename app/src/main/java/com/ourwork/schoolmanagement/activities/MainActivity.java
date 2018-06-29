@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ourwork.schoolmanagement.R;
+import com.ourwork.schoolmanagement.activities.student.StudentAttendanceActivity;
+import com.ourwork.schoolmanagement.activities.teacher.TeacherAttendanceActivity;
 import com.ourwork.schoolmanagement.fragments.MainFragment;
 import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 import com.ourwork.schoolmanagement.utils.AppConstant;
@@ -224,9 +226,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_attendance:
 
-                intent = new Intent(MainActivity.this, AttendanceActivity.class);
-                intent.putExtra("loginResponse", loginResponse);
-                startActivity(intent);
+
+                if (loginResponse.getUsertype() .equalsIgnoreCase( "student")) {
+
+                    //Student Login
+                    intent = new Intent(MainActivity.this, StudentAttendanceActivity.class);
+                    intent.putExtra("loginResponse", loginResponse);
+                    startActivity(intent);
+
+                } else if (loginResponse.getUsertype() .equalsIgnoreCase( "teacher")) {
+
+                    //Teacher Login
+                    intent = new Intent(MainActivity.this, TeacherAttendanceActivity.class);
+                    intent.putExtra("loginResponse", loginResponse);
+                    startActivity(intent);
+
+                } else{
+
+                    //Admin Login
+
+                }
+
+
 
                 break;
             case R.id.nav_behaviour:
@@ -267,6 +288,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_result:
 
                 intent = new Intent(MainActivity.this, MarksActivity.class);
+                intent.putExtra("loginResponse", loginResponse);
                 startActivity(intent);
 
                 break;

@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.ExamScheduleAdapter;
 import com.ourwork.schoolmanagement.singleton.HomeWorkNode;
-import com.ourwork.schoolmanagement.singleton.request.ParentStudentRequest;
+import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
 import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleNode;
 import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleResponse;
@@ -106,7 +106,7 @@ public class ExamScheduleActivity extends AppCompatActivity {
 
                             recyclerView = findViewById(R.id.recyclerview);
 
-                            int resId = R.anim.layout_animation_fall_down;
+                            int resId = R.anim.layout_animation_slide_from_right;
                             LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(ExamScheduleActivity.this, resId);
                             recyclerView.setLayoutAnimation(animation);
 

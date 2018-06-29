@@ -19,7 +19,7 @@ import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.SubjectPagerAdapter;
 import com.ourwork.schoolmanagement.adapters.SyllabusAdapter;
 import com.ourwork.schoolmanagement.singleton.SingleSubjectDetails;
-import com.ourwork.schoolmanagement.singleton.request.ParentStudentRequest;
+import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
 import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusNode;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusResponse;
@@ -116,7 +116,7 @@ public class SyllabusActivity extends AppCompatActivity {
 
                             recyclerView = findViewById(R.id.recycler);
 
-                            int resId = R.anim.layout_animation_fall_down;
+                            int resId = R.anim.layout_animation_slide_from_right;
                             LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(SyllabusActivity.this, resId);
                             recyclerView.setLayoutAnimation(animation);
 

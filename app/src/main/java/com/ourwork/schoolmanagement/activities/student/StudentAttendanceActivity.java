@@ -1,4 +1,4 @@
-package com.ourwork.schoolmanagement.activities;
+package com.ourwork.schoolmanagement.activities.student;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -10,12 +10,11 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.AttendanceDataAdapter;
-import com.ourwork.schoolmanagement.singleton.request.ParentStudentRequest;
+import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
 import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.AttendanceNode;
 import com.ourwork.schoolmanagement.singleton.response.student.AttendanceResponse;
@@ -41,9 +40,9 @@ import static com.ourwork.schoolmanagement.MyApplication.apiCall;
  * Created by Purvik Rana on 01-06-2018.
  */
 
-public class AttendanceActivity extends AppCompatActivity {
+public class StudentAttendanceActivity extends AppCompatActivity {
 
-    private static final String TAG = AttendanceActivity.class.getName();
+    private static final String TAG = StudentAttendanceActivity.class.getName();
 
     AttendanceDataAdapter adapter;
     Toolbar toolbar;
@@ -54,13 +53,14 @@ public class AttendanceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_attendance);
+        setContentView(R.layout.activity_student_attendance);
+
         topCardViewPanel = findViewById(R.id.topCardViewPanel);
         calendarCardView = findViewById(R.id.calendarCardView);
 
 
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("AttendanceNode");
+        toolbar.setTitle("Attendance");
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null)
@@ -120,7 +120,7 @@ public class AttendanceActivity extends AppCompatActivity {
 
                         if (attendanceNodeList.size() == 0) {
 
-                            AlertMessage.showMessage(AttendanceActivity.this, R.mipmap.ic_launcher, "ProPathshala Says..", "No Attendance Record Found!");
+                            AlertMessage.showMessage(StudentAttendanceActivity.this, R.mipmap.ic_launcher, "ProPathshala Says..", "No Attendance Record Found!");
 
                         } else {
 

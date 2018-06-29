@@ -63,7 +63,13 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".activities.AttendanceActivity"
+            android:name=".activities.student.StudentAttendanceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".activities.teacher.TeacherAttendanceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
