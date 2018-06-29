@@ -3,6 +3,7 @@ package com.ourwork.schoolmanagement.apicall;
 
 import com.ourwork.schoolmanagement.singleton.request.LoginRequest;
 import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
+import com.ourwork.schoolmanagement.singleton.request.teacher.GetSectionRequest;
 import com.ourwork.schoolmanagement.singleton.request.teacher.ParentTeacherRequest;
 import com.ourwork.schoolmanagement.singleton.response.LoginResp;
 import com.ourwork.schoolmanagement.singleton.response.student.AssignmentResponseData;
@@ -10,6 +11,7 @@ import com.ourwork.schoolmanagement.singleton.response.student.AttendanceRespons
 import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleResponseData;
 import com.ourwork.schoolmanagement.singleton.response.student.MarkResponseData;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusResponseData;
+import com.ourwork.schoolmanagement.singleton.response.teacher.SectionNodeResponseData;
 import com.ourwork.schoolmanagement.singleton.response.teacher.TeacherClassNodeResponseData;
 import com.ourwork.schoolmanagement.utils.AppConstant;
 
@@ -39,6 +41,9 @@ public interface ApiCall {
 
     @POST(AppConstant.URL_CLASS_LIST)
     Call<TeacherClassNodeResponseData> get_class_list(@Body ParentTeacherRequest parentTeacherRequest);
+
+    @POST(AppConstant.URL_SECTION_LIST)
+    Call<SectionNodeResponseData> get_section_list(@Body GetSectionRequest getSectionRequest);
 
    /* @GET(AppConstant.URL_FORGOT_PASSWORD)
     Call<Boolean> forgotPassword(@Query("email") String email);

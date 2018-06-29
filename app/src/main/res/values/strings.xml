@@ -63,6 +63,8 @@
     <string name="tv_label_present">PRESENT</string>
     <string name="tv_label_absent">ABSENT</string>
     <string name="tv_label_today">TODAY</string>
+    <string name="label_class_selection">Select Your Class Room</string>
+    <string name="label_section_selection">Select Section of Class</string>
 
     <string-array name="stud_parent_dashboard_titles">
 

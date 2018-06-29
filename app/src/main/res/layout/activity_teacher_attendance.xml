@@ -33,14 +33,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:visibility="invisible"/>
+            android:spinnerMode="dialog"
+            android:prompt="@string/label_class_selection"
+            style="@android:style/Widget.Holo.Light.Spinner"
+            android:alpha="0.0"/>
 
         <Spinner
             android:id="@+id/sectionListSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:spinnerMode="dialog"
+            android:prompt="@string/label_section_selection"
+            style="@android:style/Widget.Holo.Light.Spinner"
             android:layout_margin="8dp"
-            android:visibility="invisible"/>
+            android:alpha="0.0"/>
 
 
 
