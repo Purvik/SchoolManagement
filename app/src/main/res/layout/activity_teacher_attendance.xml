@@ -28,31 +28,66 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <Spinner
-            android:id="@+id/classListSpinner"
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/mainCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:spinnerMode="dialog"
-            android:prompt="@string/label_class_selection"
-            style="@android:style/Widget.Holo.Light.Spinner"
-            android:alpha="0.0"/>
+            android:elevation="5dp"
+            android:layout_margin="4dp"
+            app:cardCornerRadius="5dp">
 
-        <Spinner
-            android:id="@+id/sectionListSpinner"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="4dp">
+
+                <Spinner
+                    android:id="@+id/classListSpinner"
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:alpha="0.0"
+                    android:visibility="gone"
+                    android:prompt="@string/label_class_selection"
+                    android:spinnerMode="dialog" />
+
+                <Spinner
+                    android:id="@+id/sectionListSpinner"
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:alpha="0.0"
+                    android:visibility="gone"
+                    android:prompt="@string/label_section_selection"
+                    android:spinnerMode="dialog" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/mainCalendarCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:spinnerMode="dialog"
-            android:prompt="@string/label_section_selection"
-            style="@android:style/Widget.Holo.Light.Spinner"
-            android:layout_margin="8dp"
-            android:alpha="0.0"/>
+            android:layout_margin="4dp"
+            android:alpha="0.0"
+            android:elevation="5dp"
+            app:cardCornerRadius="5dp">
 
+            <FrameLayout
+                android:id="@+id/fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp" />
 
+        </android.support.v7.widget.CardView>
 
 
     </LinearLayout>
-
 
 
 </android.support.design.widget.CoordinatorLayout>

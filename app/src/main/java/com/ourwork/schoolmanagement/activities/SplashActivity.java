@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ourwork.schoolmanagement.R;
+import com.ourwork.schoolmanagement.activities.teacher.TeacherAttendanceActivity;
 import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 import com.ourwork.schoolmanagement.utils.AppSharedPreferences;
 
@@ -41,8 +42,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                LoginResponse loginResponse;
-                loginResponse = AppSharedPreferences.getAppPreferences(mPrefs);
+                LoginResponse loginResponse = AppSharedPreferences.getAppPreferences(mPrefs);
                 //Log.d(TAG, "run: " + accountUser.toString());
 
                 if (loginResponse != null) {
@@ -51,7 +51,18 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 }else{
+
+                    //Actual Call
                     startActivity(new Intent(SplashActivity.this, LogInActivity.class));
+
+                    //For Testing Only
+                    /*Intent intent = new Intent(SplashActivity.this, TeacherAttendanceActivity.class);
+                    LoginResponse loginResponse1 = new LoginResponse();
+                    loginResponse1.setUsertypeID("3");
+                    loginResponse1.setUsername("pTeacher");
+                    loginResponse1.setDefaultschoolyearID("1");
+                    intent.putExtra("loginResponse", loginResponse1);
+                    startActivity(intent);*/
                 }
                 finish();
 

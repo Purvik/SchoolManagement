@@ -2,8 +2,10 @@ package com.ourwork.schoolmanagement.apicall;
 
 
 import com.ourwork.schoolmanagement.singleton.request.LoginRequest;
+import com.ourwork.schoolmanagement.singleton.request.student.MarkStudentRequest;
 import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
 import com.ourwork.schoolmanagement.singleton.request.teacher.GetSectionRequest;
+import com.ourwork.schoolmanagement.singleton.request.teacher.GetStudentListRequest;
 import com.ourwork.schoolmanagement.singleton.request.teacher.ParentTeacherRequest;
 import com.ourwork.schoolmanagement.singleton.response.LoginResp;
 import com.ourwork.schoolmanagement.singleton.response.student.AssignmentResponseData;
@@ -12,6 +14,7 @@ import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleRespo
 import com.ourwork.schoolmanagement.singleton.response.student.MarkResponseData;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusResponseData;
 import com.ourwork.schoolmanagement.singleton.response.teacher.SectionNodeResponseData;
+import com.ourwork.schoolmanagement.singleton.response.teacher.StudentAttendanceResponseData;
 import com.ourwork.schoolmanagement.singleton.response.teacher.TeacherClassNodeResponseData;
 import com.ourwork.schoolmanagement.utils.AppConstant;
 
@@ -37,13 +40,16 @@ public interface ApiCall {
     Call<ExamScheduleResponseData> exam_schedule(@Body ParentStudentRequest parentStudentRequest);
 
     @POST(AppConstant.URL_MARKS)
-    Call<MarkResponseData> mark(@Body ParentStudentRequest parentStudentRequest);
+    Call<MarkResponseData> mark(@Body MarkStudentRequest markStudentRequest);
 
     @POST(AppConstant.URL_CLASS_LIST)
     Call<TeacherClassNodeResponseData> get_class_list(@Body ParentTeacherRequest parentTeacherRequest);
 
     @POST(AppConstant.URL_SECTION_LIST)
     Call<SectionNodeResponseData> get_section_list(@Body GetSectionRequest getSectionRequest);
+
+    @POST(AppConstant.URL_STUDENT_LIST_FOR_ATTENDANCE)
+    Call<StudentAttendanceResponseData> student_list_for_attendance (@Body GetStudentListRequest getStudentListRequest);
 
    /* @GET(AppConstant.URL_FORGOT_PASSWORD)
     Call<Boolean> forgotPassword(@Query("email") String email);

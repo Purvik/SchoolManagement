@@ -10,21 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.activities.AssignmentActivity;
-import com.ourwork.schoolmanagement.activities.MainActivity;
-import com.ourwork.schoolmanagement.activities.student.StudentAttendanceActivity;
 import com.ourwork.schoolmanagement.activities.ExamScheduleActivity;
+import com.ourwork.schoolmanagement.activities.GalleryActivity;
 import com.ourwork.schoolmanagement.activities.HomeworkActivity;
 import com.ourwork.schoolmanagement.activities.MarksActivity;
 import com.ourwork.schoolmanagement.activities.NoticeActivity;
 import com.ourwork.schoolmanagement.activities.SyllabusActivity;
 import com.ourwork.schoolmanagement.activities.TimeTableActivity;
+import com.ourwork.schoolmanagement.activities.student.StudentAttendanceActivity;
 import com.ourwork.schoolmanagement.activities.teacher.TeacherAttendanceActivity;
 import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
-import com.ourwork.schoolmanagement.utils.AppConstant;
 import com.ourwork.schoolmanagement.utils.SquareCardView;
 
 /**
@@ -187,11 +185,11 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
                 case "Gallery":
 
-                    /*intent = new Intent(mContext, GalleryActivity.class);
-                    mContext.startActivity(intent);*/
+                    intent = new Intent(mContext, GalleryActivity.class);
+                    mContext.startActivity(intent);
 
 
-                    Toast.makeText(mContext, ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+                   // Toast.makeText(mContext, ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
                     break;
 

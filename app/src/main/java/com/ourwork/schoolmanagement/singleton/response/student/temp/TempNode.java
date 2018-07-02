@@ -1,11 +1,13 @@
 
 package com.ourwork.schoolmanagement.singleton.response.student.temp;
 
+import com.ourwork.schoolmanagement.singleton.response.ParentResponse;
+
 import java.util.List;
 
 
 @SuppressWarnings("unused")
-public class TempNode {
+public class TempNode   {
 
     
     private List<Object> errors;

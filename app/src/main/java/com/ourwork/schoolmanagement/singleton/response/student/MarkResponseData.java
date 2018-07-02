@@ -1,6 +1,7 @@
 package com.ourwork.schoolmanagement.singleton.response.student;
 
 import com.ourwork.schoolmanagement.singleton.response.ParentResponse;
+import com.ourwork.schoolmanagement.singleton.response.student.temp.TempNode;
 
 /**
  * Created by Purvik Rana on 28-06-2018.
@@ -8,13 +9,13 @@ import com.ourwork.schoolmanagement.singleton.response.ParentResponse;
 
 public class MarkResponseData extends ParentResponse {
 
-    MarkResponse data;
+    TempNode data;
 
-    public MarkResponse getData() {
+    public TempNode getData() {
         return data;
     }
 
-    public void setData(MarkResponse data) {
+    public void setData(TempNode data) {
         this.data = data;
     }
 

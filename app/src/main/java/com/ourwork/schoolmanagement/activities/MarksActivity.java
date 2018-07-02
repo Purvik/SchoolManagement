@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.MarkListAdapter;
 import com.ourwork.schoolmanagement.singleton.MarkNode;
+import com.ourwork.schoolmanagement.singleton.request.student.MarkStudentRequest;
 import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
 import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.MarkResponseData;
@@ -69,14 +70,14 @@ public class MarksActivity extends AppCompatActivity {
             pDialog.setCanceledOnTouchOutside(false);
             pDialog.show();
 
-            ParentStudentRequest parentStudentRequest = new ParentStudentRequest();
-            parentStudentRequest.setDefaultschoolyearID(loginResponse.getDefaultschoolyearID());
-            parentStudentRequest.setUsername(loginResponse.getUsername());
-            parentStudentRequest.setUsertypeID(loginResponse.getUsertypeID());
+            MarkStudentRequest markStudentRequest = new MarkStudentRequest();
+            markStudentRequest.setSchoolyearID(loginResponse.getDefaultschoolyearID());
+            markStudentRequest.setUsername(loginResponse.getUsername());
+            markStudentRequest.setUsertypeID(loginResponse.getUsertypeID());
 
-            Log.d(TAG, "" + parentStudentRequest.toString());
+            Log.d(TAG, "" + markStudentRequest.toString());
 
-            Call<MarkResponseData> call = apiCall.mark(parentStudentRequest);
+            Call<MarkResponseData> call = apiCall.mark(markStudentRequest);
             call.enqueue(new Callback<MarkResponseData>() {
                 @Override
                 public void onResponse(Call<MarkResponseData> call, Response<MarkResponseData> response) {

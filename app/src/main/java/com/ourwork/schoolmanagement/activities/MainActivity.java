@@ -307,10 +307,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_gallery:
 
-                /*intent = new Intent(MainActivity.this, GalleryActivity.class);
+                intent = new Intent(MainActivity.this, GalleryActivity.class);
                 startActivity(intent);
-*/
-                Toast.makeText(getApplicationContext(), ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+              //  Toast.makeText(getApplicationContext(), ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
 
                 break;
