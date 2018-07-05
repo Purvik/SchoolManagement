@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusNode;
@@ -76,6 +76,22 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.ViewHo
         holder.syllabusDesc.setText(syllabusNode.getDescription());
         holder.syllabusDate.setText(syllabusNode.getDate());
         holder.syllabusUploader.setText(syllabusNode.getUsertypeID());
+
+        if (syllabusNode.getFile().length() != 0) {
+
+            holder.btnFileDownload.setTextColor(mContext.getResources().getColor(R.color.green));
+            holder.btnFileDownload.setClickable(true);
+            holder.btnFileDownload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext,"DOWNLOAD FILE FUNCTION" , Toast.LENGTH_LONG).show();
+                }
+            });
+        }else{
+            holder.btnFileDownload.setTextColor(mContext.getResources().getColor(R.color.red));
+            holder.btnFileDownload.setClickable(false);
+        }
+
 
         //holder.mainCardView.animate().alpha(1.0f).setDuration(500);
 

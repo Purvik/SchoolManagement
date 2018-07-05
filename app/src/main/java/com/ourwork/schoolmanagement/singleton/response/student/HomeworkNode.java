@@ -4,15 +4,13 @@ package com.ourwork.schoolmanagement.singleton.response.student;
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
-public class AssignmentNode {
+public class HomeworkNode {
 
-         
-    private String assignmentID;
-         
+
     private String assignuserID;
-         
+
     private String assignusertypeID;
-         
+
     private String classesID;
 
     private String createDate;
@@ -22,53 +20,49 @@ public class AssignmentNode {
     private String createUsername;
 
     private String createUsertype;
-         
+
     private String deadlinedate;
-         
+
     private String description;
-         
+
     private String file;
-         
+
     private String finalmark;
 
+    private String homeworkID;
+
     private String modifyDate;
-         
+
     private String originalfile;
-         
+
     private String passmark;
-         
+
+    private String schoolId;
+
     private String schoolyearID;
-         
+
     private String sectionID;
-         
+
     private String subject;
 
     private String subjectAuthor;
 
     private String subjectCode;
-         
+
     private String subjectID;
-         
+
     private String teacherID;
 
     @SerializedName("teacher_name")
     private String teacherName;
-         
+
     private String title;
-         
+
     private String type;
-         
+
     private String userID;
-         
+
     private String usertypeID;
-
-    public String getAssignmentID() {
-        return assignmentID;
-    }
-
-    public void setAssignmentID(String assignmentID) {
-        this.assignmentID = assignmentID;
-    }
 
     public String getAssignuserID() {
         return assignuserID;
@@ -158,6 +152,14 @@ public class AssignmentNode {
         this.finalmark = finalmark;
     }
 
+    public String getHomeworkID() {
+        return homeworkID;
+    }
+
+    public void setHomeworkID(String homeworkID) {
+        this.homeworkID = homeworkID;
+    }
+
     public String getModifyDate() {
         return modifyDate;
     }
@@ -180,6 +182,14 @@ public class AssignmentNode {
 
     public void setPassmark(String passmark) {
         this.passmark = passmark;
+    }
+
+    public String getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(String schoolId) {
+        this.schoolId = schoolId;
     }
 
     public String getSchoolyearID() {
@@ -278,11 +288,11 @@ public class AssignmentNode {
         this.usertypeID = usertypeID;
     }
 
+
     @Override
     public String toString() {
-        return "AssignmentNode{" +
-                "assignmentID='" + assignmentID + '\'' +
-                ", assignuserID='" + assignuserID + '\'' +
+        return "HomeworkNode{" +
+                "assignuserID='" + assignuserID + '\'' +
                 ", assignusertypeID='" + assignusertypeID + '\'' +
                 ", classesID='" + classesID + '\'' +
                 ", createDate='" + createDate + '\'' +
@@ -293,9 +303,11 @@ public class AssignmentNode {
                 ", description='" + description + '\'' +
                 ", file='" + file + '\'' +
                 ", finalmark='" + finalmark + '\'' +
+                ", homeworkID='" + homeworkID + '\'' +
                 ", modifyDate='" + modifyDate + '\'' +
                 ", originalfile='" + originalfile + '\'' +
                 ", passmark='" + passmark + '\'' +
+                ", schoolId='" + schoolId + '\'' +
                 ", schoolyearID='" + schoolyearID + '\'' +
                 ", sectionID='" + sectionID + '\'' +
                 ", subject='" + subject + '\'' +

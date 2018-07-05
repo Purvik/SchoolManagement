@@ -3,6 +3,7 @@ package com.ourwork.schoolmanagement.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -19,6 +20,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.activities.student.StudentAttendanceActivity;
 import com.ourwork.schoolmanagement.activities.teacher.TeacherAttendanceActivity;
@@ -46,6 +51,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView navHeaderProfileIcon;
     Toolbar toolbar;
     TextView navigationDrawerTitle, navigationDrawerSubTitle;
+    int backPressCount = 0;
+
+    private AdView mAdView;
+
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if(getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         navigationView = findViewById(R.id.nav_view);
@@ -66,8 +76,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationDrawerTitle = navHeaderView.findViewById(R.id.navigationDrawerTitle);
         navigationDrawerSubTitle = navHeaderView.findViewById(R.id.navigationDrawerSubTitle);
 
+        //Load Ads
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(getResources().getString(R.string.ads_test_device_id)).build();
 
-        if(getIntent() != null)
+
+        if (getIntent() != null)
             loginuserSerail = getIntent().getExtras().getSerializable("loggedInUser");
         Log.d(TAG, "onCreate: " + loginuserSerail);
 
@@ -76,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationDrawerTitle.setVisibility(View.VISIBLE);
             navigationDrawerSubTitle.setVisibility(View.VISIBLE);
 
-            loginResponse= (LoginResponse) loginuserSerail;
+            loginResponse = (LoginResponse) loginuserSerail;
             navigationDrawerTitle.setText(loginResponse.getUsername());
             navigationDrawerSubTitle.setText(loginResponse.getUsertype());
 
@@ -91,23 +106,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .placeholder(R.drawable.ic_login)
                     .into(navHeaderProfileIcon);*/
 
-            if (loginResponse.getUsertype() .equalsIgnoreCase("teacher")  ) {
+            if (loginResponse.getUsertype().equalsIgnoreCase("teacher")) {
 
                 //check gender also then put the icon
                 navHeaderProfileIcon.setImageResource(R.drawable.ic_teacher_male);
 
-            } else if(loginResponse.getUsertype() .equalsIgnoreCase("student")){
+            } else if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
 
                 //check gender also then put the icon
                 navHeaderProfileIcon.setImageResource(R.drawable.ic_student_male);
 
-            }else if(loginResponse.getUsertype() .equalsIgnoreCase("admin")){
+            } else if (loginResponse.getUsertype().equalsIgnoreCase("admin")) {
 
                 //check gender also then put the icon
                 navHeaderProfileIcon.setImageResource(R.drawable.ic_teacher_female);
 
-            }
-            else{
+            } else {
 
                 //this is for admin
                 navHeaderProfileIcon.setImageResource(R.drawable.ic_student_female);
@@ -137,6 +151,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         mPref = getSharedPreferences("loggedInAccountInfo", MODE_PRIVATE);
+
+        //Load the Banned Ads
+        mAdView.loadAd(adRequest);
+
+        //Build InterstitialAd Object
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().addTestDevice(getResources().getString(R.string.ads_test_device_id)).build());
+        mInterstitialAd.setAdListener(new AdListener() {
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                Log.e(TAG, "Interstitial Ads Failed To Load");
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                Log.e(TAG, "Interstitial Finished Loading ready to show.");
+            }
+        });
 
 
     }
@@ -203,7 +239,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_timetable:
 
-
                 intent = new Intent(MainActivity.this, TimeTableActivity.class);
                 startActivity(intent);
 
@@ -212,6 +247,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_homework:
 
                 intent = new Intent(MainActivity.this, HomeworkActivity.class);
+                intent.putExtra("loginResponse", loginResponse);
                 startActivity(intent);
 
                 break;
@@ -227,51 +263,52 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_attendance:
 
 
-                if (loginResponse.getUsertype() .equalsIgnoreCase( "student")) {
+                if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
 
                     //Student Login
                     intent = new Intent(MainActivity.this, StudentAttendanceActivity.class);
                     intent.putExtra("loginResponse", loginResponse);
                     startActivity(intent);
 
-                } else if (loginResponse.getUsertype() .equalsIgnoreCase( "teacher")) {
+                } else if (loginResponse.getUsertype().equalsIgnoreCase("teacher")) {
 
                     //Teacher Login
                     intent = new Intent(MainActivity.this, TeacherAttendanceActivity.class);
                     intent.putExtra("loginResponse", loginResponse);
                     startActivity(intent);
 
-                } else{
+                } else {
 
                     //Admin Login
 
                 }
 
 
-
                 break;
             case R.id.nav_behaviour:
 
-                Toast.makeText(getApplicationContext(), ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
                 break;
 
             case R.id.nav_parent_meeting:
 
-                Toast.makeText(getApplicationContext(), ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
                 break;
 
             case R.id.nav_notice_board:
 
-                Toast.makeText(getApplicationContext(), ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
                 break;
 
             case R.id.nav_notifications:
 
-                intent = new Intent(MainActivity.this, NoticeActivity.class);
-                startActivity(intent);
+                /*intent = new Intent(MainActivity.this, NoticeActivity.class);
+                startActivity(intent);*/
+
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
 
                 break;
@@ -295,21 +332,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_sports:
 
-                Toast.makeText(getApplicationContext(), ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
                 break;
 
             case R.id.nav_feepayment:
 
-                Toast.makeText(getApplicationContext(), ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
                 break;
 
             case R.id.nav_gallery:
 
-                intent = new Intent(MainActivity.this, GalleryActivity.class);
-                startActivity(intent);
-              //  Toast.makeText(getApplicationContext(), ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+               /* intent = new Intent(MainActivity.this, GalleryActivity.class);
+                startActivity(intent);*/
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
 
                 break;
@@ -353,13 +390,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (view.getId()) {
 
             case R.id.navHeaderProfileIcon:
-                
+
                 //Toast.makeText(getApplicationContext(), "ICON CLICKER", Toast.LENGTH_SHORT).show();
 
                 if (loginResponse != null) {
                     displayUserProfileActivity(loginResponse);
                 }
-
 
 
                 break;
@@ -383,9 +419,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
            /* TeacherUserProfile teacherUserProfile =
                     new TeacherUserProfile("Ronak Roy", "SingleClass Teacher", "Male", "Christian","5555588888","ronak@9655","25/12/1990","12/05/2015","r@yahoo.in","C-5 High Heights Bunglows, Pragati Nagar, Nadiyad","photo_url");*/
 
-            Intent actIntent = new Intent(MainActivity.this, UserProfileActivity.class);
-            actIntent.putExtra("loginResponse", loginResponse);
-            startActivity(actIntent);
+        Intent actIntent = new Intent(MainActivity.this, UserProfileActivity.class);
+        actIntent.putExtra("loginResponse", loginResponse);
+        startActivity(actIntent);
 
        /* } else if(loginResponse.getUsertype() .equalsIgnoreCase("admin")){
 
@@ -395,6 +431,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 */
 
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (backPressCount == 0) {
+
+            backPressCount = 1;
+            Toast.makeText(MainActivity.this, "Press Back Again to Exit", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    backPressCount = 0;
+                }
+            }, 3500);
+
+        } else {
+
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            } else {
+                Log.d("TAG", "The interstitial wasn't loaded yet.");
+            }
+
+            super.onBackPressed();
+        }
 
     }
 }

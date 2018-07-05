@@ -13,11 +13,15 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.MarkListAdapter;
 import com.ourwork.schoolmanagement.singleton.MarkNode;
 import com.ourwork.schoolmanagement.singleton.request.student.MarkStudentRequest;
-import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
 import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.MarkResponseData;
 import com.ourwork.schoolmanagement.utils.AlertMessage;
@@ -35,7 +39,7 @@ import static com.ourwork.schoolmanagement.MyApplication.apiCall;
  * Created by Purvik Rana on 06-06-2018.
  */
 
-public class MarksActivity extends AppCompatActivity {
+public class MarksActivity extends AppCompatActivity implements RewardedVideoAdListener{
 
     private static final String TAG = MarksActivity.class.getName();
     RecyclerView recyclerView;
@@ -44,6 +48,8 @@ public class MarksActivity extends AppCompatActivity {
     MarkListAdapter markListAdapter;
     LoginResponse loginResponse;
     ProgressDialog pDialog;
+
+    private RewardedVideoAd mRewardedVideoAd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +64,15 @@ public class MarksActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Initialize Mobile Ads SDK
+        MobileAds.initialize(this, getResources().getString(R.string.sample_adMob_app_id));
+
+        // Get the rewarded video instance.
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        mRewardedVideoAd.setRewardedVideoAdListener(this);
+
+        loadRewardedVideoAd();
 
         loginResponse = (LoginResponse) getIntent().getExtras().getSerializable("loginResponse");
 
@@ -106,7 +121,7 @@ public class MarksActivity extends AppCompatActivity {
 
                     Log.e(TAG, "Result Fail Response:" + t.getMessage());
 
-                    Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_FAILURE, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
                 }
             });
@@ -142,6 +157,18 @@ public class MarksActivity extends AppCompatActivity {
             markListAdapter = new MarkListAdapter(MarksActivity.this, markNodeArrayList);
             recyclerView.setAdapter(markListAdapter);
         }
+
+
+
+    }
+
+    /*
+    * Load the Rewarded Video Ad
+    * */
+    private void loadRewardedVideoAd() {
+
+        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+                new AdRequest.Builder().addTestDevice(getResources().getString(R.string.ads_test_device_id)).build());
     }
 
 
@@ -153,14 +180,63 @@ public class MarksActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 break;
-
         }
-
         return true;
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    public void onRewardedVideoAdLoaded() {
+        Log.e(TAG, "onRewardedVideoAdLoaded: Rewarded Video Loaded");
+        if (mRewardedVideoAd.isLoaded())
+            mRewardedVideoAd.show();
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+        Log.e(TAG, "onRewardedVideoAdLoaded: Rewarded Video Opened");
+
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+        Log.e(TAG, "onRewardedVideoAdLoaded: Rewarded Video Started");
+
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+        Log.e(TAG, "onRewardedVideoAdLoaded: Rewarded Video Closed");
+
+    }
+
+    @Override
+    public void onRewarded(RewardItem reward) {
+
+        Toast.makeText(this, "onRewarded! currency: " + reward.getType() + "  amount: " +
+                reward.getAmount(), Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+        Log.e(TAG, "onRewardedVideoAdLoaded: Rewarded Video Left Application");
+
+    }
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int errorCode) {
+        Log.e(TAG, "onRewardedVideoAdLoaded: Rewarded Video Failed To Load" + errorCode);
+
+    }
+
+    @Override
+    public void onRewardedVideoCompleted() {
+        Log.e(TAG, "onRewardedVideoAdLoaded: Rewarded Video Completed");
+
     }
 }

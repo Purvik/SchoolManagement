@@ -11,6 +11,7 @@ import com.ourwork.schoolmanagement.singleton.response.LoginResp;
 import com.ourwork.schoolmanagement.singleton.response.student.AssignmentResponseData;
 import com.ourwork.schoolmanagement.singleton.response.student.AttendanceResponseData;
 import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleResponseData;
+import com.ourwork.schoolmanagement.singleton.response.student.HomeworkResponseData;
 import com.ourwork.schoolmanagement.singleton.response.student.MarkResponseData;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusResponseData;
 import com.ourwork.schoolmanagement.singleton.response.teacher.SectionNodeResponseData;
@@ -23,6 +24,11 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface ApiCall {
+
+
+    /*
+    * Student API
+    * */
 
     @POST(AppConstant.URL_LOGIN)
     Call<LoginResp> login(@Body LoginRequest loginRequest);
@@ -38,6 +44,14 @@ public interface ApiCall {
 
     @POST(AppConstant.URL_EXAM_SCHEDULE)
     Call<ExamScheduleResponseData> exam_schedule(@Body ParentStudentRequest parentStudentRequest);
+
+    @POST(AppConstant.URL_HOMEWORK)
+    Call<HomeworkResponseData> homework(@Body ParentStudentRequest parentStudentRequest);
+
+
+    /*
+    * Teacher APIs
+    * */
 
     @POST(AppConstant.URL_MARKS)
     Call<MarkResponseData> mark(@Body MarkStudentRequest markStudentRequest);

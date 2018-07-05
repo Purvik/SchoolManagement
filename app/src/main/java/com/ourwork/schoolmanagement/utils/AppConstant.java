@@ -54,6 +54,7 @@ public class AppConstant {
     public static final String URL_CLASS_LIST = "classes";
     public static final String URL_SECTION_LIST = "get_section";
     public static final String URL_STUDENT_LIST_FOR_ATTENDANCE = "student_list_for_attendance";
+    public static final String URL_HOMEWORK = "homework";
 
 
     public static final int[] leapYearMonthDays = new int[] {31,29,31,30,31,30,31,31,30,31,30,31};

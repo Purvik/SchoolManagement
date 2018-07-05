@@ -66,6 +66,9 @@
     <string name="label_class_selection">Select Your Class Room</string>
     <string name="label_section_selection">Select Section of Class</string>
 
+    <string name="sample_adMob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="ads_test_device_id">6AD94C36A4BB46F171C05D3AFD84DBDE</string>
+
     <string-array name="stud_parent_dashboard_titles">
 
         <item>Syllabus</item>

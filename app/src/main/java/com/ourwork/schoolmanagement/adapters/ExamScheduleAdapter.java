@@ -6,15 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ourwork.schoolmanagement.R;
-import com.ourwork.schoolmanagement.singleton.HomeWorkNode;
 import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleNode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

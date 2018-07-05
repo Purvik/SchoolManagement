@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.AttendanceDataAdapter;
 import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
@@ -50,6 +53,8 @@ public class StudentAttendanceActivity extends AppCompatActivity {
     CardView topCardViewPanel, calendarCardView;
     private ProgressDialog pDialog;
 
+    private InterstitialAd mInterstitialAd;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +70,30 @@ public class StudentAttendanceActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        //Initialized Mobile Ads (not required every time)
+        //MobileAds.initialize(this, getResources().getString(R.string.sample_adMob_app_id));
+
+        //Build InterstitialAd Object
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().addTestDevice(getResources().getString(R.string.ads_test_device_id)).build());
+        mInterstitialAd.setAdListener(new AdListener() {
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                Log.e(TAG, "Interstitial Ads Failed To Load");
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                Log.e(TAG, "Interstitial Finished Loading ready to show.");
+            }
+        });
+
 
         loginResponse = (LoginResponse) getIntent().getExtras().getSerializable("loginResponse");
 
@@ -173,7 +202,6 @@ public class StudentAttendanceActivity extends AppCompatActivity {
 
                                         }
 
-
                                     } catch (NoSuchFieldException e) {
                                         e.printStackTrace();
                                     } catch (IllegalAccessException e) {
@@ -213,7 +241,7 @@ public class StudentAttendanceActivity extends AppCompatActivity {
                     if (pDialog.isShowing())
                         pDialog.dismiss();
 
-                    Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_FAILURE, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
                 }
             });
@@ -223,6 +251,7 @@ public class StudentAttendanceActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
         }
+
 
     }
 
@@ -243,6 +272,10 @@ public class StudentAttendanceActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case android.R.id.home:
+
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                }
                 onBackPressed();
                 break;
         }
@@ -251,6 +284,11 @@ public class StudentAttendanceActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+
         super.onBackPressed();
     }
 }

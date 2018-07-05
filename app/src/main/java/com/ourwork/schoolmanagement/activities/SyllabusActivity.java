@@ -15,6 +15,9 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.SubjectPagerAdapter;
 import com.ourwork.schoolmanagement.adapters.SyllabusAdapter;
@@ -53,6 +56,8 @@ public class SyllabusActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     private ProgressDialog pDialog;
 
+    private AdView mAdView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +76,14 @@ public class SyllabusActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Initialized Mobile Ads
+        MobileAds.initialize(this, getResources().getString(R.string.sample_adMob_app_id));
+
+        //Load Ads
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(getResources().getString(R.string.ads_test_device_id)).build();
+
         loginResponse = (LoginResponse) getIntent().getExtras().getSerializable("loginResponse");
 
 
@@ -88,6 +101,7 @@ public class SyllabusActivity extends AppCompatActivity {
             parentStudentRequest.setDefaultschoolyearID(loginResponse.getDefaultschoolyearID());
             parentStudentRequest.setUsername(loginResponse.getUsername());
             parentStudentRequest.setUsertypeID(loginResponse.getUsertypeID());
+            parentStudentRequest.setSchool_id(loginResponse.getSchool_id());
 
             Log.d(TAG, "" + parentStudentRequest.toString());
 
@@ -114,19 +128,17 @@ public class SyllabusActivity extends AppCompatActivity {
 
                         } else {
 
-                            recyclerView = findViewById(R.id.recycler);
+                            recyclerView = findViewById(R.id.recyclerview);
 
                             int resId = R.anim.layout_animation_slide_from_right;
                             LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(SyllabusActivity.this, resId);
                             recyclerView.setLayoutAnimation(animation);
-
 
                             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(SyllabusActivity.this);
                             recyclerView.setLayoutManager(mLayoutManager);
 
                             RecyclerView.Adapter adapter = new SyllabusAdapter(syllabusNodeList, SyllabusActivity.this);
                             recyclerView.setAdapter(adapter);
-
 
                         }
 
@@ -154,10 +166,12 @@ public class SyllabusActivity extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
+        } else {
+            Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+
         }
 
-
-
+        mAdView.loadAd(adRequest);
 
         /*String json = loadJSONFromAsset();
         Type type = new TypeToken<ArrayList<SingleSubjectDetails>>() {}.getType();

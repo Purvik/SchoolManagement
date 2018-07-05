@@ -9,7 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ourwork.schoolmanagement.R;
@@ -33,6 +36,8 @@ public class NoticeActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<NoticeNode> noticeNodeArrayList;
 
+    private AdView mAdView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +49,12 @@ public class NoticeActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Load Ads
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(getResources().getString(R.string.ads_test_device_id)).build();
+
 
         String json = loadJSONFromAsset();
         Type type = new TypeToken<ArrayList<NoticeNode>>() {}.getType();
@@ -59,6 +70,11 @@ public class NoticeActivity extends AppCompatActivity {
 
         NoticeAdapter noticeAdapter = new NoticeAdapter(this, noticeNodeArrayList);
         recyclerView.setAdapter(noticeAdapter);
+
+        //Display Banner Ad
+        mAdView.loadAd(adRequest);
+        if (mAdView.getVisibility() == View.GONE)
+            mAdView.setVisibility(View.VISIBLE);
     }
 
     public String loadJSONFromAsset() {

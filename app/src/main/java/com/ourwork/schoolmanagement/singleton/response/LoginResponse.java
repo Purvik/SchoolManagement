@@ -6,7 +6,11 @@ import java.io.Serializable;
 @SuppressWarnings("unused")
 public class LoginResponse implements Serializable{
 
-   
+
+    private String classesID;
+
+    private String sectionID;
+
     private String defaultschoolyearID;
     
     private String email;
@@ -20,12 +24,30 @@ public class LoginResponse implements Serializable{
     private String name;
     
     private String photo;
+
+    private String school_id;
     
     private String username;
     
     private String usertype;
     
     private String usertypeID;
+
+    public String getClassesID() {
+        return classesID;
+    }
+
+    public void setClassesID(String classesID) {
+        this.classesID = classesID;
+    }
+
+    public String getSectionID() {
+        return sectionID;
+    }
+
+    public void setSectionID(String sectionID) {
+        this.sectionID = sectionID;
+    }
 
     public String getDefaultschoolyearID() {
         return defaultschoolyearID;
@@ -81,6 +103,14 @@ public class LoginResponse implements Serializable{
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public String getSchool_id() {
+        return school_id;
+    }
+
+    public void setSchool_id(String school_id) {
+        this.school_id = school_id;
     }
 
     public String getUsername() {

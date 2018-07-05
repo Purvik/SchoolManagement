@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_margin="1dp"
-        android:background="@drawable/background_orange_border">
+        android:background="@drawable/background_syllabus_item_border">
 
 
         <TextView

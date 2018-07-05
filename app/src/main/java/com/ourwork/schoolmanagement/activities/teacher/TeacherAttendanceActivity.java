@@ -207,7 +207,7 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
 
                 //Display Progress Dialog
                 pDialog = new ProgressDialog(this);
-                pDialog.setMessage("Fetching Section List for Selected Class ...");
+                pDialog.setMessage("Fetching HomeworkSectionNode List for Selected Class ...");
                 pDialog.setCanceledOnTouchOutside(false);
                 pDialog.show();
 
@@ -217,7 +217,7 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
                     public void onResponse(Call<SectionNodeResponseData> call, Response<SectionNodeResponseData> response) {
 
 
-                        Log.e(TAG, " Section Code: " + response.code());
+                        Log.e(TAG, " HomeworkSectionNode Code: " + response.code());
 
                         if (response.code() == AppConstant.RESPONSE_CODE_OK) {
 
@@ -230,7 +230,7 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
                                 for (SectionNode sectionNode : sectionNodeList) {
                                     String sectionName = sectionNode.getSection();
                                     sectionNameList.add(sectionName);
-                                    Log.e(TAG, "Section Item Name:" + sectionName);
+                                    Log.e(TAG, "HomeworkSectionNode Item Name:" + sectionName);
                                 }
 
                                 //attach array of class names to the section list spinner
@@ -275,7 +275,7 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
                 selectedSectionNode = sectionNodeList.get(adapterView.getSelectedItemPosition());
 
                 sectionID = selectedSectionNode.getSectionID();
-                Log.e(TAG, "Selected Section Id:" + sectionID);
+                Log.e(TAG, "Selected HomeworkSectionNode Id:" + sectionID);
 
                 CaldroidFragment caldroidFragment = new CaldroidFragment();
                 Bundle args = new Bundle();

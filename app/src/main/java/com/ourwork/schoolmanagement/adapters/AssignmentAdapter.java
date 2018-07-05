@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.singleton.response.student.AssignmentNode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,13 +32,14 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView mainCardView;
-        TextView title, desc, uploader, deadline;
+        TextView title, desc, uploader, deadline, subject;
         Button btnDownload;
 
         public ViewHolder(View v) {
             super(v);
             mainCardView = v.findViewById(R.id.mainCardView);
             title = v.findViewById(R.id.title);
+            subject = v.findViewById(R.id.subject);
             desc = v.findViewById(R.id.desc);
             uploader = v.findViewById(R.id.uploader);
             deadline = v.findViewById(R.id.deadline);
@@ -61,6 +61,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
         AssignmentNode assignmentNode = assignmentNodeList.get(position);
 
         holder.title.setText(assignmentNode.getTitle());
+        holder.subject.setText(assignmentNode.getSubject());
         holder.desc.setText(assignmentNode.getDescription());
         holder.uploader.setText(assignmentNode.getTeacherName());
         holder.deadline.setText(assignmentNode.getDeadlinedate());

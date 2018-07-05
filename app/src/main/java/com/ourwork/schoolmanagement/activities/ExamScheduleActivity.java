@@ -14,9 +14,11 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.ExamScheduleAdapter;
-import com.ourwork.schoolmanagement.singleton.HomeWorkNode;
 import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
 import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleNode;
@@ -25,7 +27,6 @@ import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleRespo
 import com.ourwork.schoolmanagement.utils.AlertMessage;
 import com.ourwork.schoolmanagement.utils.AppConstant;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -45,8 +46,9 @@ public class ExamScheduleActivity extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView recyclerView;
     LoginResponse loginResponse;
-    ArrayList<HomeWorkNode> homeWorkNodeArrayList;
     private ProgressDialog pDialog;
+
+    private AdView mAdView;
 
 
     @Override
@@ -61,6 +63,13 @@ public class ExamScheduleActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Initialized Mobile Ads
+        MobileAds.initialize(this, getResources().getString(R.string.sample_adMob_app_id));
+
+        //Load Ads
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("6AD94C36A4BB46F171C05D3AFD84DBDE").build();
 
         loginResponse = (LoginResponse) getIntent().getExtras().getSerializable("loginResponse");
 
@@ -79,6 +88,7 @@ public class ExamScheduleActivity extends AppCompatActivity {
             parentStudentRequest.setDefaultschoolyearID(loginResponse.getDefaultschoolyearID());
             parentStudentRequest.setUsername(loginResponse.getUsername());
             parentStudentRequest.setUsertypeID(loginResponse.getUsertypeID());
+            parentStudentRequest.setSchool_id(loginResponse.getSchool_id());
 
             Log.d(TAG, "" + parentStudentRequest.toString());
 
@@ -137,6 +147,9 @@ public class ExamScheduleActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
         }
+
+        //Display Ads with Results
+        mAdView.loadAd(adRequest);
 
 
     }
