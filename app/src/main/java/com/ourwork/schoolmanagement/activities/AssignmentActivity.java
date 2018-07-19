@@ -2,6 +2,7 @@ package com.ourwork.schoolmanagement.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,18 +10,22 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.ourwork.schoolmanagement.R;
+import com.ourwork.schoolmanagement.activities.teacher.AddAssignmentHomeworkActivity;
 import com.ourwork.schoolmanagement.adapters.AssignmentAdapter;
 import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
-import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
+import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
 import com.ourwork.schoolmanagement.singleton.response.student.AssignmentNode;
 import com.ourwork.schoolmanagement.singleton.response.student.AssignmentResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.AssignmentResponseData;
@@ -46,8 +51,9 @@ public class AssignmentActivity extends AppCompatActivity {
     Context mContext;
     Toolbar toolbar;
     RecyclerView recyclerView;
+    TextView tvEmptyView;
     ArrayList<AssignmentNode> assignmentNodeArrayList;
-    LoginResponse loginResponse;
+    StudentParentResp studentParentResp;
     private ProgressDialog pDialog;
 
     private AdView mAdView;
@@ -57,7 +63,10 @@ public class AssignmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assignment);
 
-        loginResponse = (LoginResponse) getIntent().getExtras().getSerializable("loginResponse");
+        recyclerView = findViewById(R.id.recyclerview);
+        tvEmptyView = findViewById(R.id.emptyTextView);
+
+        studentParentResp = (StudentParentResp) getIntent().getExtras().getSerializable("loginResponse");
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Assignments");
@@ -76,7 +85,7 @@ public class AssignmentActivity extends AppCompatActivity {
             .addTestDevice("6AD94C36A4BB46F171C05D3AFD84DBDE").build();
 
 
-        if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
+        if (studentParentResp.getUsertype().equalsIgnoreCase("student")) {
 
 
             /*
@@ -88,10 +97,10 @@ public class AssignmentActivity extends AppCompatActivity {
             pDialog.setCanceledOnTouchOutside(false);
             pDialog.show();
             ParentStudentRequest parentStudentRequest = new ParentStudentRequest();
-            parentStudentRequest.setDefaultschoolyearID(loginResponse.getDefaultschoolyearID());
-            parentStudentRequest.setUsername(loginResponse.getUsername());
-            parentStudentRequest.setUsertypeID(loginResponse.getUsertypeID());
-            parentStudentRequest.setSchool_id(loginResponse.getSchool_id());
+            parentStudentRequest.setDefaultschoolyearID(studentParentResp.getDefaultschoolyearID());
+            parentStudentRequest.setStudentID(studentParentResp.getStudentID());
+            parentStudentRequest.setUsertypeID(studentParentResp.getUsertypeID());
+            parentStudentRequest.setSchool_id(studentParentResp.getSchoolId());
 
             Log.d(TAG, "" + parentStudentRequest.toString());
 
@@ -117,9 +126,13 @@ public class AssignmentActivity extends AppCompatActivity {
 
                             AlertMessage.showMessage(AssignmentActivity.this, R.mipmap.ic_launcher, "ProPathshala Says..","No Assignment Record Found!");
 
+                            recyclerView.setVisibility(View.INVISIBLE);
+                            tvEmptyView.setVisibility(View.VISIBLE);
+
+
                         } else {
 
-                            recyclerView = findViewById(R.id.recyclerview);
+
 
                             int resId = R.anim.layout_animation_slide_from_right;
                             LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(AssignmentActivity.this, resId);
@@ -132,10 +145,14 @@ public class AssignmentActivity extends AppCompatActivity {
                             recyclerView.setAdapter(adapter);
 
                         }
+                    } else{
+
+                        if (pDialog.isShowing())
+                            pDialog.dismiss();
+
+                        Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_FAILURE, Toast.LENGTH_LONG).show();
 
                     }
-
-
                 }
 
                 @Override
@@ -150,7 +167,7 @@ public class AssignmentActivity extends AppCompatActivity {
             });
 
 
-        } else if (loginResponse.getUsertype().equalsIgnoreCase("teacher")) {
+        } else if (studentParentResp.getUsertype().equalsIgnoreCase("teacher")) {
 
             /*
             * Teacher Assignment API calls
@@ -172,21 +189,15 @@ public class AssignmentActivity extends AppCompatActivity {
 
     }
 
-    /*public String loadJSONFromAsset() {
-        String json = null;
-        try {
-            InputStream is = (AssignmentActivity.this.getAssets().open("homework.json"));
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        if (studentParentResp.getUsertype().equalsIgnoreCase("teacher")) {
+            getMenuInflater().inflate(R.menu.menu_actionbar_add_item, menu);
         }
-        return json;
-    }*/
+
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -195,6 +206,17 @@ public class AssignmentActivity extends AppCompatActivity {
 
             case android.R.id.home:
                 onBackPressed();
+                break;
+
+            case R.id.menu_item_add:
+
+                //Open add assignment activity for the teacher
+                Intent addAssignmentIntent = new Intent(AssignmentActivity.this, AddAssignmentHomeworkActivity.class);
+                addAssignmentIntent.putExtra("loginResponse", studentParentResp);
+                addAssignmentIntent.putExtra("addItemType", "assignment");
+                startActivity(addAssignmentIntent);
+
+
                 break;
         }
         return true;

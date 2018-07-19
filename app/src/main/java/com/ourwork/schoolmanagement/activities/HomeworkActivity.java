@@ -2,6 +2,7 @@ package com.ourwork.schoolmanagement.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
@@ -18,9 +20,10 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.ourwork.schoolmanagement.R;
+import com.ourwork.schoolmanagement.activities.teacher.AddAssignmentHomeworkActivity;
 import com.ourwork.schoolmanagement.adapters.HomeworkAdapter;
 import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
-import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
+import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
 import com.ourwork.schoolmanagement.singleton.response.student.HomeworkNode;
 import com.ourwork.schoolmanagement.singleton.response.student.HomeworkResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.HomeworkResponseData;
@@ -45,7 +48,7 @@ public class HomeworkActivity extends AppCompatActivity {
     Context mContext;
     Toolbar toolbar;
     RecyclerView recyclerView;
-    LoginResponse loginResponse;
+    StudentParentResp studentParentResp;
     ProgressDialog pDialog;
 
     private AdView mAdView;
@@ -59,7 +62,7 @@ public class HomeworkActivity extends AppCompatActivity {
         mContext = HomeworkActivity.this;
 
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("HomeworkNode");
+        toolbar.setTitle("Homework");
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null)
@@ -74,25 +77,25 @@ public class HomeworkActivity extends AppCompatActivity {
                 .addTestDevice("6AD94C36A4BB46F171C05D3AFD84DBDE").build();
 
 
-        loginResponse = (LoginResponse) getIntent().getExtras().getSerializable("loginResponse");
+        studentParentResp = (StudentParentResp) getIntent().getExtras().getSerializable("loginResponse");
 
 
-        if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
+        if (studentParentResp.getUsertype().equalsIgnoreCase("student")) {
 
             /*
             * Call Student Syllabus API
             * */
 
             pDialog = new ProgressDialog(this);
-            pDialog.setMessage("loading...");
+            pDialog.setMessage("loading homework...");
             pDialog.setCanceledOnTouchOutside(false);
             pDialog.show();
 
             ParentStudentRequest parentStudentRequest = new ParentStudentRequest();
-            parentStudentRequest.setDefaultschoolyearID(loginResponse.getDefaultschoolyearID());
-            parentStudentRequest.setUsername(loginResponse.getUsername());
-            parentStudentRequest.setUsertypeID(loginResponse.getUsertypeID());
-            parentStudentRequest.setSchool_id(loginResponse.getSchool_id());
+            parentStudentRequest.setDefaultschoolyearID(studentParentResp.getDefaultschoolyearID());
+            parentStudentRequest.setStudentID(studentParentResp.getStudentID());
+            parentStudentRequest.setUsertypeID(studentParentResp.getUsertypeID());
+            parentStudentRequest.setSchool_id(studentParentResp.getSchoolId());
 
             Log.d(TAG, "" + parentStudentRequest.toString());
 
@@ -150,7 +153,7 @@ public class HomeworkActivity extends AppCompatActivity {
                 }
             });
 
-        } else if (loginResponse.getUsertype().equalsIgnoreCase("teacher")) {
+        } else if (studentParentResp.getUsertype().equalsIgnoreCase("teacher")) {
 
             /*
             * Call Teacher Syllabus API
@@ -170,12 +173,33 @@ public class HomeworkActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        if (studentParentResp.getUsertype().equalsIgnoreCase("teacher")) {
+            getMenuInflater().inflate(R.menu.menu_actionbar_add_item, menu);
+        }
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
 
             case android.R.id.home:
                 onBackPressed();
+                break;
+
+            case R.id.menu_item_add:
+
+                //Open add assignment activity for the teacher
+                Intent addAssignmentIntent = new Intent(HomeworkActivity.this, AddAssignmentHomeworkActivity.class);
+                addAssignmentIntent.putExtra("loginResponse", studentParentResp);
+                addAssignmentIntent.putExtra("addItemType", "homework");
+                startActivity(addAssignmentIntent);
+
+
                 break;
         }
         return true;

@@ -66,8 +66,26 @@
     <string name="label_class_selection">Select Your Class Room</string>
     <string name="label_section_selection">Select Section of Class</string>
 
+    <!--Testing IDs for AdMob advertisement-->
     <string name="sample_adMob_app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="ads_test_device_id">6AD94C36A4BB46F171C05D3AFD84DBDE</string>
+    <string name="test_banner_ads_id">ca-app-pub-3940256099942544/6300978111</string>
+
+    <!--For Ads Actual IDs-->
+    <string name="adMob_app_id">ca-app-pub-3377185033414651~3780589844</string>
+    <string name="banner_ad_id">ca-app-pub-3377185033414651/4870294329</string>
+    <string name="interstitial_ad_id">ca-app-pub-3377185033414651/1342537881</string>
+    <string name="empty_listview_message">This List is Empty..!!</string>
+    <string name="nav_tv_teachers">Teachers</string>
+    <string name="nav_tv_students">Students</string>
+
+    <string-array name="user_types" >
+        <item>Student/Parent</item>
+        <item>Teacher</item>
+        <item>Admin</item>
+
+    </string-array>
+
 
     <string-array name="stud_parent_dashboard_titles">
 
@@ -103,5 +121,43 @@
         <item>Chat</item>
     </string-array>
 
+    <string-array name="admin_dashboard_titles">
 
+        <item>Teachers</item>
+        <item>Students</item>
+        <item>Syllabus</item>
+        <item>Time Table</item>
+        <item>Home Work</item>
+        <item>Assignments</item>
+        <item>Attendance</item>
+        <item>Behaviour</item>
+        <item>Parents Meeting</item>
+        <item>Notice Board</item>
+        <item>Exam Schedule</item>
+        <item>Results</item>
+        <item>Fees Payment</item>
+        <item>Gallery</item>
+        <item>Chat</item>
+    </string-array>
+    <string name="youAreNotUpdatedTitle">Update Available</string>
+    <string name="youAreNotUpdatedMessage">A new version of Pro Pathshala is available. Please update to version\s</string>
+    <string name="youAreNotUpdatedMessage1">\s now</string>
+    <string name="update">Update</string>
+    <string name="tvDOJTitle">DOJ</string>
+    <string name="tvDesignationTitle">DESIGNATION</string>
+    <string name="tvPhoneTitle">PHONE</string>
+    <string name="tvEmailTitle">EMAIL</string>
+    <string name="error_server">SERVER ERROR !!</string>
+    <string name="menu_label_add">Add</string>
+    <string name="hint_label_add_title">Enter Title</string>
+    <string name="hint_lable_description">Enter Description</string>
+    <string name="hint_label_date">Enter Deadline Date</string>
+    <string name="tv_label_Section">Section</string>
+    <string name="tv_label_Title">Title</string>
+    <string name="tv_label_Description">Desctiption</string>
+    <string name="tv_label_DeadlineDate">Deadline Date</string>
+    <string name="btn_label_file_upload">SELECT FILE</string>
+    <string name="btn_label_assignment_upload">UPLOAD ASSIGNMENT</string>
+    <string name="btn_label_homework_upload">UPLOAD HOMEWORK</string>
+    <string name="btn_label_syllabus_upload">UPLOAD SYLLABUS</string>
 </resources>

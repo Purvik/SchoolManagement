@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pro Pathshala</string>
+    <string name="lbl_username">યુઝર નેમ</string>
+    <string name="hint_username">તમારું યુઝર નેમ નાખો</string>
+    <string name="hint_password">તમારો પાસવર્ડ નાખો</string>
+    <string name="lbl_password">પાસવર્ડ</string>
+    <string name="btn_login_label">લૉગ ઇન</string>
+    <string name="bt_lbl_forgot_pwd">પાસવર્ડ ભુલી ગયેલ છો ?</string>
+    <string name="lbl_school_name">પ્રો પાઠશાલા</string>
+    <string name="lbl_school_subtitle">સ્માર્ટ સ્કૂલ, સ્માર્ટ ઈન્ડિયા</string>
+    <string name="nav_tv_exam_timetable">પરીક્ષા સમય પત્રક</string>
+    <string name="nav_tv_about_us">જાણો અમારા વિશે</string>
+    <string name="nav_tv_settings">સેટિંગ્સ</string>
+    <string name="nav_tv_logout">લૉગ આઉટ</string>
+    <string name="nav_tv_login">લૉગ ઇન</string>
+    <string name="nav_tv_attendance">એટેંડન્સ</string>
+    <string name="nav_tv_assignments">અસાઇન્મેંટ્સ</string>
+    <string name="nav_tv_result">રિઝલ્ટ</string>
+    <string name="nav_tv_notifications">નોટિફિકેશન</string>
+    <string name="nav_tv_timetable">સમય પત્રક</string>
+    <string name="nav_tv_homework">હોમ વર્ક</string>
+    <string name="nav_tv_parent_meeting">પેરેંટ્સ મીટિંગ્સ</string>
+    <string name="nav_tv_notice_board">નોટિસ બોર્ડ</string>
+    <string name="nav_tv_sports">સ્પોર્ટ્સ</string>
+    <string name="nav_tv_feepayment">ફી પેમેંટ</string>
+    <string name="nav_tv_gallery">ગેલેરી</string>
+    <string name="nav_tv_chat">ચેટિંગ</string>
+    <string name="btn_label_download">ડાઉનલોડ ફાઇલ</string>
+    <string name="btn_label_no_download">નો અત્તેચમેંટ</string>
+    <string name="tv_label_Class">ક્લાસ</string>
+    <string name="tv_label_Subject">વિષય</string>
+    <string name="tv_label_Date">તારીખ</string>
+    <string name="tv_label_Time">સમય</string>
+    <string name="tv_label_roomno">રૂમ નંબર</string>
+    <string name="label_class_selection">તમારો ક્લાસ રૂમ સિલેક્ટ કરો</string>
+    <string name="label_section_selection">તમારો સેક્શન સિલેક્ટ કરો</string>
+</resources>

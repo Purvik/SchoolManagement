@@ -9,21 +9,19 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
-import org.apache.commons.io.IOUtils;
-
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.DaysPagerAdapter;
 import com.ourwork.schoolmanagement.singleton.SingleClass;
+import com.ourwork.schoolmanagement.utils.AlertMessage;
+
+import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * Created by Purvik Rana on 30-05-2018.
@@ -81,6 +79,8 @@ public class TimeTableActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(0);
             }
         }
+
+        AlertMessage.showMessage(TimeTableActivity.this, "Pro-Pathshala Says..","This module is Under Development, displaying dummy data.", "CLOSE");
     }
 
 

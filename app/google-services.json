@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "588396237972",
+    "firebase_url": "https://pro-pathshala.firebaseio.com",
+    "project_id": "pro-pathshala",
+    "storage_bucket": "pro-pathshala.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588396237972:android:325455cb14911bf7",
+        "android_client_info": {
+          "package_name": "com.ourwork.schoolmanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588396237972-4ucqos8tb9rteds6h5j36mvthktvaukp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBbHA4UlsHND6U8do-sb1y9wi8Lnytr8s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

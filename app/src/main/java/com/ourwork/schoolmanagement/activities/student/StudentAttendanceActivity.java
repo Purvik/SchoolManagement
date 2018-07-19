@@ -14,11 +14,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.AttendanceDataAdapter;
 import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
-import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
+import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
 import com.ourwork.schoolmanagement.singleton.response.student.AttendanceNode;
 import com.ourwork.schoolmanagement.singleton.response.student.AttendanceResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.AttendanceResponseData;
@@ -49,11 +50,14 @@ public class StudentAttendanceActivity extends AppCompatActivity {
 
     AttendanceDataAdapter adapter;
     Toolbar toolbar;
-    LoginResponse loginResponse;
+    StudentParentResp studentParentResp;
     CardView topCardViewPanel, calendarCardView;
     private ProgressDialog pDialog;
 
     private InterstitialAd mInterstitialAd;
+
+    private AdView mAdView;
+    private AdRequest adRequest;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,7 +81,7 @@ public class StudentAttendanceActivity extends AppCompatActivity {
 
         //Build InterstitialAd Object
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.interstitial_ad_id));
         mInterstitialAd.loadAd(new AdRequest.Builder().addTestDevice(getResources().getString(R.string.ads_test_device_id)).build());
         mInterstitialAd.setAdListener(new AdListener() {
 
@@ -94,11 +98,16 @@ public class StudentAttendanceActivity extends AppCompatActivity {
             }
         });
 
+        //Load Ads
+        mAdView = findViewById(R.id.adView);
+        adRequest = new AdRequest.Builder()
+                .addTestDevice(getResources().getString(R.string.ads_test_device_id)).build();
 
-        loginResponse = (LoginResponse) getIntent().getExtras().getSerializable("loginResponse");
+
+        studentParentResp = (StudentParentResp) getIntent().getExtras().getSerializable("loginResponse");
 
 
-        if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
+        if (studentParentResp.getUsertype().equalsIgnoreCase("student")) {
 
             /*
             * Student Assignment API calls
@@ -113,9 +122,10 @@ public class StudentAttendanceActivity extends AppCompatActivity {
 
             //Build Request Node
             ParentStudentRequest parentStudentRequest = new ParentStudentRequest();
-            parentStudentRequest.setDefaultschoolyearID(loginResponse.getDefaultschoolyearID());
-            parentStudentRequest.setUsername(loginResponse.getUsername());
-            parentStudentRequest.setUsertypeID(loginResponse.getUsertypeID());
+            parentStudentRequest.setDefaultschoolyearID(studentParentResp.getDefaultschoolyearID());
+            parentStudentRequest.setStudentID(studentParentResp.getStudentID());
+            parentStudentRequest.setUsertypeID(studentParentResp.getUsertypeID());
+            parentStudentRequest.setSchool_id(studentParentResp.getSchoolId());
 
 
             Log.d(TAG, "" + parentStudentRequest.toString());
@@ -241,6 +251,8 @@ public class StudentAttendanceActivity extends AppCompatActivity {
                     if (pDialog.isShowing())
                         pDialog.dismiss();
 
+                    Log.e(TAG, "onFailure: " + t.getMessage());
+
                     Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
                 }
@@ -251,6 +263,8 @@ public class StudentAttendanceActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
         }
+
+        mAdView.loadAd(adRequest);
 
 
     }

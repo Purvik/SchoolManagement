@@ -2,6 +2,8 @@ package com.ourwork.schoolmanagement.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -25,12 +27,12 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.ourwork.schoolmanagement.R;
-import com.ourwork.schoolmanagement.activities.student.StudentAttendanceActivity;
-import com.ourwork.schoolmanagement.activities.teacher.TeacherAttendanceActivity;
+import com.ourwork.schoolmanagement.activities.admin.TeacherListActivity;
 import com.ourwork.schoolmanagement.fragments.MainFragment;
-import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
+import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
 import com.ourwork.schoolmanagement.utils.AppConstant;
 import com.ourwork.schoolmanagement.utils.AppSharedPreferences;
+import com.ourwork.schoolmanagement.utils.ForceUpdateAsync;
 
 import java.io.Serializable;
 
@@ -42,11 +44,10 @@ import java.io.Serializable;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private static final String TAG = "MainActivity.java";
-    Serializable loginuserSerail;
-    LoginResponse loginResponse;
+    Serializable loginuserSerial;
+    StudentParentResp studentParentResp;
     NavigationView navigationView;
     Menu navigationMenu;
-    SharedPreferences mPref;
     View navHeaderView;
     ImageView navHeaderProfileIcon;
     Toolbar toolbar;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private InterstitialAd mInterstitialAd;
 
+    SharedPreferences mPrefs;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        forceUpdate();
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -82,18 +85,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .addTestDevice(getResources().getString(R.string.ads_test_device_id)).build();
 
 
-        if (getIntent() != null)
-            loginuserSerail = getIntent().getExtras().getSerializable("loggedInUser");
-        Log.d(TAG, "onCreate: " + loginuserSerail);
+        mPrefs = getSharedPreferences("loggedInAccountInfo",MODE_PRIVATE);
 
-        if (loginuserSerail != null) {
+
+        if (getIntent() != null)
+            loginuserSerial = getIntent().getExtras().getSerializable("loggedInUser");
+
+
+        if (loginuserSerial != null) {
 
             navigationDrawerTitle.setVisibility(View.VISIBLE);
             navigationDrawerSubTitle.setVisibility(View.VISIBLE);
 
-            loginResponse = (LoginResponse) loginuserSerail;
-            navigationDrawerTitle.setText(loginResponse.getUsername());
-            navigationDrawerSubTitle.setText(loginResponse.getUsertype());
+            studentParentResp = (StudentParentResp) loginuserSerial;
+
+            Log.e(TAG, "onCreate: " + studentParentResp.toString());
+
+            navigationDrawerTitle.setText(studentParentResp.getUsername());
+            navigationDrawerSubTitle.setText(studentParentResp.getUsertype());
 
             /*Picasso.get()
                     .load(R.drawable.ic_login)
@@ -106,20 +115,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .placeholder(R.drawable.ic_login)
                     .into(navHeaderProfileIcon);*/
 
-            if (loginResponse.getUsertype().equalsIgnoreCase("teacher")) {
+            if (studentParentResp.getUsertype().equalsIgnoreCase("teacher")) {
 
                 //check gender also then put the icon
-                navHeaderProfileIcon.setImageResource(R.drawable.ic_teacher_male);
+                if (studentParentResp.getGender().equalsIgnoreCase("Male")) {
+                    navHeaderProfileIcon.setImageResource(R.drawable.ic_teacher_male);
+                }else{
+                    navHeaderProfileIcon.setImageResource(R.drawable.ic_teacher_female);
+                }
 
-            } else if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
+
+            } else if (studentParentResp.getUsertype().equalsIgnoreCase("student") || studentParentResp.getUsertype().equalsIgnoreCase("parents")) {
+
 
                 //check gender also then put the icon
-                navHeaderProfileIcon.setImageResource(R.drawable.ic_student_male);
+                if (studentParentResp.getGender().equalsIgnoreCase("Male")) {
+                    navHeaderProfileIcon.setImageResource(R.drawable.ic_student_male);
+                }else{
+                    navHeaderProfileIcon.setImageResource(R.drawable.ic_student_female);
+                }
 
-            } else if (loginResponse.getUsertype().equalsIgnoreCase("admin")) {
+            } else if (studentParentResp.getUsertype().equalsIgnoreCase("admin")) {
 
                 //check gender also then put the icon
-                navHeaderProfileIcon.setImageResource(R.drawable.ic_teacher_female);
+                if (studentParentResp.getGender().equalsIgnoreCase("Male")) {
+                    navHeaderProfileIcon.setImageResource(R.drawable.ic_teacher_male);
+                }else{
+                    navHeaderProfileIcon.setImageResource(R.drawable.ic_teacher_female);
+                }
 
             } else {
 
@@ -130,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             navHeaderProfileIcon.setOnClickListener(this);
 
-            hideLogInMenuItem(loginResponse.getUsertype());
+            hideLogInMenuItem(studentParentResp.getUsertype());
         }
 
         loadMainGridFragment();
@@ -150,14 +173,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mPref = getSharedPreferences("loggedInAccountInfo", MODE_PRIVATE);
 
         //Load the Banned Ads
         mAdView.loadAd(adRequest);
 
         //Build InterstitialAd Object
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.interstitial_ad_id));
         mInterstitialAd.loadAd(new AdRequest.Builder().addTestDevice(getResources().getString(R.string.ads_test_device_id)).build());
         mInterstitialAd.setAdListener(new AdListener() {
 
@@ -180,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void loadMainGridFragment() {
 
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        MainFragment mainFragment = MainFragment.newInstance(loginResponse);
+        MainFragment mainFragment = MainFragment.newInstance(studentParentResp);
         fragmentTransaction.replace(R.id.frame, mainFragment);
         fragmentTransaction.commit();
 
@@ -195,17 +217,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationMenu.findItem(R.id.nav_logout).setVisible(true);
 
         //customize navigation menu as per user type
-        if (userType.equalsIgnoreCase("student")) {
+        if (userType.equalsIgnoreCase("student") || userType.equalsIgnoreCase("parents")) {
 
+            navigationMenu.findItem(R.id.nav_teachers).setVisible(false);
+            navigationMenu.findItem(R.id.nav_students).setVisible(false);
             navigationMenu.findItem(R.id.nav_notice_board).setVisible(false);
             navigationMenu.findItem(R.id.nav_chat).setVisible(false);
             //navigationMenu.findItem(R.id.nav_mail_sms).setVisible(false);
 
         } else if (userType.equalsIgnoreCase("teacher")) {
 
+            navigationMenu.findItem(R.id.nav_teachers).setVisible(false);
+            navigationMenu.findItem(R.id.nav_students).setVisible(false);
             navigationMenu.findItem(R.id.nav_notifications).setVisible(false);
             navigationMenu.findItem(R.id.nav_sports).setVisible(false);
 
+        } else if (userType.equalsIgnoreCase("Admin")) {
+
+            navigationMenu.findItem(R.id.nav_notifications).setVisible(false);
+            navigationMenu.findItem(R.id.nav_sports).setVisible(false);
         }
     }
 
@@ -221,6 +251,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (id) {
 
 
+            //invisible
             case R.id.nav_login:
 
                 //opens login activity from this menu
@@ -229,14 +260,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 break;
 
+                // ADMIN
+            case R.id.nav_teachers:
+
+                intent = new Intent(MainActivity.this, TeacherListActivity.class);
+                intent.putExtra("loginResponse", studentParentResp);
+                startActivity(intent);
+
+                //Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+
+                break;
+
+                // ADMIN
+            case R.id.nav_students:
+
+                /*intent = new Intent(MainActivity.this, SyllabusActivity.class);
+                intent.putExtra("loginResponse", studentParentResp);
+                startActivity(intent);*/
+
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+
+                break;
+
+                //ADMIN/TEACHER/PARENT/STUDENT
             case R.id.nav_syllabus:
 
                 intent = new Intent(MainActivity.this, SyllabusActivity.class);
-                intent.putExtra("loginResponse", loginResponse);
+                intent.putExtra("loginResponse", studentParentResp);
                 startActivity(intent);
 
                 break;
 
+            //ADMIN/TEACHER/PARENT/STUDENT
             case R.id.nav_timetable:
 
                 intent = new Intent(MainActivity.this, TimeTableActivity.class);
@@ -244,101 +299,119 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 break;
 
+            //ADMIN/TEACHER/PARENT/STUDENT
             case R.id.nav_homework:
 
-                intent = new Intent(MainActivity.this, HomeworkActivity.class);
-                intent.putExtra("loginResponse", loginResponse);
-                startActivity(intent);
+                /*intent = new Intent(MainActivity.this, HomeworkActivity.class);
+                intent.putExtra("loginResponse", studentParentResp);
+                startActivity(intent);*/
+
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                 break;
 
+            //ADMIN/TEACHER/PARENT/STUDENT
             case R.id.nav_assignment:
 
                 intent = new Intent(MainActivity.this, AssignmentActivity.class);
-                intent.putExtra("loginResponse", loginResponse);
+                intent.putExtra("loginResponse", studentParentResp);
                 startActivity(intent);
 
                 break;
 
+            //ADMIN/TEACHER/PARENT/STUDENT
             case R.id.nav_attendance:
 
 
-                if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
+                if (studentParentResp.getUsertype().equalsIgnoreCase("student")) {
 
                     //Student Login
-                    intent = new Intent(MainActivity.this, StudentAttendanceActivity.class);
-                    intent.putExtra("loginResponse", loginResponse);
-                    startActivity(intent);
+                    /*intent = new Intent(MainActivity.this, StudentAttendanceActivity.class);
+                    intent.putExtra("loginResponse", studentParentResp);
+                    startActivity(intent);*/
 
-                } else if (loginResponse.getUsertype().equalsIgnoreCase("teacher")) {
+                    Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+
+                } else if (studentParentResp.getUsertype().equalsIgnoreCase("teacher")) {
 
                     //Teacher Login
-                    intent = new Intent(MainActivity.this, TeacherAttendanceActivity.class);
-                    intent.putExtra("loginResponse", loginResponse);
-                    startActivity(intent);
+                    /*intent = new Intent(MainActivity.this, TeacherAttendanceActivity.class);
+                    intent.putExtra("loginResponse", studentParentResp);
+                    startActivity(intent);*/
+
+                    Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                 } else {
 
                     //Admin Login
+                    Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                 }
-
-
                 break;
+
+            //ADMIN/TEACHER/PARENT/STUDENT
             case R.id.nav_behaviour:
 
-                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                 break;
 
+            //ADMIN/TEACHER/PARENT/STUDENT
             case R.id.nav_parent_meeting:
 
-                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                 break;
 
+            //ADMIN/TEACHER/PARENT/STUDENT
             case R.id.nav_notice_board:
 
-                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                 break;
 
+            //STUDENT
             case R.id.nav_notifications:
 
                 /*intent = new Intent(MainActivity.this, NoticeActivity.class);
                 startActivity(intent);*/
 
-                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
 
                 break;
 
+            //ADMIN/TEACHER/PARENT/STUDENT
             case R.id.nav_exam:
 
-                intent = new Intent(MainActivity.this, ExamScheduleActivity.class);
-                intent.putExtra("loginResponse", loginResponse);
-                startActivity(intent);
+                /*intent = new Intent(MainActivity.this, ExamScheduleActivity.class);
+                intent.putExtra("loginResponse", studentParentResp);
+                startActivity(intent);*/
+
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
 
                 break;
 
             case R.id.nav_result:
 
-                intent = new Intent(MainActivity.this, MarksActivity.class);
-                intent.putExtra("loginResponse", loginResponse);
-                startActivity(intent);
+                /*intent = new Intent(MainActivity.this, MarksActivity.class);
+                intent.putExtra("loginResponse", studentParentResp);
+                startActivity(intent);*/
+
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                 break;
 
             case R.id.nav_sports:
 
-                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                 break;
 
             case R.id.nav_feepayment:
 
-                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                 break;
 
@@ -346,27 +419,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                /* intent = new Intent(MainActivity.this, GalleryActivity.class);
                 startActivity(intent);*/
-                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
 
                 break;
 
             case R.id.nav_chat:
 
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+
                 break;
 
             case R.id.nav_about_us:
 
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+
                 break;
 
             case R.id.nav_settings:
+
+                Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                 break;
 
             case R.id.nav_logout:
 
                 //remove the app preferences from the app
-                AppSharedPreferences.removeStoredUserAccount(mPref);
+                AppSharedPreferences.removeStoredUserAccount(mPrefs);
 
                 Intent logInIntent = new Intent(MainActivity.this, LogInActivity.class);
                 logInIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -393,8 +472,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 //Toast.makeText(getApplicationContext(), "ICON CLICKER", Toast.LENGTH_SHORT).show();
 
-                if (loginResponse != null) {
-                    displayUserProfileActivity(loginResponse);
+                if (studentParentResp != null) {
+                    displayUserProfileActivity(studentParentResp);
                 }
 
 
@@ -403,27 +482,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void displayUserProfileActivity(LoginResponse loginResponse) {
+    private void displayUserProfileActivity(StudentParentResp studentParentResp) {
 
-       /* if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
+       /* if (loginStudentParentResponse.getUsertype().equalsIgnoreCase("student")) {
 
             *//*StudentUserProfile studentUserProfile =
-                    new StudentUserProfile("Krutik Patel",1002,"Primary", "Male","Hindu","Gujarat","5555544444", loginResponse.getUsername(),55,"12/03/1990","B-","p@gmail.com","Surat", "India","10-A");*//*
+                    new StudentUserProfile("Krutik Patel",1002,"Primary", "Male","Hindu","Gujarat","5555544444", loginStudentParentResponse.getUsername(),55,"12/03/1990","B-","p@gmail.com","Surat", "India","10-A");*//*
 
             Intent actIntent = new Intent(MainActivity.this, UserProfileActivity.class);
-            actIntent.putExtra("studentProfile", loginResponse);
+            actIntent.putExtra("studentProfile", loginStudentParentResponse);
             startActivity(actIntent);
 
-        } else if(loginResponse.getUsertype().equalsIgnoreCase("teacher")){*/
+        } else if(loginStudentParentResponse.getUsertype().equalsIgnoreCase("teacher")){*/
 
            /* TeacherUserProfile teacherUserProfile =
                     new TeacherUserProfile("Ronak Roy", "SingleClass Teacher", "Male", "Christian","5555588888","ronak@9655","25/12/1990","12/05/2015","r@yahoo.in","C-5 High Heights Bunglows, Pragati Nagar, Nadiyad","photo_url");*/
 
         Intent actIntent = new Intent(MainActivity.this, UserProfileActivity.class);
-        actIntent.putExtra("loginResponse", loginResponse);
+        actIntent.putExtra("loginResponse", studentParentResp);
         startActivity(actIntent);
 
-       /* } else if(loginResponse.getUsertype() .equalsIgnoreCase("admin")){
+       /* } else if(loginStudentParentResponse.getUsertype() .equalsIgnoreCase("admin")){
 
 
 
@@ -459,5 +538,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
 
+    }
+
+    public void forceUpdate(){
+        PackageManager packageManager = this.getPackageManager();
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo =  packageManager.getPackageInfo(getPackageName(),0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        String currentVersion = packageInfo.versionName;
+        new ForceUpdateAsync(currentVersion,MainActivity.this).execute();
     }
 }

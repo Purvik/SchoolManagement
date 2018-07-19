@@ -20,7 +20,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.ExamScheduleAdapter;
 import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
-import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
+import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
 import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleNode;
 import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleResponseData;
@@ -45,7 +45,7 @@ public class ExamScheduleActivity extends AppCompatActivity {
     Context mContext;
     Toolbar toolbar;
     RecyclerView recyclerView;
-    LoginResponse loginResponse;
+    StudentParentResp studentParentResp;
     private ProgressDialog pDialog;
 
     private AdView mAdView;
@@ -71,9 +71,9 @@ public class ExamScheduleActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("6AD94C36A4BB46F171C05D3AFD84DBDE").build();
 
-        loginResponse = (LoginResponse) getIntent().getExtras().getSerializable("loginResponse");
+        studentParentResp = (StudentParentResp) getIntent().getExtras().getSerializable("loginResponse");
 
-        if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
+        if (studentParentResp.getUsertype().equalsIgnoreCase("student")) {
 
             /*
             * Student API call to get : Exam Schedule
@@ -85,10 +85,10 @@ public class ExamScheduleActivity extends AppCompatActivity {
             pDialog.show();
 
             ParentStudentRequest parentStudentRequest = new ParentStudentRequest();
-            parentStudentRequest.setDefaultschoolyearID(loginResponse.getDefaultschoolyearID());
-            parentStudentRequest.setUsername(loginResponse.getUsername());
-            parentStudentRequest.setUsertypeID(loginResponse.getUsertypeID());
-            parentStudentRequest.setSchool_id(loginResponse.getSchool_id());
+            parentStudentRequest.setDefaultschoolyearID(studentParentResp.getDefaultschoolyearID());
+            parentStudentRequest.setStudentID(studentParentResp.getStudentID());
+            parentStudentRequest.setUsertypeID(studentParentResp.getUsertypeID());
+            parentStudentRequest.setSchool_id(studentParentResp.getSchoolId());
 
             Log.d(TAG, "" + parentStudentRequest.toString());
 

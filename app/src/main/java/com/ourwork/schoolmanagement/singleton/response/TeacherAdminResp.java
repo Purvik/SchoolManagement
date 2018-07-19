@@ -1,61 +1,36 @@
 
 package com.ourwork.schoolmanagement.singleton.response;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
+
 @SuppressWarnings("unused")
-public class LoginResponse implements Serializable{
+public class TeacherAdminResp implements Serializable{
 
+    protected String email;
 
-    private String classesID;
+    protected String gender;
 
-    private String sectionID;
+    protected String lang;
 
-    private String defaultschoolyearID;
-    
-    private String email;
-    
-    private String lang;
-    
-    private Boolean loggedin;
-    
-    private String loginuserID;
-    
-    private String name;
-    
-    private String photo;
+    protected Boolean loggedin;
 
-    private String school_id;
-    
-    private String username;
-    
-    private String usertype;
-    
-    private String usertypeID;
+    protected String loginuserID;
 
-    public String getClassesID() {
-        return classesID;
-    }
+    protected String name;
 
-    public void setClassesID(String classesID) {
-        this.classesID = classesID;
-    }
+    protected String photo;
 
-    public String getSectionID() {
-        return sectionID;
-    }
+    @SerializedName("school_id")
+    protected String schoolId;
 
-    public void setSectionID(String sectionID) {
-        this.sectionID = sectionID;
-    }
+    protected String username;
 
-    public String getDefaultschoolyearID() {
-        return defaultschoolyearID;
-    }
+    protected String usertype;
 
-    public void setDefaultschoolyearID(String defaultschoolyearID) {
-        this.defaultschoolyearID = defaultschoolyearID;
-    }
+    protected String usertypeID;
 
     public String getEmail() {
         return email;
@@ -63,6 +38,14 @@ public class LoginResponse implements Serializable{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getLang() {
@@ -105,12 +88,12 @@ public class LoginResponse implements Serializable{
         this.photo = photo;
     }
 
-    public String getSchool_id() {
-        return school_id;
+    public String getSchoolId() {
+        return schoolId;
     }
 
-    public void setSchool_id(String school_id) {
-        this.school_id = school_id;
+    public void setSchoolId(String schoolId) {
+        this.schoolId = schoolId;
     }
 
     public String getUsername() {
@@ -139,14 +122,15 @@ public class LoginResponse implements Serializable{
 
     @Override
     public String toString() {
-        return "LoginResponse{" +
-                "defaultschoolyearID='" + defaultschoolyearID + '\'' +
-                ", email='" + email + '\'' +
+        return "TeacherAdminResp{" +
+                "email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
                 ", lang='" + lang + '\'' +
                 ", loggedin=" + loggedin +
                 ", loginuserID='" + loginuserID + '\'' +
                 ", name='" + name + '\'' +
                 ", photo='" + photo + '\'' +
+                ", schoolId='" + schoolId + '\'' +
                 ", username='" + username + '\'' +
                 ", usertype='" + usertype + '\'' +
                 ", usertypeID='" + usertypeID + '\'' +

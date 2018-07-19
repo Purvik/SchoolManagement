@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.HomeMenuAdapter;
-import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
+import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
 
 /**
  * Created by Purvik Rana on 19-05-2018.
@@ -28,7 +28,7 @@ public class MainFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    LoginResponse loginResponse;
+    StudentParentResp studentParentResp;
     static String ACCOUNT_KEY = "account_type";
     Context mContext;
     String titles[];/*{"Calender", "Take Test", "Facility", "Achievments", "Lunch Menu", "Forms"};*/
@@ -36,11 +36,11 @@ public class MainFragment extends Fragment {
     //TypedArray stdImg;
 
 
-    public static MainFragment newInstance(LoginResponse loginResponse) {
+    public static MainFragment newInstance(StudentParentResp studentParentResp) {
 
         MainFragment mainFragment = new MainFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ACCOUNT_KEY, loginResponse);
+        bundle.putSerializable(ACCOUNT_KEY, studentParentResp);
         mainFragment.setArguments(bundle);
         return mainFragment;
 
@@ -55,7 +55,7 @@ public class MainFragment extends Fragment {
 
         mContext= getActivity();
 
-        loginResponse = (LoginResponse) getArguments().getSerializable(ACCOUNT_KEY);
+        studentParentResp = (StudentParentResp) getArguments().getSerializable(ACCOUNT_KEY);
 
         recyclerView = v.findViewById(R.id.recycler_view);
 
@@ -63,27 +63,26 @@ public class MainFragment extends Fragment {
         mLayoutManager = new GridLayoutManager(mContext,3);
         recyclerView.setLayoutManager(mLayoutManager);
 
-
-        loadCustomGridAdapter(loginResponse);
+        loadCustomGridAdapter(studentParentResp);
 
 
         return v;
     }
 
-    private void loadCustomGridAdapter(LoginResponse loginResponse) {
+    private void loadCustomGridAdapter(StudentParentResp studentParentResp) {
 
-        if (loginResponse.getUsertype().equalsIgnoreCase("parent" ) || loginResponse.getUsertype().equalsIgnoreCase("student" )) {
+        if (studentParentResp.getUsertype().equalsIgnoreCase("parent" ) || studentParentResp.getUsertype().equalsIgnoreCase("student" )) {
 
             titles = getResources().getStringArray(R.array.stud_parent_dashboard_titles);
             imgIds = getResources().obtainTypedArray(R.array.student_img_icons);
 
-        } else if (loginResponse.getUsertype().equalsIgnoreCase("admin" )) {
+        } else if (studentParentResp.getUsertype().equalsIgnoreCase("admin" )) {
 
-            titles = getResources().getStringArray(R.array.teacher_dashboard_titles);
-            imgIds = getResources().obtainTypedArray(R.array.teacher_img_icons);
+            titles = getResources().getStringArray(R.array.admin_dashboard_titles);
+            imgIds = getResources().obtainTypedArray(R.array.admin_img_icons);
 
 
-        } else if (loginResponse.getUsertype().equalsIgnoreCase("teacher" )) {
+        } else if (studentParentResp.getUsertype().equalsIgnoreCase("teacher" )) {
 
             titles = getResources().getStringArray(R.array.teacher_dashboard_titles);
             imgIds = getResources().obtainTypedArray(R.array.teacher_img_icons);
@@ -95,7 +94,7 @@ public class MainFragment extends Fragment {
         }
 
 
-       mAdapter = new HomeMenuAdapter(titles, imgIds, getActivity(), loginResponse);
+       mAdapter = new HomeMenuAdapter(titles, imgIds, getActivity(), studentParentResp);
 
        recyclerView.setAdapter(mAdapter);
 

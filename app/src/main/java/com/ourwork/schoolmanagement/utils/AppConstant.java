@@ -15,6 +15,7 @@ public class AppConstant {
     public static final int RESPONSE_CODE_TOKEN_EXPIRED = 401;
     public static final String API_RESPONSE_FAILURE = "API Call Response Failure";
     public static final String APP_NOT_DEVELOPED_YET = "Not Developed Yet !";
+    public static final String APP_RESPONSE_NO_DATA = "No Data Found!";
 
     public static final String CONTENT_TYPE = "application/json";
 
@@ -51,10 +52,17 @@ public class AppConstant {
     public static final String URL_STUDENT_ATTENDANCE="student_attendance";
     public static final String URL_EXAM_SCHEDULE= "examschedule";
     public static final String URL_MARKS = "mark";
+
     public static final String URL_CLASS_LIST = "classes";
-    public static final String URL_SECTION_LIST = "get_section";
+    public static final String URL_SECTION_LIST = "getsection";
+    public static final String URL_SUBJECT_LIST = "subject";
+
     public static final String URL_STUDENT_LIST_FOR_ATTENDANCE = "student_list_for_attendance";
     public static final String URL_HOMEWORK = "homework";
+    public static final String URL_TEACHER_LIST = "teacher";
+    public static final String URL_UPLOAD_ASSIGNMENT = "add_assignment";
+    public static final String URL_UPLOAD_HOMEWORK= "add_homework";
+
 
 
     public static final int[] leapYearMonthDays = new int[] {31,29,31,30,31,30,31,31,30,31,30,31};

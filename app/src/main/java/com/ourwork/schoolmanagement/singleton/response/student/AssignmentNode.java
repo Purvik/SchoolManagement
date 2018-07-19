@@ -3,63 +3,65 @@ package com.ourwork.schoolmanagement.singleton.response.student;
 
 import com.google.gson.annotations.SerializedName;
 
+
 @SuppressWarnings("unused")
 public class AssignmentNode {
 
-         
+    
     private String assignmentID;
-         
+    
     private String assignuserID;
-         
+    
     private String assignusertypeID;
-         
+    
     private String classesID;
-
+    @SerializedName("create_date")
     private String createDate;
-
+    @SerializedName("create_userID")
     private String createUserID;
-
+    @SerializedName("create_username")
     private String createUsername;
-
+    @SerializedName("create_usertype")
     private String createUsertype;
-         
+    
     private String deadlinedate;
-         
+    
     private String description;
-         
+    
     private String file;
-         
+    
     private String finalmark;
-
+    @SerializedName("modify_date")
     private String modifyDate;
-         
+    
     private String originalfile;
-         
+    
     private String passmark;
-         
+    @SerializedName("school_id")
+    private String schoolId;
+    
     private String schoolyearID;
-         
+    
     private String sectionID;
-         
+    
     private String subject;
-
+    @SerializedName("subject_author")
     private String subjectAuthor;
-
+    @SerializedName("subject_code")
     private String subjectCode;
-         
+    
     private String subjectID;
-         
+    
     private String teacherID;
-
     @SerializedName("teacher_name")
     private String teacherName;
-         
+    
     private String title;
-         
+    
     private String type;
-         
+    
     private String userID;
-         
+    
     private String usertypeID;
 
     public String getAssignmentID() {
@@ -182,6 +184,14 @@ public class AssignmentNode {
         this.passmark = passmark;
     }
 
+    public String getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(String schoolId) {
+        this.schoolId = schoolId;
+    }
+
     public String getSchoolyearID() {
         return schoolyearID;
     }
@@ -278,36 +288,4 @@ public class AssignmentNode {
         this.usertypeID = usertypeID;
     }
 
-    @Override
-    public String toString() {
-        return "AssignmentNode{" +
-                "assignmentID='" + assignmentID + '\'' +
-                ", assignuserID='" + assignuserID + '\'' +
-                ", assignusertypeID='" + assignusertypeID + '\'' +
-                ", classesID='" + classesID + '\'' +
-                ", createDate='" + createDate + '\'' +
-                ", createUserID='" + createUserID + '\'' +
-                ", createUsername='" + createUsername + '\'' +
-                ", createUsertype='" + createUsertype + '\'' +
-                ", deadlinedate='" + deadlinedate + '\'' +
-                ", description='" + description + '\'' +
-                ", file='" + file + '\'' +
-                ", finalmark='" + finalmark + '\'' +
-                ", modifyDate='" + modifyDate + '\'' +
-                ", originalfile='" + originalfile + '\'' +
-                ", passmark='" + passmark + '\'' +
-                ", schoolyearID='" + schoolyearID + '\'' +
-                ", sectionID='" + sectionID + '\'' +
-                ", subject='" + subject + '\'' +
-                ", subjectAuthor='" + subjectAuthor + '\'' +
-                ", subjectCode='" + subjectCode + '\'' +
-                ", subjectID='" + subjectID + '\'' +
-                ", teacherID='" + teacherID + '\'' +
-                ", teacherName='" + teacherName + '\'' +
-                ", title='" + title + '\'' +
-                ", type='" + type + '\'' +
-                ", userID='" + userID + '\'' +
-                ", usertypeID='" + usertypeID + '\'' +
-                '}';
-    }
 }

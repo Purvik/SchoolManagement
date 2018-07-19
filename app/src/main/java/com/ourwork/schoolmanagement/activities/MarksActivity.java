@@ -22,7 +22,7 @@ import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.MarkListAdapter;
 import com.ourwork.schoolmanagement.singleton.MarkNode;
 import com.ourwork.schoolmanagement.singleton.request.student.MarkStudentRequest;
-import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
+import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
 import com.ourwork.schoolmanagement.singleton.response.student.MarkResponseData;
 import com.ourwork.schoolmanagement.utils.AlertMessage;
 import com.ourwork.schoolmanagement.utils.AppConstant;
@@ -46,7 +46,7 @@ public class MarksActivity extends AppCompatActivity implements RewardedVideoAdL
     ArrayList<MarkNode> markNodeArrayList;
     Toolbar toolbar;
     MarkListAdapter markListAdapter;
-    LoginResponse loginResponse;
+    StudentParentResp studentParentResp;
     ProgressDialog pDialog;
 
     private RewardedVideoAd mRewardedVideoAd;
@@ -74,9 +74,9 @@ public class MarksActivity extends AppCompatActivity implements RewardedVideoAdL
 
         loadRewardedVideoAd();
 
-        loginResponse = (LoginResponse) getIntent().getExtras().getSerializable("loginResponse");
+        studentParentResp = (StudentParentResp) getIntent().getExtras().getSerializable("loginResponse");
 
-        if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
+        if (studentParentResp.getUsertype().equalsIgnoreCase("student")) {
 
             //for Student
 
@@ -86,9 +86,9 @@ public class MarksActivity extends AppCompatActivity implements RewardedVideoAdL
             pDialog.show();
 
             MarkStudentRequest markStudentRequest = new MarkStudentRequest();
-            markStudentRequest.setSchoolyearID(loginResponse.getDefaultschoolyearID());
-            markStudentRequest.setUsername(loginResponse.getUsername());
-            markStudentRequest.setUsertypeID(loginResponse.getUsertypeID());
+            markStudentRequest.setSchoolyearID(studentParentResp.getDefaultschoolyearID());
+            markStudentRequest.setUsername(studentParentResp.getUsername());
+            markStudentRequest.setUsertypeID(studentParentResp.getUsertypeID());
 
             Log.d(TAG, "" + markStudentRequest.toString());
 
@@ -128,7 +128,7 @@ public class MarksActivity extends AppCompatActivity implements RewardedVideoAdL
 
 
 
-        } else if (loginResponse.getUsertype().equalsIgnoreCase("teacher")) {
+        } else if (studentParentResp.getUsertype().equalsIgnoreCase("teacher")) {
 
             //for Teacher
             Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();

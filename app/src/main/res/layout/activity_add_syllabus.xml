@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <TextView
+            android:id="@+id/tvSelectClassLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/tv_label_Class"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinnerClassList"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spinner_height"
+            android:layout_marginTop="8dp"
+            android:focusedByDefault="true"
+            android:background="@drawable/edt_background"
+            app:layout_constraintEnd_toEndOf="@+id/tvSelectClassLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvSelectClassLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvSelectClassLabel" />
+
+        <!--<TextView
+            android:id="@+id/tvSelectSectionLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tv_label_Section"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/spinnerClassList"
+            app:layout_constraintStart_toStartOf="@+id/spinnerClassList"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerClassList" />
+
+        <Spinner
+            android:id="@+id/spinnerSectionList"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spinner_height"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edt_background"
+            app:layout_constraintEnd_toEndOf="@+id/tvSelectSectionLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvSelectSectionLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvSelectSectionLabel" />
+
+        <TextView
+            android:id="@+id/tvSelectSubjectLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tv_label_Subject"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/spinnerSectionList"
+            app:layout_constraintStart_toStartOf="@+id/spinnerSectionList"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerSectionList" />
+
+
+        <Spinner
+            android:id="@+id/spinnerSubjectList"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spinner_height"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edt_background"
+            app:layout_constraintEnd_toEndOf="@+id/tvSelectSubjectLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvSelectSubjectLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvSelectSubjectLabel" />-->
+
+
+        <TextView
+            android:id="@+id/tvTitleLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tv_label_Title"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/spinnerClassList"
+            app:layout_constraintStart_toStartOf="@+id/spinnerClassList"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerClassList" />
+
+        <EditText
+            android:id="@+id/edtTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edt_background"
+            android:ems="10"
+            android:hint="@string/hint_label_add_title"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="@+id/tvTitleLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvTitleLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleLabel" />
+
+        <TextView
+            android:id="@+id/tvDescriptionLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tv_label_Description"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/edtTitle"
+            app:layout_constraintStart_toStartOf="@+id/edtTitle"
+            app:layout_constraintTop_toBottomOf="@+id/edtTitle" />
+
+        <EditText
+            android:id="@+id/edtDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edt_background"
+            android:ems="10"
+            android:hint="@string/hint_lable_description"
+            android:inputType="textMultiLine"
+            app:layout_constraintEnd_toEndOf="@+id/tvDescriptionLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvDescriptionLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvDescriptionLabel" />
+
+        <!--<TextView
+            android:id="@+id/tvDeadlineDateLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tv_label_DeadlineDate"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/edtDescription"
+            app:layout_constraintStart_toStartOf="@+id/edtDescription"
+            app:layout_constraintTop_toBottomOf="@+id/edtDescription" />
+
+
+
+        <EditText
+            android:id="@+id/edtDeadlineDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edt_background"
+            android:ems="10"
+            android:hint="@string/hint_label_date"
+            android:inputType="date"
+            app:layout_constraintEnd_toEndOf="@+id/tvDeadlineDateLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvDeadlineDateLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvDeadlineDateLabel" />-->
+
+        <Button
+            android:id="@+id/btnSelectFileToUpload"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/btn_label_file_upload"
+            android:background="@drawable/background_accent_color_border"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
+            android:fontFamily="@font/antic"
+            app:layout_constraintHorizontal_weight="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/tvUploadFileName"
+            app:layout_constraintStart_toStartOf="@+id/edtDescription"
+            app:layout_constraintTop_toBottomOf="@+id/edtDescription"/>
+
+        <TextView
+            android:id="@+id/tvUploadFileName"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:text="filename.txt"
+            android:padding="4dp"
+            android:textSize="14sp"
+            app:layout_constraintHorizontal_weight="1"
+            android:background="@drawable/edt_background"
+            app:layout_constraintEnd_toEndOf="@+id/edtDescription"
+            app:layout_constraintStart_toEndOf="@+id/btnSelectFileToUpload"
+            app:layout_constraintTop_toBottomOf="@+id/edtDescription"/>
+
+        <Button
+            android:id="@+id/btnUpload"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/btn_label_syllabus_upload"
+            android:background="@drawable/background_time"
+            android:textColor="@color/caldroid_white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/antic"
+            app:layout_constraintEnd_toEndOf="@+id/tvUploadFileName"
+            app:layout_constraintStart_toStartOf="@+id/btnSelectFileToUpload"
+            app:layout_constraintTop_toBottomOf="@+id/btnSelectFileToUpload"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.design.widget.CoordinatorLayout>

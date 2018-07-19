@@ -10,7 +10,7 @@ public class ParentStudentRequest {
 
     private String school_id;
 
-    private String username;
+    private String studentID;
 
     private String usertypeID;
 
@@ -18,8 +18,8 @@ public class ParentStudentRequest {
         return defaultschoolyearID;
     }
 
-    public String getUsername() {
-        return username;
+    public String getStudentID() {
+        return studentID;
     }
 
     public String getUsertypeID() {
@@ -38,8 +38,8 @@ public class ParentStudentRequest {
         this.school_id = school_id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 
     public void setUsertypeID(String usertypeID) {
@@ -51,7 +51,7 @@ public class ParentStudentRequest {
         return "ParentStudentRequest{" +
                 "defaultschoolyearID='" + defaultschoolyearID + '\'' +
                 ", school_id='" + school_id + '\'' +
-                ", username='" + username + '\'' +
+                ", studentID='" + studentID + '\'' +
                 ", usertypeID='" + usertypeID + '\'' +
                 '}';
     }

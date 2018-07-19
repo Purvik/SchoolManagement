@@ -1,25 +1,21 @@
 package com.ourwork.schoolmanagement.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.adapters.ProfileListAdapter;
-import com.ourwork.schoolmanagement.singleton.StudentUserProfile;
-import com.ourwork.schoolmanagement.singleton.TeacherUserProfile;
-import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
+import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,7 +41,8 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     BaseAdapter profileListAdapter;
     TextView tvDisplayName;
     String jsonString;
-    LoginResponse loginResponse;
+    StudentParentResp studentParentResp;
+    SharedPreferences mPrefs;
 
 
     @Override
@@ -61,21 +58,40 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         btnbackArrow = findViewById(R.id.btnBackArrow);
         btnbackArrow.setOnClickListener(this);
 
+        mPrefs = getSharedPreferences("loggedInAccountInfo",MODE_PRIVATE);
+
         loginResponseSerializable = getIntent().getExtras().getSerializable("loginResponse");
-        loginResponse = (LoginResponse) loginResponseSerializable;
-
-        /*if (profileType.equalsIgnoreCase("student")) {*/
+        studentParentResp = (StudentParentResp) loginResponseSerializable;
 
 
-        if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
+        if (studentParentResp.getUsertype().equalsIgnoreCase("student") || studentParentResp.getUsertype().equalsIgnoreCase("parents")) {
 
-            expandedImage.setImageResource(R.drawable.ic_student_male);
-            userTypeOverlapImageView.setImageResource(R.drawable.ic_student_female);
+            if (studentParentResp.getGender().equalsIgnoreCase("Male")) {
 
-        } else if (loginResponse.getUsertype().equalsIgnoreCase("teacher")) {
+                expandedImage.setImageResource(R.drawable.ic_student_male);
+                userTypeOverlapImageView.setImageResource(R.drawable.ic_student_male);
 
-            expandedImage.setImageResource(R.drawable.ic_teacher_male);
-            userTypeOverlapImageView.setImageResource(R.drawable.ic_teacher_female);
+            } else {
+
+                expandedImage.setImageResource(R.drawable.ic_student_female);
+                userTypeOverlapImageView.setImageResource(R.drawable.ic_student_female);
+
+            }
+
+
+        } else if (studentParentResp.getUsertype().equalsIgnoreCase("teacher") || studentParentResp.getUsertype().equalsIgnoreCase("admin")) {
+
+            if (studentParentResp.getGender().equalsIgnoreCase("Male")) {
+
+                expandedImage.setImageResource(R.drawable.ic_teacher_male);
+                userTypeOverlapImageView.setImageResource(R.drawable.ic_teacher_male);
+
+            } else {
+
+                expandedImage.setImageResource(R.drawable.ic_teacher_female);
+                userTypeOverlapImageView.setImageResource(R.drawable.ic_teacher_female);
+
+            }
 
         } else {
 
@@ -83,10 +99,10 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         }
 
 
-        tvDisplayName.setText(loginResponse.getName());
+        tvDisplayName.setText(studentParentResp.getName());
 
         Gson gson = new Gson();
-        jsonString = gson.toJson(loginResponse);
+        jsonString = gson.toJson(studentParentResp);
         Log.d("User Details String", "onCreate: " + jsonString);
 
         buildArrayList(jsonString);

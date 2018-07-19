@@ -1,6 +1,7 @@
 package com.ourwork.schoolmanagement.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -10,26 +11,31 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.ourwork.schoolmanagement.R;
+import com.ourwork.schoolmanagement.activities.teacher.AddSyllabusActivity;
 import com.ourwork.schoolmanagement.adapters.SubjectPagerAdapter;
 import com.ourwork.schoolmanagement.adapters.SyllabusAdapter;
 import com.ourwork.schoolmanagement.singleton.SingleSubjectDetails;
 import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
-import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
+import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusNode;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusResponseData;
 import com.ourwork.schoolmanagement.utils.AlertMessage;
 import com.ourwork.schoolmanagement.utils.AppConstant;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,8 +58,10 @@ public class SyllabusActivity extends AppCompatActivity {
     SubjectPagerAdapter subjectPagerAdapter;
     TabLayout tabs;
     String userType;
-    LoginResponse loginResponse;
+    StudentParentResp studentParentResp;
+    Serializable loginuserSerail;
     RecyclerView recyclerView;
+    TextView tvEmptyTextView;
     private ProgressDialog pDialog;
 
     private AdView mAdView;
@@ -63,6 +71,8 @@ public class SyllabusActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_syllabus);
 
+        recyclerView = findViewById(R.id.recyclerview);
+        tvEmptyTextView = findViewById(R.id.emptyTextView);
 
         /*viewPager = findViewById(R.id.pager);
         tabs = findViewById(R.id.tabs);*/
@@ -81,27 +91,35 @@ public class SyllabusActivity extends AppCompatActivity {
 
         //Load Ads
         mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
+//        mAdView.setVisibility(View.GONE);
+        final AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(getResources().getString(R.string.ads_test_device_id)).build();
 
-        loginResponse = (LoginResponse) getIntent().getExtras().getSerializable("loginResponse");
 
+        if (getIntent() != null)
+            loginuserSerail = getIntent().getExtras().getSerializable("loginResponse");
 
-        if (loginResponse.getUsertype().equalsIgnoreCase("student")) {
+        Log.e(TAG, "Serial:"+ loginuserSerail);
+
+        studentParentResp = (StudentParentResp) loginuserSerail;
+
+        Log.e(TAG, "user:" +studentParentResp.toString());
+
+        if (studentParentResp.getUsertype().equalsIgnoreCase("student")) {
 
             /*
             * Call Student Syllabus API
             * */
 
             pDialog = new ProgressDialog(this);
-            pDialog.setMessage("loading...");
+            pDialog.setMessage("loading syllabus...");
             pDialog.setCanceledOnTouchOutside(false);
             pDialog.show();
             ParentStudentRequest parentStudentRequest = new ParentStudentRequest();
-            parentStudentRequest.setDefaultschoolyearID(loginResponse.getDefaultschoolyearID());
-            parentStudentRequest.setUsername(loginResponse.getUsername());
-            parentStudentRequest.setUsertypeID(loginResponse.getUsertypeID());
-            parentStudentRequest.setSchool_id(loginResponse.getSchool_id());
+            parentStudentRequest.setDefaultschoolyearID(studentParentResp.getDefaultschoolyearID());
+            parentStudentRequest.setStudentID(studentParentResp.getStudentID());
+            parentStudentRequest.setUsertypeID(studentParentResp.getUsertypeID());
+            parentStudentRequest.setSchool_id(studentParentResp.getSchoolId());
 
             Log.d(TAG, "" + parentStudentRequest.toString());
 
@@ -126,9 +144,10 @@ public class SyllabusActivity extends AppCompatActivity {
 
                             AlertMessage.showMessage(SyllabusActivity.this, R.mipmap.ic_launcher, "ProPathshala Says..", "No Syllabus Record Found!");
 
-                        } else {
+                            recyclerView.setVisibility(View.INVISIBLE);
+                            tvEmptyTextView.setVisibility(View.VISIBLE);
 
-                            recyclerView = findViewById(R.id.recyclerview);
+                        } else {
 
                             int resId = R.anim.layout_animation_slide_from_right;
                             LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(SyllabusActivity.this, resId);
@@ -140,8 +159,15 @@ public class SyllabusActivity extends AppCompatActivity {
                             RecyclerView.Adapter adapter = new SyllabusAdapter(syllabusNodeList, SyllabusActivity.this);
                             recyclerView.setAdapter(adapter);
 
+
                         }
 
+
+                    } else {
+
+                        recyclerView.setVisibility(View.GONE);
+                        tvEmptyTextView.setText(getString(R.string.empty_listview_message));
+                        tvEmptyTextView.setVisibility(View.VISIBLE);
 
                     }
                 }
@@ -151,6 +177,11 @@ public class SyllabusActivity extends AppCompatActivity {
                     if (pDialog.isShowing())
                         pDialog.dismiss();
 
+
+                    recyclerView.setVisibility(View.GONE);
+                    tvEmptyTextView.setText(getString(R.string.error_server));
+                    tvEmptyTextView.setVisibility(View.VISIBLE);
+
                     Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_FAILURE, Toast.LENGTH_LONG).show();
 
 
@@ -158,7 +189,7 @@ public class SyllabusActivity extends AppCompatActivity {
             });
 
 
-        } else if (loginResponse.getUsertype().equalsIgnoreCase("teacher")) {
+        } else if (studentParentResp.getUsertype().equalsIgnoreCase("teacher")) {
 
             /*
             * Call Teacher Syllabus API
@@ -171,7 +202,15 @@ public class SyllabusActivity extends AppCompatActivity {
 
         }
 
-        mAdView.loadAd(adRequest);
+
+     /*   new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mAdView.setVisibility(View.VISIBLE);*/
+                mAdView.loadAd(adRequest);
+       /*     }
+        }, 2000);*/
+
 
         /*String json = loadJSONFromAsset();
         Type type = new TypeToken<ArrayList<SingleSubjectDetails>>() {}.getType();
@@ -221,11 +260,32 @@ public class SyllabusActivity extends AppCompatActivity {
         return json;
     }*/
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        if (studentParentResp.getUsertype().equalsIgnoreCase("teacher")) {
+            getMenuInflater().inflate(R.menu.menu_actionbar_add_item, menu);
+        }
+
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                break;
+
+            case R.id.menu_item_add:
+
+                //Open add assignment activity for the teacher
+                Intent addAssignmentIntent = new Intent(SyllabusActivity.this, AddSyllabusActivity.class);
+                addAssignmentIntent.putExtra("loginResponse", studentParentResp);
+                startActivity(addAssignmentIntent);
+
+
                 break;
         }
         return true;

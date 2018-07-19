@@ -10,12 +10,22 @@ public class ParentTeacherRequest {
 
     private String usertypeID;
 
+    private String school_id;
+
     public String getDefaultschoolyearID() {
         return defaultschoolyearID;
     }
 
     public void setDefaultschoolyearID(String defaultschoolyearID) {
         this.defaultschoolyearID = defaultschoolyearID;
+    }
+
+    public String getSchool_id() {
+        return school_id;
+    }
+
+    public void setSchool_id(String school_id) {
+        this.school_id = school_id;
     }
 
     public String getUsername() {

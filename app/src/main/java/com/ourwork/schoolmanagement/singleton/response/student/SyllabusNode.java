@@ -25,6 +25,8 @@ public class SyllabusNode {
        
     private String usertypeID;
 
+    private String school_id;
+
     public String getClassesID() {
         return classesID;
     }
@@ -79,6 +81,14 @@ public class SyllabusNode {
 
     public void setSyllabusID(String syllabusID) {
         this.syllabusID = syllabusID;
+    }
+
+    public String getSchool_id() {
+        return school_id;
+    }
+
+    public void setSchool_id(String school_id) {
+        this.school_id = school_id;
     }
 
     public String getTitle() {

@@ -14,15 +14,12 @@ import android.widget.Toast;
 
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.activities.AssignmentActivity;
-import com.ourwork.schoolmanagement.activities.ExamScheduleActivity;
 import com.ourwork.schoolmanagement.activities.HomeworkActivity;
-import com.ourwork.schoolmanagement.activities.MarksActivity;
-import com.ourwork.schoolmanagement.activities.NoticeActivity;
 import com.ourwork.schoolmanagement.activities.SyllabusActivity;
 import com.ourwork.schoolmanagement.activities.TimeTableActivity;
-import com.ourwork.schoolmanagement.activities.student.StudentAttendanceActivity;
+import com.ourwork.schoolmanagement.activities.admin.TeacherListActivity;
 import com.ourwork.schoolmanagement.activities.teacher.TeacherAttendanceActivity;
-import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
+import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
 import com.ourwork.schoolmanagement.utils.AppConstant;
 import com.ourwork.schoolmanagement.utils.SquareCardView;
 
@@ -35,13 +32,13 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
     private String[] mTitles;
     private TypedArray mImgIds;
     private Context mContext;
-    private LoginResponse mLoginResponse;
+    private StudentParentResp mStudentParentResp;
 
-    public HomeMenuAdapter(String[] mTitles, TypedArray mImgIds, Context mContext, LoginResponse mLoginResponse) {
+    public HomeMenuAdapter(String[] mTitles, TypedArray mImgIds, Context mContext, StudentParentResp mStudentParentResp) {
         this.mTitles = mTitles;
         this.mImgIds = mImgIds;
         this.mContext = mContext;
-        this.mLoginResponse = mLoginResponse;
+        this.mStudentParentResp = mStudentParentResp;
     }
 
     @Override
@@ -59,7 +56,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
         holder.mImageView.setImageDrawable(mImgIds.getDrawable(position));
         holder.mTextView.setText(mTitles[position]);
-        holder.mImageView.setOnClickListener(new ClickListener(mTitles[position]));
+        holder.itemView.setOnClickListener(new ClickListener(mTitles[position]));
 
         //holder.mainCardView.animate().alpha(1.0f).setDuration(250);
 
@@ -100,11 +97,26 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
             switch (title) {
 
+                case "Teachers":
+
+                    intent = new Intent(mContext, TeacherListActivity.class);
+                    intent.putExtra("loginResponse", mStudentParentResp);
+                    mContext.startActivity(intent);
+                    /*Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();*/
+
+                    break;
+
+                case "Students":
+
+                    Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+
+                    break;
+
 
                 case "Syllabus":
 
                     intent = new Intent(mContext, SyllabusActivity.class);
-                    intent.putExtra("loginResponse", mLoginResponse);
+                    intent.putExtra("loginResponse", mStudentParentResp);
                     mContext.startActivity(intent);
 
                     break;
@@ -119,7 +131,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
                 case "Home Work":
 
                     intent = new Intent(mContext, HomeworkActivity.class);
-                    intent.putExtra("loginResponse", mLoginResponse);
+                    intent.putExtra("loginResponse", mStudentParentResp);
                     mContext.startActivity(intent);
 
                     break;
@@ -127,7 +139,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
                 case "Assignments":
 
                     intent = new Intent(mContext, AssignmentActivity.class);
-                    intent.putExtra("loginResponse", mLoginResponse);
+                    intent.putExtra("loginResponse", mStudentParentResp);
                     mContext.startActivity(intent);
 
                     break;
@@ -135,53 +147,104 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
                 case "Attendance":
 
 
-                    if (mLoginResponse.getUsertype() .equalsIgnoreCase( "student")) {
+                    if (mStudentParentResp.getUsertype().equalsIgnoreCase("student")) {
 
                         //Student Login
-                        intent = new Intent(mContext, StudentAttendanceActivity.class);
-                        intent.putExtra("loginResponse", mLoginResponse);
-                        mContext.startActivity(intent);
+                        /*intent = new Intent(mContext, StudentAttendanceActivity.class);
+                        intent.putExtra("loginResponse", mStudentParentResp);
+                        mContext.startActivity(intent);*/
 
-                    } else if (mLoginResponse.getUsertype() .equalsIgnoreCase( "teacher")) {
+                        Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+
+                    } else if (mStudentParentResp.getUsertype().equalsIgnoreCase("teacher")) {
 
                         //Teacher Login
                         intent = new Intent(mContext, TeacherAttendanceActivity.class);
-                        intent.putExtra("loginResponse", mLoginResponse);
+                        intent.putExtra("loginResponse", mStudentParentResp);
                         mContext.startActivity(intent);
 
-                    } else{
+                        //Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+
+                    } else {
 
                         //Admin Login
+                        Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                     }
 
 
+                    break;
+
+                case "Behaviour":
+
+                    /*intent = new Intent(mContext, ExamScheduleActivity.class);
+                    intent.putExtra("loginResponse", mStudentParentResp);
+                    mContext.startActivity(intent);*/
+
+                    Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                     break;
 
+                case "Parents Meeting":
+
+                    /*intent = new Intent(mContext, ExamScheduleActivity.class);
+                    intent.putExtra("loginResponse", mStudentParentResp);
+                    mContext.startActivity(intent);*/
+
+                    Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+
+                    break;
+
+                case "Notice Board":
+
+                    /*intent = new Intent(mContext, ExamScheduleActivity.class);
+                    intent.putExtra("loginResponse", mStudentParentResp);
+                    mContext.startActivity(intent);*/
+
+                    Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+
+                    break;
+
+
                 case "Exam Schedule":
 
-                    intent = new Intent(mContext, ExamScheduleActivity.class);
-                    intent.putExtra("loginResponse", mLoginResponse);
-                    mContext.startActivity(intent);
+                    /*intent = new Intent(mContext, ExamScheduleActivity.class);
+                    intent.putExtra("loginResponse", mStudentParentResp);
+                    mContext.startActivity(intent);*/
+
+                    Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                     break;
 
 
                 case "Results":
 
-                    intent = new Intent(mContext, MarksActivity.class);
-                    intent.putExtra("loginResponse", mLoginResponse);
-                    mContext.startActivity(intent);
+                    /*intent = new Intent(mContext, MarksActivity.class);
+                    intent.putExtra("loginResponse", mStudentParentResp);
+                    mContext.startActivity(intent);*/
+
+                    Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+
+                    break;
+
+                case "Fees Payment":
+
+                    /*intent = new Intent(mContext, MarksActivity.class);
+                    intent.putExtra("loginResponse", mStudentParentResp);
+                    mContext.startActivity(intent);*/
+
+                    Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                     break;
 
 
                 case "Notifications":
 
-                    intent = new Intent(mContext, NoticeActivity.class);
-                    intent.putExtra("loginResponse", mLoginResponse);
-                    mContext.startActivity(intent);
+                    /*intent = new Intent(mContext, NoticeActivity.class);
+                    intent.putExtra("loginResponse", mStudentParentResp);
+                    mContext.startActivity(intent);*/
+
+                    Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                     break;
 
@@ -191,7 +254,17 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
                     mContext.startActivity(intent);*/
 
 
-                   Toast.makeText(mContext, ""+ AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+
+                    break;
+
+                case "Chat":
+
+                    /*intent = new Intent(mContext, GalleryActivity.class);
+                    mContext.startActivity(intent);*/
+
+
+                    Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                     break;
 

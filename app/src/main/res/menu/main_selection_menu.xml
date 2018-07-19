@@ -16,6 +16,16 @@
             android:visible="true" />
 
         <item
+            android:id="@+id/nav_teachers"
+            android:icon="@drawable/ic_teacher_male"
+            android:title="@string/nav_tv_teachers" />
+
+        <item
+            android:id="@+id/nav_students"
+            android:icon="@drawable/ic_student_male"
+            android:title="@string/nav_tv_students" />
+
+        <item
             android:id="@+id/nav_syllabus"
             android:icon="@drawable/ic_syllabus"
             android:title="@string/nav_tv_syllabus" />

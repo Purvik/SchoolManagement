@@ -4,12 +4,11 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.ourwork.schoolmanagement.singleton.response.LoginResponse;
+import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
 
 /**
  * Created by Purvik Rana on 19-05-2018.
  */
-
 
 
 public class AppSharedPreferences {
@@ -17,30 +16,32 @@ public class AppSharedPreferences {
 
     private static final String TAG = "AppPreferences";
 
-    public static void  storeAppPreferences(SharedPreferences pref, LoginResponse loginResponse){
+    public static void storeUserLogInUserAppPreferences(SharedPreferences pref, StudentParentResp studentParentResp) {
         SharedPreferences.Editor prefsEditor = pref.edit();
         Gson gson = new Gson();
-        String json = gson.toJson(loginResponse);
-        Log.d(TAG, "storeAppPreferences: " + json);
+        String json = gson.toJson(studentParentResp);
+
+        Log.d(TAG, "storeUserLogInUserAppPreferences: " + json);
         prefsEditor.putString("LoggedInAccountUser", json);
         prefsEditor.apply();
     }
 
-    public static LoginResponse getAppPreferences(SharedPreferences pref){
+    public static StudentParentResp getUserlogInAppPreferences(SharedPreferences pref) {
         Gson gson = new Gson();
         String json = pref.getString("LoggedInAccountUser", "");
-        LoginResponse loginResponse = gson.fromJson(json, LoginResponse.class);
-        Log.d(TAG, json + "getAppPreferences: " + loginResponse);
-        return loginResponse;
+
+        Log.e(TAG, "getUserlogInAppPreferences: " + json);
+
+        return gson.fromJson(json, StudentParentResp.class);
+
     }
-    public static void removeStoredUserAccount(SharedPreferences mPrf){
+
+    public static void removeStoredUserAccount(SharedPreferences mPrf) {
 
         SharedPreferences.Editor prefsEditor = mPrf.edit();
         prefsEditor.remove("LoggedInAccountUser").apply();
 
     }
-
-
 
 
 }
