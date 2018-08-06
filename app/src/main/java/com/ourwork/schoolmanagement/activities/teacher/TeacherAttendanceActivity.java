@@ -4,10 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -21,12 +21,15 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.ourwork.schoolmanagement.R;
+import com.ourwork.schoolmanagement.adapters.StudentListAdapter;
 import com.ourwork.schoolmanagement.singleton.request.admin.TeacherListRequest;
 import com.ourwork.schoolmanagement.singleton.request.teacher.GetSectionRequest;
 import com.ourwork.schoolmanagement.singleton.request.teacher.GetStudentListRequest;
 import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
 import com.ourwork.schoolmanagement.singleton.response.teacher.SectionListNode;
 import com.ourwork.schoolmanagement.singleton.response.teacher.SectionListResponseData;
+import com.ourwork.schoolmanagement.singleton.response.teacher.StudentListNode;
+import com.ourwork.schoolmanagement.singleton.response.teacher.StudentListRespData;
 import com.ourwork.schoolmanagement.singleton.response.teacher.TeacherClassNode;
 import com.ourwork.schoolmanagement.singleton.response.teacher.TeacherClassNodeResponseData;
 import com.ourwork.schoolmanagement.utils.AlertMessage;
@@ -35,7 +38,6 @@ import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -55,19 +57,19 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
 
     Toolbar toolbar;
     StudentParentResp studentParentResp;
-    ArrayList<String> classList, sectionList;
+    List<String> classList, sectionList;
     Spinner classListSpinner, sectionListSpinner;
     TextView tvClassListTitle, tvSectionListTitle;
     Context mContext;
     List<TeacherClassNode> teacherClassNodeList;
-    CardView mainCalendarCardView;
+    CardView mainCalendarCardView, studentListCardView;
     String classesId, sectionID;
     List<SectionListNode> sectionNodeList;
-    private ProgressDialog pDialog;
     CaldroidListener caldroidListener;
     TeacherClassNode selectedClassNode;
     SectionListNode selectedSectionNode;
-
+    RecyclerView studentListRecyclerView;
+    private ProgressDialog pDialog;
     private AdView mAdView;
     private AdRequest adRequest;
 
@@ -92,20 +94,24 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
         tvSectionListTitle = findViewById(R.id.tvSelectSectionLabel);
 
         mainCalendarCardView = findViewById(R.id.mainCalendarCardView);
+        studentListCardView = findViewById(R.id.studentListCardView);
+
+        studentListRecyclerView = findViewById(R.id.studentListRecyclerView);
 
         //Initialized Mobile Ads
-       // MobileAds.initialize(this, getResources().getString(R.string.adMob_app_id));
+        // MobileAds.initialize(this, getResources().getString(R.string.adMob_app_id));
 
         //Load Ads
         mAdView = findViewById(R.id.adView);
         adRequest = new AdRequest.Builder()
                 .addTestDevice(getResources().getString(R.string.ads_test_device_id)).build();
 
+
         studentParentResp = (StudentParentResp) getIntent().getExtras().getSerializable("loginResponse");
 
         loadClassList(studentParentResp);
 
-        Toast.makeText(getApplicationContext(), AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -131,7 +137,7 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
 
                     teacherClassNodeList = response.body().getData().getClasses();
 
-                    Log.e(TAG, response.code() + " | " + teacherClassNodeList.size() );
+                    Log.e(TAG, response.code() + " | " + teacherClassNodeList.size());
 
                     if (teacherClassNodeList.size() != 0) {
 
@@ -152,16 +158,18 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
                         classListSpinner.setSelection(0, false);
                         classListSpinner.setOnItemSelectedListener(TeacherAttendanceActivity.this);
 
-                        if(classListSpinner.getVisibility() == View.GONE)
+                        if (classListSpinner.getVisibility() == View.GONE)
                             classListSpinner.setVisibility(View.VISIBLE);
+
+                        if (tvClassListTitle.getVisibility() == View.GONE)
+                            tvClassListTitle.setVisibility(View.VISIBLE);
 
                         tvClassListTitle.animate().alpha(1.0f).setDuration(500);
                         classListSpinner.animate().alpha(1.0f).setDuration(750);
 
 
-
                     } else {
-                        Toast.makeText(getApplicationContext(), "" + AppConstant.APP_RESPONSE_NO_DATA, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_NO_DATA, Toast.LENGTH_LONG).show();
                     }
 
                     if (pDialog.isShowing())
@@ -211,13 +219,19 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
                     Toast.makeText(mContext, "Select a Class from list", Toast.LENGTH_SHORT).show();
 
 
-                }else{
+                } else {
 
                     if (sectionListSpinner.getVisibility() == View.VISIBLE)
                         sectionListSpinner.setVisibility(View.GONE);
 
+                    if (tvSectionListTitle.getVisibility() == View.VISIBLE)
+                        tvSectionListTitle.setVisibility(View.GONE);
+
                     if (mainCalendarCardView.getVisibility() == View.VISIBLE)
                         mainCalendarCardView.setVisibility(View.GONE);
+
+                    if (studentListCardView.getVisibility() == View.VISIBLE)
+                        studentListCardView.setVisibility(View.GONE);
 
 
                     selectedClassNode = teacherClassNodeList.get(adapterView.getSelectedItemPosition() - 1);
@@ -226,18 +240,17 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
 
                     //Log.e(TAG, "Selected class Id:" + classesId);
 
+                    //Display Progress Dialog
+                    pDialog = new ProgressDialog(this);
+                    pDialog.setMessage("loading sections...");
+                    pDialog.setCanceledOnTouchOutside(false);
+                    pDialog.show();
+
                     GetSectionRequest getSectionRequest = new GetSectionRequest();
                     getSectionRequest.setClassesID(classesId);
                     getSectionRequest.setSchoolId(studentParentResp.getSchoolId());
 
-                    Log.e(TAG, ""+ getSectionRequest.toString() );
-
-
-                    //Display Progress Dialog
-                    pDialog = new ProgressDialog(this);
-                    pDialog.setMessage("Fetching HomeworkSectionNode List for Selected Class ...");
-                    pDialog.setCanceledOnTouchOutside(false);
-                    pDialog.show();
+                    Log.e(TAG, "" + getSectionRequest.toString());
 
                     Call<SectionListResponseData> call = apiCall.section_list(getSectionRequest);
                     call.enqueue(new Callback<SectionListResponseData>() {
@@ -254,8 +267,9 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
                                 sectionNodeList = response.body().getData().getSection();
                                 if (sectionNodeList.size() != 0) {
 
-                                    sectionList = new ArrayList();
+                                    sectionList = new ArrayList<String>();
                                     sectionList.add("Select Section");
+
                                     for (SectionListNode sectionNode : sectionNodeList) {
                                         String sectionName = sectionNode.getSection();
                                         sectionList.add(sectionName);
@@ -263,14 +277,22 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
                                     }
 
                                     //attach array of class names to the section list spinner
-                                    ArrayAdapter dataAdapter = new ArrayAdapter(TeacherAttendanceActivity.this, android.R.layout.simple_spinner_dropdown_item, sectionList);
+                                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
+                                            (mContext, android.R.layout.simple_spinner_item, sectionList);
+
                                     dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+
+
                                     sectionListSpinner.setAdapter(dataAdapter);
                                     sectionListSpinner.setSelection(0, false);
                                     sectionListSpinner.setOnItemSelectedListener(TeacherAttendanceActivity.this);
 
-                                    if(sectionListSpinner.getVisibility() == View.GONE)
+                                    if (tvSectionListTitle.getVisibility() == View.GONE)
+                                        tvSectionListTitle.setVisibility(View.VISIBLE);
+
+                                    if (sectionListSpinner.getVisibility() == View.GONE)
                                         sectionListSpinner.setVisibility(View.VISIBLE);
+
 
                                     //display section list spinner
                                     tvSectionListTitle.animate().alpha(1.0f).setDuration(500);
@@ -302,27 +324,25 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
                 }
 
 
-
-
                 break;
 
             case R.id.sectionListSpinner:
 
                 if (adapterView.getSelectedItemPosition() == 0) {
 
-                    sectionListSpinner.setAdapter(null);
-
                     Toast.makeText(mContext, "Select a Section from list", Toast.LENGTH_SHORT).show();
 
-
-                }else{
+                } else {
 
                     selectedSectionNode = sectionNodeList.get(adapterView.getSelectedItemPosition() - 1);
 
                     sectionID = selectedSectionNode.getSectionID();
-                    Log.e(TAG, "Selected HomeworkSectionNode Id:" + sectionID);
+                    Log.e(TAG, "Selected SectionNode Id:" + sectionID);
 
-                    CaldroidFragment caldroidFragment = new CaldroidFragment();
+
+                    loadStudentList();
+
+                    /*CaldroidFragment caldroidFragment = new CaldroidFragment();
                     Bundle args = new Bundle();
                     Calendar cal = Calendar.getInstance();
                     args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
@@ -341,15 +361,87 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
                     loadCaldroidListener(caldroidFragment);
 
                     mainCalendarCardView.setVisibility(View.VISIBLE);
-                    mainCalendarCardView.animate().alpha(1.0f).setDuration(1000);
+                    mainCalendarCardView.animate().alpha(1.0f).setDuration(1000);*/
 
-                    Toast.makeText(mContext, "Select Date to Load Student List", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(mContext, "Select Date to Load Student List", Toast.LENGTH_LONG).show();
 
 
                 }
 
                 break;
         }
+
+    }
+
+    private void loadStudentList() {
+
+        Log.e(TAG, "loadStudentList: Called");
+
+        //Build Request Node
+        GetStudentListRequest getStudentListRequest = new GetStudentListRequest();
+        getStudentListRequest.setClassesID(Long.parseLong(classesId));
+        getStudentListRequest.setSectionID(Long.parseLong(sectionID));
+        getStudentListRequest.setDefaultschoolyearID(Long.parseLong("1"));
+        getStudentListRequest.setSchoolId(Long.parseLong(studentParentResp.getSchoolId()));
+
+        Log.e(TAG, "GetStudentListRequest: " + getStudentListRequest.toString());
+
+
+        Call<StudentListRespData> getStudentList = apiCall.student_list(getStudentListRequest);
+        getStudentList.enqueue(new Callback<StudentListRespData>() {
+            @Override
+            public void onResponse(Call<StudentListRespData> call, Response<StudentListRespData> response) {
+
+                Log.e(TAG, "Resp Code:" + response.code());
+
+                if (response.code() == AppConstant.RESPONSE_CODE_OK) {
+
+                    List<StudentListNode> studentListNodeList = response.body().getData().getStudents();
+
+                    if (studentListNodeList.size() != 0) {
+
+
+                        StudentListAdapter adapter = new StudentListAdapter(mContext, studentListNodeList);
+
+                        LinearLayoutManager llm = new LinearLayoutManager(mContext);
+                        llm.setOrientation(LinearLayoutManager.VERTICAL);
+                        studentListRecyclerView.setLayoutManager(llm);
+
+                        studentListRecyclerView.setAdapter(adapter);
+
+                        if (studentListCardView.getVisibility() == View.GONE)
+                            studentListCardView.setVisibility(View.VISIBLE);
+
+                        studentListCardView.animate().alpha(1.0f).setDuration(1000);
+
+
+
+
+                    } else {
+                        AlertMessage.showMessage(mContext, "Pro-Pathshala Say..", "Class has no Students.", "OK", R.mipmap.ic_launcher);
+                    }
+
+
+                } else {
+
+
+                }
+
+                if (pDialog.isShowing())
+                    pDialog.dismiss();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<StudentListRespData> call, Throwable t) {
+
+                Toast.makeText(mContext, AppConstant.API_RESPONSE_FAILURE, Toast.LENGTH_SHORT).show();
+
+                if (pDialog.isShowing())
+                    pDialog.dismiss();
+            }
+        });
 
     }
 
@@ -360,19 +452,6 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
             public void onSelectDate(Date date, View view) {
 
                 //load the student list for Current Date
-
-                //Build Request Node
-                GetStudentListRequest getStudentListRequest = new GetStudentListRequest();
-                getStudentListRequest.setLoginuserID(studentParentResp.getLoginuserID());
-                getStudentListRequest.setUsertype(studentParentResp.getUsertype());
-                getStudentListRequest.setUsername(studentParentResp.getUsername());
-                getStudentListRequest.setClassesID(selectedClassNode.getClassesID());
-                getStudentListRequest.setSectionID(selectedSectionNode.getSectionID());
-                getStudentListRequest.setDate(date.toString());
-                //getStudentListRequest.setSchoolyearID(selectedSectionNode.getSchoolId());
-
-                Log.d(TAG, "GetStudentListRequest: " + getStudentListRequest.toString());
-
 
 
             }
@@ -399,7 +478,6 @@ public class TeacherAttendanceActivity extends AppCompatActivity implements Spin
         }
         return true;
     }
-
 
 
 }

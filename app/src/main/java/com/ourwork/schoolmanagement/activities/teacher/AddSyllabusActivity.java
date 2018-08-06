@@ -130,7 +130,7 @@ public class AddSyllabusActivity extends AppCompatActivity implements Spinner.On
 
 
                         } else {
-                            Toast.makeText(getApplicationContext(), "" + AppConstant.APP_RESPONSE_NO_DATA, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_NO_DATA, Toast.LENGTH_LONG).show();
                         }
 
                         edtTitle.clearFocus();
@@ -242,7 +242,7 @@ public class AddSyllabusActivity extends AppCompatActivity implements Spinner.On
         btnUpload = findViewById(R.id.btnUpload);
         /*if (addItemType .equalsIgnoreCase("assignment")) {
             btnUpload.setText(getResources().getString(R.string.btn_label_assignment_upload));
-            toolbar.setTitle("Add New Assignment");
+            toolbar.setTitle("Add New AdminAssignmentListNode");
         }else{
             btnUpload.setText(getResources().getString(R.string.btn_label_homework_upload));
             toolbar.setTitle("Add New Homework");
@@ -419,7 +419,7 @@ public class AddSyllabusActivity extends AppCompatActivity implements Spinner.On
 
 
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "" + AppConstant.APP_RESPONSE_NO_DATA, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_NO_DATA, Toast.LENGTH_LONG).show();
                                 }
 
                                 if (pDialog.isShowing())
@@ -513,7 +513,7 @@ public class AddSyllabusActivity extends AppCompatActivity implements Spinner.On
 
 
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "" + AppConstant.APP_RESPONSE_NO_DATA, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_NO_DATA, Toast.LENGTH_LONG).show();
                                 }
 
                                 if (pDialog.isShowing())

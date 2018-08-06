@@ -70,11 +70,25 @@
     <string name="sample_adMob_app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="ads_test_device_id">6AD94C36A4BB46F171C05D3AFD84DBDE</string>
     <string name="test_banner_ads_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="test_interstitial_ads_id">ca-app-pub-3940256099942544/1033173712</string>
+
+
+    <!--For Testing Keep this uncommented-->
+    <string name="adMob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="banner_ad_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="interstitial_ad_id">ca-app-pub-3940256099942544/1033173712</string>
 
     <!--For Ads Actual IDs-->
-    <string name="adMob_app_id">ca-app-pub-3377185033414651~3780589844</string>
+
+    <!--App Id: ca-app-pub-3377185033414651~3780589844 -->
+    <!--Banner Ad Id: ca-app-pub-3377185033414651/4870294329 -->
+    <!--Interstitial Ad Id: ca-app-pub-3377185033414651/1342537881 -->
+
+    <!--For Release Keep this uncommented-->
+    <!--<string name="adMob_app_id">ca-app-pub-3377185033414651~3780589844</string>
     <string name="banner_ad_id">ca-app-pub-3377185033414651/4870294329</string>
-    <string name="interstitial_ad_id">ca-app-pub-3377185033414651/1342537881</string>
+    <string name="interstitial_ad_id">ca-app-pub-3377185033414651/1342537881</string>-->
+
     <string name="empty_listview_message">This List is Empty..!!</string>
     <string name="nav_tv_teachers">Teachers</string>
     <string name="nav_tv_students">Students</string>
@@ -96,7 +110,7 @@
         <item>Attendance</item>
         <item>Behaviour</item>
         <item>Parents Meeting</item>
-        <item>Notifications</item>
+        <item>Notice Board</item>
         <item>Exam Schedule</item>
         <item>Results</item>
         <item>Sports</item>
@@ -125,6 +139,7 @@
 
         <item>Teachers</item>
         <item>Students</item>
+        <item>Subjects</item>
         <item>Syllabus</item>
         <item>Time Table</item>
         <item>Home Work</item>
@@ -160,4 +175,15 @@
     <string name="btn_label_assignment_upload">UPLOAD ASSIGNMENT</string>
     <string name="btn_label_homework_upload">UPLOAD HOMEWORK</string>
     <string name="btn_label_syllabus_upload">UPLOAD SYLLABUS</string>
+    <string name="student_id_label">ID</string>
+    <string name="tv_student_name_label">NAME</string>
+    <string name="no_assignment_message">Assignments List is Empty !</string>
+    <string name="no_exam_schedule_message">No Exam Schedule Found !</string>
+    <string name="no_syllabus_message">Syllabus List is Empty !</string>
+    <string name="tv_label_student_list">List Of Students</string>
+    <string name="empty_student_list_message">No Students Exist in this Section !</string>
+    <string name="no_event_message">No Event in the list !</string>
+    <string name="nav_tv_subjects">Subjects</string>
+    <string name="tv_label_subject_list">List Of Subjects</string>
+    <string name="tv_label_assignment_list">Assignment List</string>
 </resources>

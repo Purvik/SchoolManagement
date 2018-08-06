@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,13 +28,16 @@ import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.activities.teacher.AddSyllabusActivity;
 import com.ourwork.schoolmanagement.adapters.SubjectPagerAdapter;
 import com.ourwork.schoolmanagement.adapters.SyllabusAdapter;
+import com.ourwork.schoolmanagement.adapters.TeacherSyllabusAdapter;
 import com.ourwork.schoolmanagement.singleton.SingleSubjectDetails;
 import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
+import com.ourwork.schoolmanagement.singleton.request.teacher.GetSyllabusRequest;
 import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusNode;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.SyllabusResponseData;
-import com.ourwork.schoolmanagement.utils.AlertMessage;
+import com.ourwork.schoolmanagement.singleton.response.teacher.TeacherSyllabusNode;
+import com.ourwork.schoolmanagement.singleton.response.teacher.TeacherSyllabusRespData;
 import com.ourwork.schoolmanagement.utils.AppConstant;
 
 import java.io.Serializable;
@@ -59,8 +64,12 @@ public class SyllabusActivity extends AppCompatActivity {
     TabLayout tabs;
     String userType;
     StudentParentResp studentParentResp;
+    List<TeacherSyllabusNode> teacherSyllabusNodeList;
+    List<SyllabusNode> syllabusNodeList;
     Serializable loginuserSerail;
     RecyclerView recyclerView;
+    LinearLayout emptyDisplay;
+    SwipeRefreshLayout swipeRefreshLayout;
     TextView tvEmptyTextView;
     private ProgressDialog pDialog;
 
@@ -71,8 +80,20 @@ public class SyllabusActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_syllabus);
 
+        swipeRefreshLayout = findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                loadSyllabusForStudent();
+
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         recyclerView = findViewById(R.id.recyclerview);
         tvEmptyTextView = findViewById(R.id.emptyTextView);
+        emptyDisplay = findViewById(R.id.emptyDisplay);
 
         /*viewPager = findViewById(R.id.pager);
         tabs = findViewById(R.id.tabs);*/
@@ -107,109 +128,25 @@ public class SyllabusActivity extends AppCompatActivity {
 
         if (studentParentResp.getUsertype().equalsIgnoreCase("student")) {
 
-            /*
-            * Call Student Syllabus API
-            * */
-
-            pDialog = new ProgressDialog(this);
-            pDialog.setMessage("loading syllabus...");
-            pDialog.setCanceledOnTouchOutside(false);
-            pDialog.show();
-            ParentStudentRequest parentStudentRequest = new ParentStudentRequest();
-            parentStudentRequest.setDefaultschoolyearID(studentParentResp.getDefaultschoolyearID());
-            parentStudentRequest.setStudentID(studentParentResp.getStudentID());
-            parentStudentRequest.setUsertypeID(studentParentResp.getUsertypeID());
-            parentStudentRequest.setSchool_id(studentParentResp.getSchoolId());
-
-            Log.d(TAG, "" + parentStudentRequest.toString());
-
-            Call<SyllabusResponseData> call = apiCall.syllabus(parentStudentRequest);
-            call.enqueue(new Callback<SyllabusResponseData>() {
-                @Override
-                public void onResponse(Call<SyllabusResponseData> call, Response<SyllabusResponseData> response) {
-
-
-                    Log.e("Resp", response.code() + " ");
-                    Log.d("Resp", "" + response.body().toString());
-                    if (pDialog.isShowing())
-                        pDialog.dismiss();
-
-                    if (response.code() == AppConstant.RESPONSE_CODE_OK) {
-
-
-                        SyllabusResponse syllabusResponse = response.body().getData();
-                        List<SyllabusNode> syllabusNodeList = syllabusResponse.getSyllabusNodes();
-
-                        if (syllabusNodeList.size() == 0) {
-
-                            AlertMessage.showMessage(SyllabusActivity.this, R.mipmap.ic_launcher, "ProPathshala Says..", "No Syllabus Record Found!");
-
-                            recyclerView.setVisibility(View.INVISIBLE);
-                            tvEmptyTextView.setVisibility(View.VISIBLE);
-
-                        } else {
-
-                            int resId = R.anim.layout_animation_slide_from_right;
-                            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(SyllabusActivity.this, resId);
-                            recyclerView.setLayoutAnimation(animation);
-
-                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(SyllabusActivity.this);
-                            recyclerView.setLayoutManager(mLayoutManager);
-
-                            RecyclerView.Adapter adapter = new SyllabusAdapter(syllabusNodeList, SyllabusActivity.this);
-                            recyclerView.setAdapter(adapter);
-
-
-                        }
-
-
-                    } else {
-
-                        recyclerView.setVisibility(View.GONE);
-                        tvEmptyTextView.setText(getString(R.string.empty_listview_message));
-                        tvEmptyTextView.setVisibility(View.VISIBLE);
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<SyllabusResponseData> call, Throwable t) {
-                    if (pDialog.isShowing())
-                        pDialog.dismiss();
-
-
-                    recyclerView.setVisibility(View.GONE);
-                    tvEmptyTextView.setText(getString(R.string.error_server));
-                    tvEmptyTextView.setVisibility(View.VISIBLE);
-
-                    Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_FAILURE, Toast.LENGTH_LONG).show();
-
-
-                }
-            });
-
+            loadSyllabusForStudent();
 
         } else if (studentParentResp.getUsertype().equalsIgnoreCase("teacher")) {
 
-            /*
-            * Call Teacher Syllabus API
-            * */
-
-            Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+            loadSyllabusForTeacher();
 
         } else {
-            Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
 
+            if(recyclerView.getVisibility() == View.VISIBLE)
+                recyclerView.setVisibility(View.GONE);
+
+            if (emptyDisplay.getVisibility() == View.GONE) {
+                tvEmptyTextView.setText(AppConstant.APP_NOT_DEVELOPED_YET);
+                tvEmptyTextView.setVisibility(View.VISIBLE);
+                emptyDisplay.setVisibility(View.VISIBLE);
+            }
         }
 
-
-     /*   new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mAdView.setVisibility(View.VISIBLE);*/
                 mAdView.loadAd(adRequest);
-       /*     }
-        }, 2000);*/
 
 
         /*String json = loadJSONFromAsset();
@@ -243,23 +180,185 @@ public class SyllabusActivity extends AppCompatActivity {
         }*/
     }
 
+    private void loadSyllabusForTeacher() {
 
-    /*public String loadJSONFromAsset() {
-        String json = null;
-        try {
-            InputStream is = (SyllabusActivity.this.getAssets().open("syllabus.json"));
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-    }*/
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("loading syllabus...");
+        pDialog.setCanceledOnTouchOutside(false);
+        pDialog.show();
 
+        GetSyllabusRequest getSyllabusRequest = new GetSyllabusRequest();
+        getSyllabusRequest.setDefaultschoolyearID(Long.parseLong("1"));
+        getSyllabusRequest.setLoginuserID(Long.parseLong(studentParentResp.getLoginuserID()));
+        getSyllabusRequest.setSchoolId(Long.parseLong(studentParentResp.getSchoolId()));
+
+        Call<TeacherSyllabusRespData> call = apiCall.t_get_syllabus(getSyllabusRequest);
+        call.enqueue(new Callback<TeacherSyllabusRespData>() {
+            @Override
+            public void onResponse(Call<TeacherSyllabusRespData> call, Response<TeacherSyllabusRespData> response) {
+
+                Log.e(TAG, "onResponse: "+ response.code());
+                if (response.code() == AppConstant.RESPONSE_CODE_OK) {
+
+                    teacherSyllabusNodeList = response.body().getData().getSyllabuss();
+                    Toast.makeText(getApplicationContext(),"Data Received", Toast.LENGTH_SHORT).show();
+
+                    Log.e(TAG, "onResponse: " +teacherSyllabusNodeList.size());
+
+                    if (teacherSyllabusNodeList.size() == 0) {
+
+                        //AlertMessage.showMessage(SyllabusActivity.this, R.mipmap.ic_launcher, "ProPathshala Says..", "No Syllabus Record Found!");
+
+                        recyclerView.setVisibility(View.INVISIBLE);
+                        tvEmptyTextView.setText(getResources().getString(R.string.no_syllabus_message));
+                        emptyDisplay.setVisibility(View.VISIBLE);
+
+                    } else {
+
+                        if(emptyDisplay.getVisibility() == View.VISIBLE)
+                            emptyDisplay.setVisibility(View.GONE);
+
+                        if(recyclerView.getVisibility() == View.GONE)
+                            recyclerView.setVisibility(View.VISIBLE);
+
+                        int resId = R.anim.layout_animation_slide_from_right;
+                        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(SyllabusActivity.this, resId);
+                        recyclerView.setLayoutAnimation(animation);
+
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(SyllabusActivity.this);
+                        recyclerView.setLayoutManager(mLayoutManager);
+
+                        RecyclerView.Adapter adapter = new TeacherSyllabusAdapter(teacherSyllabusNodeList, SyllabusActivity.this);
+                        recyclerView.setAdapter(adapter);
+                    }
+
+
+
+                } else {
+
+                    recyclerView.setVisibility(View.INVISIBLE);
+                    tvEmptyTextView.setText(getResources().getString(R.string.no_syllabus_message));
+                    emptyDisplay.setVisibility(View.VISIBLE);
+
+
+                }
+
+                if (pDialog.isShowing())
+                    pDialog.dismiss();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<TeacherSyllabusRespData> call, Throwable t) {
+
+                if (pDialog.isShowing())
+                    pDialog.dismiss();
+
+                recyclerView.setVisibility(View.GONE);
+                tvEmptyTextView.setText(getString(R.string.error_server));
+                tvEmptyTextView.setVisibility(View.VISIBLE);
+
+                Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_FAILURE, Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+
+
+
+
+    }
+
+    private void loadSyllabusForStudent() {
+
+        /*
+         * Call Student Syllabus API
+         * */
+
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("loading syllabus...");
+        pDialog.setCanceledOnTouchOutside(false);
+        pDialog.show();
+
+        ParentStudentRequest parentStudentRequest = new ParentStudentRequest();
+        parentStudentRequest.setDefaultschoolyearID(studentParentResp.getDefaultschoolyearID());
+        parentStudentRequest.setStudentID(studentParentResp.getStudentID());
+        parentStudentRequest.setUsertypeID(studentParentResp.getUsertypeID());
+        parentStudentRequest.setSchool_id(studentParentResp.getSchoolId());
+
+        Log.d(TAG, "" + parentStudentRequest.toString());
+
+        Call<SyllabusResponseData> call = apiCall.syllabus(parentStudentRequest);
+        call.enqueue(new Callback<SyllabusResponseData>() {
+            @Override
+            public void onResponse(Call<SyllabusResponseData> call, Response<SyllabusResponseData> response) {
+
+
+                Log.e("Resp", response.code() + " ");
+                Log.d("Resp", "" + response.body().toString());
+                if (pDialog.isShowing())
+                    pDialog.dismiss();
+
+                if (response.code() == AppConstant.RESPONSE_CODE_OK) {
+
+                    SyllabusResponse syllabusResponse = response.body().getData();
+                    syllabusNodeList = syllabusResponse.getSyllabusNodes();
+
+                    if (syllabusNodeList.size() == 0) {
+
+                        //AlertMessage.showMessage(SyllabusActivity.this, R.mipmap.ic_launcher, "ProPathshala Says..", "No Syllabus Record Found!");
+
+                        recyclerView.setVisibility(View.INVISIBLE);
+                        tvEmptyTextView.setText(getResources().getString(R.string.no_syllabus_message));
+                        emptyDisplay.setVisibility(View.VISIBLE);
+
+                    } else {
+
+                        if(emptyDisplay.getVisibility() == View.VISIBLE)
+                            emptyDisplay.setVisibility(View.GONE);
+
+                        if(recyclerView.getVisibility() == View.GONE)
+                            recyclerView.setVisibility(View.VISIBLE);
+
+                        int resId = R.anim.layout_animation_slide_from_right;
+                        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(SyllabusActivity.this, resId);
+                        recyclerView.setLayoutAnimation(animation);
+
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(SyllabusActivity.this);
+                        recyclerView.setLayoutManager(mLayoutManager);
+
+                        RecyclerView.Adapter adapter = new SyllabusAdapter(syllabusNodeList, SyllabusActivity.this);
+                        recyclerView.setAdapter(adapter);
+                    }
+
+
+                } else {
+
+                    recyclerView.setVisibility(View.GONE);
+                    tvEmptyTextView.setText(getString(R.string.empty_listview_message));
+                    tvEmptyTextView.setVisibility(View.VISIBLE);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SyllabusResponseData> call, Throwable t) {
+                if (pDialog.isShowing())
+                    pDialog.dismiss();
+
+
+                recyclerView.setVisibility(View.GONE);
+                tvEmptyTextView.setText(getString(R.string.error_server));
+                tvEmptyTextView.setVisibility(View.VISIBLE);
+
+                Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_FAILURE, Toast.LENGTH_LONG).show();
+
+
+            }
+        });
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

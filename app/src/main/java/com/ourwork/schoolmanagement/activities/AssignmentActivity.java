@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -24,15 +25,17 @@ import com.google.android.gms.ads.MobileAds;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.activities.teacher.AddAssignmentHomeworkActivity;
 import com.ourwork.schoolmanagement.adapters.AssignmentAdapter;
-import com.ourwork.schoolmanagement.singleton.request.student.ParentStudentRequest;
+import com.ourwork.schoolmanagement.adapters.TeacherAssignmentAdapter;
+import com.ourwork.schoolmanagement.singleton.request.student.StudentRequest;
+import com.ourwork.schoolmanagement.singleton.request.teacher.GetAssignmentRequst;
 import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
-import com.ourwork.schoolmanagement.singleton.response.student.AssignmentNode;
+import com.ourwork.schoolmanagement.singleton.response.admin.AdminAssignmentListNode;
 import com.ourwork.schoolmanagement.singleton.response.student.AssignmentResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.AssignmentResponseData;
-import com.ourwork.schoolmanagement.utils.AlertMessage;
+import com.ourwork.schoolmanagement.singleton.response.teacher.TeacherAssignmentNode;
+import com.ourwork.schoolmanagement.singleton.response.teacher.TeacherAssignmentRespData;
 import com.ourwork.schoolmanagement.utils.AppConstant;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -51,8 +54,11 @@ public class AssignmentActivity extends AppCompatActivity {
     Context mContext;
     Toolbar toolbar;
     RecyclerView recyclerView;
+    List<TeacherAssignmentNode> teacherAssignmentNodeList;
+    List<AdminAssignmentListNode> assignmentNodes;
+    LinearLayout emptyDisplay;
     TextView tvEmptyView;
-    ArrayList<AssignmentNode> assignmentNodeArrayList;
+    SwipeRefreshLayout swipeRefreshLayout;
     StudentParentResp studentParentResp;
     private ProgressDialog pDialog;
 
@@ -63,10 +69,56 @@ public class AssignmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assignment);
 
+        mContext = AssignmentActivity.this;
+
+        if(getIntent() != null)
+            studentParentResp = (StudentParentResp) getIntent().getExtras().getSerializable("loginResponse");
+
+        swipeRefreshLayout = findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                if (studentParentResp.getUsertype().equalsIgnoreCase("student")) {
+
+                    loadAssignmentForStudent();
+
+
+                } else if (studentParentResp.getUsertype().equalsIgnoreCase("teacher")) {
+
+                    /*if(recyclerView.getVisibility() == View.VISIBLE)
+                        recyclerView.setVisibility(View.GONE);
+
+                    if (emptyDisplay.getVisibility() == View.GONE) {
+                        tvEmptyView.setText(AppConstant.APP_NOT_DEVELOPED_YET);
+                        tvEmptyView.setVisibility(View.VISIBLE);
+                        emptyDisplay.setVisibility(View.VISIBLE);
+                    }*/
+
+                    loadAssignmentForTeacher();
+
+
+                } else {
+
+                    if(recyclerView.getVisibility() == View.VISIBLE)
+                        recyclerView.setVisibility(View.GONE);
+
+                    if (emptyDisplay.getVisibility() == View.GONE) {
+                        tvEmptyView.setText(AppConstant.APP_NOT_DEVELOPED_YET);
+                        tvEmptyView.setVisibility(View.VISIBLE);
+                        emptyDisplay.setVisibility(View.VISIBLE);
+                    }
+                }
+
+
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         recyclerView = findViewById(R.id.recyclerview);
         tvEmptyView = findViewById(R.id.emptyTextView);
+        emptyDisplay = findViewById(R.id.emptyDisplay);
 
-        studentParentResp = (StudentParentResp) getIntent().getExtras().getSerializable("loginResponse");
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Assignments");
@@ -87,104 +139,241 @@ public class AssignmentActivity extends AppCompatActivity {
 
         if (studentParentResp.getUsertype().equalsIgnoreCase("student")) {
 
-
-            /*
-            * Student Assignment API calls
-            * */
-
-            pDialog = new ProgressDialog(this);
-            pDialog.setMessage("loading assignments...");
-            pDialog.setCanceledOnTouchOutside(false);
-            pDialog.show();
-            ParentStudentRequest parentStudentRequest = new ParentStudentRequest();
-            parentStudentRequest.setDefaultschoolyearID(studentParentResp.getDefaultschoolyearID());
-            parentStudentRequest.setStudentID(studentParentResp.getStudentID());
-            parentStudentRequest.setUsertypeID(studentParentResp.getUsertypeID());
-            parentStudentRequest.setSchool_id(studentParentResp.getSchoolId());
-
-            Log.d(TAG, "" + parentStudentRequest.toString());
-
-            Call<AssignmentResponseData> call = apiCall.assignment(parentStudentRequest);
-            call.enqueue(new Callback<AssignmentResponseData>() {
-                @Override
-                public void onResponse(Call<AssignmentResponseData> call, Response<AssignmentResponseData> response) {
-
-
-                    Log.d(TAG, "Assignment Resp Code" + response.code());
-                    Log.d(TAG, "Resp Body:" + response.body());
-
-                    if (pDialog.isShowing())
-                        pDialog.dismiss();
-
-                    if (response.code() == AppConstant.RESPONSE_CODE_OK) {
-
-
-                        AssignmentResponse assignmentResponse = response.body().getData();
-                        List<AssignmentNode> assignmentNodes = assignmentResponse.getAssignments();
-
-                        if (assignmentNodes.size() == 0) {
-
-                            AlertMessage.showMessage(AssignmentActivity.this, R.mipmap.ic_launcher, "ProPathshala Says..","No Assignment Record Found!");
-
-                            recyclerView.setVisibility(View.INVISIBLE);
-                            tvEmptyView.setVisibility(View.VISIBLE);
-
-
-                        } else {
-
-
-
-                            int resId = R.anim.layout_animation_slide_from_right;
-                            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(AssignmentActivity.this, resId);
-                            recyclerView.setLayoutAnimation(animation);
-
-                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(AssignmentActivity.this);
-                            recyclerView.setLayoutManager(mLayoutManager);
-
-                            RecyclerView.Adapter adapter = new AssignmentAdapter(AssignmentActivity.this, assignmentNodes);
-                            recyclerView.setAdapter(adapter);
-
-                        }
-                    } else{
-
-                        if (pDialog.isShowing())
-                            pDialog.dismiss();
-
-                        Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_FAILURE, Toast.LENGTH_LONG).show();
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<AssignmentResponseData> call, Throwable t) {
-
-                    if (pDialog.isShowing())
-                        pDialog.dismiss();
-
-                    Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_FAILURE, Toast.LENGTH_LONG).show();
-
-                }
-            });
-
+            loadAssignmentForStudent();
 
         } else if (studentParentResp.getUsertype().equalsIgnoreCase("teacher")) {
 
-            /*
-            * Teacher Assignment API calls
-            * */
-
-            Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+            loadAssignmentForTeacher();
 
 
         } else {
 
-            Toast.makeText(getApplicationContext(), "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_LONG).show();
+            if(recyclerView.getVisibility() == View.VISIBLE)
+                recyclerView.setVisibility(View.GONE);
+
+            if (emptyDisplay.getVisibility() == View.GONE) {
+                tvEmptyView.setText(AppConstant.APP_NOT_DEVELOPED_YET);
+                tvEmptyView.setVisibility(View.VISIBLE);
+                emptyDisplay.setVisibility(View.VISIBLE);
+            }
 
 
         }
 
         //Display Ads with Results
         mAdView.loadAd(adRequest);
+
+
+    }
+
+    /*
+     * Load AdminAssignmentListNode Method for Student
+     * */
+    private void loadAssignmentForStudent() {
+
+
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("loading assignments...");
+        pDialog.setCanceledOnTouchOutside(false);
+        pDialog.show();
+
+        StudentRequest studentRequest = new StudentRequest();
+        studentRequest.setDefaultschoolyearID(Long.parseLong("1"));
+        studentRequest.setLoginuserID(Long.parseLong(studentParentResp.getLoginuserID()));
+        studentRequest.setSchoolId(Long.parseLong(studentParentResp.getSchoolId()));
+        studentRequest.setUsertypeID(Long.parseLong(studentParentResp.getUsertypeID()));
+
+
+        Call<AssignmentResponseData> call = apiCall.assignment(studentRequest);
+        call.enqueue(new Callback<AssignmentResponseData>() {
+            @Override
+            public void onResponse(Call<AssignmentResponseData> call, Response<AssignmentResponseData> response) {
+
+
+//                Log.d(TAG, "AdminAssignmentListNode Resp Code" + response.code());
+//                Log.d(TAG, "Resp Body:" + response.body());
+
+                if (response.code() == AppConstant.RESPONSE_CODE_OK) {
+
+                    AssignmentResponse assignmentResponse = response.body().getData();
+                    assignmentNodes = assignmentResponse.getAssignments();
+
+                    if (assignmentNodes.size() == 0) {
+
+                        //AlertMessage.showMessage(AssignmentActivity.this, R.mipmap.ic_launcher, "ProPathshala Says..","No AdminAssignmentListNode Record Found!");
+
+                        //Display API Failure Message
+                        if (recyclerView.getVisibility() == View.VISIBLE)
+                            recyclerView.setVisibility(View.GONE);
+
+                        if (emptyDisplay.getVisibility() == View.GONE) {
+                            tvEmptyView.setText(AppConstant.API_RESPONSE_NO_DATA);
+                            tvEmptyView.setVisibility(View.VISIBLE);
+                            emptyDisplay.setVisibility(View.VISIBLE);
+                        }
+
+
+                    } else {
+
+                        if(emptyDisplay.getVisibility() == View.VISIBLE)
+                            emptyDisplay.setVisibility(View.GONE);
+
+                        if(recyclerView.getVisibility() == View.GONE)
+                            recyclerView.setVisibility(View.VISIBLE);
+
+                        int resId = R.anim.layout_animation_slide_from_right;
+                        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(AssignmentActivity.this, resId);
+                        recyclerView.setLayoutAnimation(animation);
+
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(AssignmentActivity.this);
+                        recyclerView.setLayoutManager(mLayoutManager);
+
+                        RecyclerView.Adapter adapter = new AssignmentAdapter(AssignmentActivity.this, assignmentNodes);
+                        recyclerView.setAdapter(adapter);
+
+                    }
+                    if (pDialog.isShowing())
+                        pDialog.dismiss();
+
+                } else{
+
+                    if (pDialog.isShowing())
+                        pDialog.dismiss();
+
+                    //Display API Failure Message
+                    if (recyclerView.getVisibility() == View.VISIBLE)
+                        recyclerView.setVisibility(View.GONE);
+
+                    if (emptyDisplay.getVisibility() == View.GONE) {
+                        tvEmptyView.setText(AppConstant.API_RESPONSE_FAILURE);
+                        tvEmptyView.setVisibility(View.VISIBLE);
+                        emptyDisplay.setVisibility(View.VISIBLE);
+                    }
+
+//                    Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_FAILURE, Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AssignmentResponseData> call, Throwable t) {
+
+                if (pDialog.isShowing())
+                    pDialog.dismiss();
+
+                //Display API Failure Message
+                if (recyclerView.getVisibility() == View.VISIBLE)
+                    recyclerView.setVisibility(View.GONE);
+
+                if (emptyDisplay.getVisibility() == View.GONE) {
+                    tvEmptyView.setText(AppConstant.API_RESPONSE_FAILURE);
+                    tvEmptyView.setVisibility(View.VISIBLE);
+                    emptyDisplay.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+
+    }
+
+    /*
+    * Load AdminAssignmentListNode Method for Teacher
+    * */
+    private void loadAssignmentForTeacher() {
+
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("loading assignments...");
+        pDialog.setCanceledOnTouchOutside(false);
+        pDialog.show();
+
+
+        GetAssignmentRequst getAssignmentRequst = new GetAssignmentRequst();
+        getAssignmentRequst.setDefaultschoolyearID(Long.parseLong("1"));
+        getAssignmentRequst.setLoginuserID(Long.parseLong(studentParentResp.getLoginuserID()));
+        getAssignmentRequst.setSchoolId(Long.parseLong(studentParentResp.getSchoolId()));
+        getAssignmentRequst.setUsertypeID(Long.parseLong(studentParentResp.getUsertypeID()));
+
+        Call<TeacherAssignmentRespData> call = apiCall.t_get_assignment(getAssignmentRequst);
+        call.enqueue(new Callback<TeacherAssignmentRespData>() {
+            @Override
+            public void onResponse(Call<TeacherAssignmentRespData> call, Response<TeacherAssignmentRespData> response) {
+
+                Log.e(TAG, "onResponse: " + response.code());
+
+                if (response.code() == AppConstant.RESPONSE_CODE_OK) {
+
+
+                    teacherAssignmentNodeList = response.body().getData().getAssignments();
+
+                    if (teacherAssignmentNodeList.size() != 0) {
+
+                        if(emptyDisplay.getVisibility() == View.VISIBLE)
+                            emptyDisplay.setVisibility(View.GONE);
+
+                        if(recyclerView.getVisibility() == View.GONE)
+                            recyclerView.setVisibility(View.VISIBLE);
+
+                        int resId = R.anim.layout_animation_slide_from_right;
+                        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(AssignmentActivity.this, resId);
+                        recyclerView.setLayoutAnimation(animation);
+
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(AssignmentActivity.this);
+                        recyclerView.setLayoutManager(mLayoutManager);
+
+                        RecyclerView.Adapter adapter = new TeacherAssignmentAdapter(AssignmentActivity.this, teacherAssignmentNodeList);
+                        recyclerView.setAdapter(adapter);
+
+
+                    }else{
+
+                        //Display API Failure Message
+                        if (recyclerView.getVisibility() == View.VISIBLE)
+                            recyclerView.setVisibility(View.GONE);
+
+                        if (emptyDisplay.getVisibility() == View.GONE) {
+                            tvEmptyView.setText(AppConstant.API_RESPONSE_NO_DATA);
+                            tvEmptyView.setVisibility(View.VISIBLE);
+                            emptyDisplay.setVisibility(View.VISIBLE);
+                        }
+
+                    }
+
+                }else{
+
+
+                    //Display API Failure Message
+                    if (recyclerView.getVisibility() == View.VISIBLE)
+                        recyclerView.setVisibility(View.GONE);
+
+                    if (emptyDisplay.getVisibility() == View.GONE) {
+                        tvEmptyView.setText(AppConstant.API_RESPONSE_FAILURE);
+                        tvEmptyView.setVisibility(View.VISIBLE);
+                        emptyDisplay.setVisibility(View.VISIBLE);
+                    }
+                }
+                if(pDialog.isShowing())
+                    pDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<TeacherAssignmentRespData> call, Throwable t) {
+
+                if(pDialog.isShowing())
+                    pDialog.dismiss();
+
+                //Display API Failure Message
+                if (recyclerView.getVisibility() == View.VISIBLE)
+                    recyclerView.setVisibility(View.GONE);
+
+                if (emptyDisplay.getVisibility() == View.GONE) {
+                    tvEmptyView.setText(AppConstant.API_RESPONSE_FAILURE);
+                    tvEmptyView.setVisibility(View.VISIBLE);
+                    emptyDisplay.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+
 
 
     }

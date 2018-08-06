@@ -10,8 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -24,7 +27,6 @@ import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
 import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleNode;
 import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleResponse;
 import com.ourwork.schoolmanagement.singleton.response.student.ExamScheduleResponseData;
-import com.ourwork.schoolmanagement.utils.AlertMessage;
 import com.ourwork.schoolmanagement.utils.AppConstant;
 
 import java.util.List;
@@ -48,6 +50,9 @@ public class ExamScheduleActivity extends AppCompatActivity {
     StudentParentResp studentParentResp;
     private ProgressDialog pDialog;
 
+    LinearLayout emptyDisplay;
+    TextView tvEmptyView;
+
     private AdView mAdView;
 
 
@@ -62,6 +67,10 @@ public class ExamScheduleActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        recyclerView = findViewById(R.id.recyclerview);
+        tvEmptyView = findViewById(R.id.emptyTextView);
+        emptyDisplay = findViewById(R.id.emptyDisplay);
 
         //Initialized Mobile Ads
         MobileAds.initialize(this, getResources().getString(R.string.sample_adMob_app_id));
@@ -110,11 +119,19 @@ public class ExamScheduleActivity extends AppCompatActivity {
 
                         if (examScheduleNodeList.size() == 0) {
 
-                            AlertMessage.showMessage(ExamScheduleActivity.this, R.mipmap.ic_launcher, "ProPathshala Says..", "No Exam Schedule Record Found!");
+                            //AlertMessage.showMessage(ExamScheduleActivity.this, R.mipmap.ic_launcher, "ProPathshala Says..", "No Exam Schedule Record Found!");
+                            recyclerView.setVisibility(View.INVISIBLE);
+                            tvEmptyView.setText(getResources().getString(R.string.no_exam_schedule_message));
+                            emptyDisplay.setVisibility(View.VISIBLE);
 
                         } else {
 
-                            recyclerView = findViewById(R.id.recyclerview);
+                            if(emptyDisplay.getVisibility() == View.VISIBLE)
+                                emptyDisplay.setVisibility(View.GONE);
+
+                            if(recyclerView.getVisibility() == View.GONE)
+                                recyclerView.setVisibility(View.VISIBLE);
+
 
                             int resId = R.anim.layout_animation_slide_from_right;
                             LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(ExamScheduleActivity.this, resId);

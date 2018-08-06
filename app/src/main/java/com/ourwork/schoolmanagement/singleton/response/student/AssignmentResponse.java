@@ -1,6 +1,8 @@
 
 package com.ourwork.schoolmanagement.singleton.response.student;
 
+import com.ourwork.schoolmanagement.singleton.response.admin.AdminAssignmentListNode;
+
 import java.util.List;
 
 
@@ -8,7 +10,7 @@ import java.util.List;
 public class AssignmentResponse {
 
 
-    private List<AssignmentNode> assignments;
+    private List<AdminAssignmentListNode> assignments;
 
     private List<Object> errors;
 
@@ -16,11 +18,11 @@ public class AssignmentResponse {
 
     private String set;
 
-    public List<AssignmentNode> getAssignments() {
+    public List<AdminAssignmentListNode> getAssignments() {
         return assignments;
     }
 
-    public void setAssignments(List<AssignmentNode> assignmentNodes) {
+    public void setAssignments(List<AdminAssignmentListNode> assignmentNodes) {
         this.assignments = assignmentNodes;
     }
 

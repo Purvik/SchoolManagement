@@ -50,6 +50,7 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -146,7 +147,7 @@ public class AddAssignmentHomeworkActivity extends AppCompatActivity implements 
 
 
                         } else {
-                            Toast.makeText(getApplicationContext(), "" + AppConstant.APP_RESPONSE_NO_DATA, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_NO_DATA, Toast.LENGTH_LONG).show();
                         }
 
                         edtTitle.clearFocus();
@@ -244,10 +245,10 @@ public class AddAssignmentHomeworkActivity extends AppCompatActivity implements 
                     params.put("data", uploadReq);
 
 
-                    //If uploading Assignment
+                    //If uploading AdminAssignmentListNode
                     if (addItemType.equalsIgnoreCase("assignment")) {
 
-                        Call<AssignmentUploadResponseData> call = apiCall.upload_assignment(params);
+                        /*Call<AssignmentUploadResponseData> call = apiCall.upload_assignment(params);
                         call.enqueue(new Callback<AssignmentUploadResponseData>() {
                             @Override
                             public void onResponse(Call<AssignmentUploadResponseData> call, Response<AssignmentUploadResponseData> response) {
@@ -262,7 +263,29 @@ public class AddAssignmentHomeworkActivity extends AppCompatActivity implements 
 
                                 Log.e("Upload Resp", t.getMessage() + "onResponse: " + t.toString());
                             }
-                        });
+                        });*/
+
+
+                        //Testing Code
+                        RequestBody requestImageFile =
+                                RequestBody.create(
+                                        MediaType.parse("file"),
+                                        selectedUploadFile
+                                );
+                        MultipartBody.Part imageBody =
+                                MultipartBody.Part.createFormData("file", selectedUploadFile.getName(), requestImageFile);
+
+                        RequestBody titleR = RequestBody.create(MultipartBody.FORM, title);
+                        RequestBody descriptionR = RequestBody.create(MultipartBody.FORM, description);
+                        RequestBody deadlinedateR = RequestBody.create(MultipartBody.FORM, deadlinedate);
+                        RequestBody classesID_R = RequestBody.create(MultipartBody.FORM,selectedTeacherClassNode.getClassesID() );
+                        RequestBody sectionID_R = RequestBody.create(MultipartBody.FORM,selectedSectionListNode.getSectionID());
+                        RequestBody subjectID = RequestBody.create(MultipartBody.FORM, selectedSubjectNode.getSubjectID());
+                        RequestBody school_idR = RequestBody.create(MultipartBody.FORM, studentParentResp.getSchoolId());
+                        RequestBody usertypeID_R = RequestBody.create(MultipartBody.FORM, studentParentResp.getUsertypeID());
+                        RequestBody userID_R = RequestBody.create(MultipartBody.FORM, studentParentResp.getLoginuserID());
+                        RequestBody schoolyearID = RequestBody.create(MultipartBody.FORM, "1");
+
 
                         //If uploading Homework
                     } else if (addItemType.equalsIgnoreCase("homework")) {
@@ -320,7 +343,7 @@ public class AddAssignmentHomeworkActivity extends AppCompatActivity implements 
         btnUpload = findViewById(R.id.btnUpload);
         if (addItemType.equalsIgnoreCase("assignment")) {
             btnUpload.setText(getResources().getString(R.string.btn_label_assignment_upload));
-            toolbar.setTitle("Add New Assignment");
+            toolbar.setTitle("Add New AdminAssignmentListNode");
         } else {
             btnUpload.setText(getResources().getString(R.string.btn_label_homework_upload));
             toolbar.setTitle("Add New Homework");
@@ -444,7 +467,6 @@ public class AddAssignmentHomeworkActivity extends AppCompatActivity implements 
                 if (adapterView.getSelectedItemPosition() == 0) {
 
                     sectionSpinner.setAdapter(null);
-
                     Toast.makeText(mContext, "Select Class from list", Toast.LENGTH_SHORT).show();
 
 
@@ -496,7 +518,7 @@ public class AddAssignmentHomeworkActivity extends AppCompatActivity implements 
 
 
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "" + AppConstant.APP_RESPONSE_NO_DATA, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_NO_DATA, Toast.LENGTH_LONG).show();
                                 }
 
                                 if (pDialog.isShowing())
@@ -590,7 +612,7 @@ public class AddAssignmentHomeworkActivity extends AppCompatActivity implements 
 
 
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "" + AppConstant.APP_RESPONSE_NO_DATA, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "" + AppConstant.API_RESPONSE_NO_DATA, Toast.LENGTH_LONG).show();
                                 }
 
                                 if (pDialog.isShowing())

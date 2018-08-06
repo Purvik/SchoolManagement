@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/edt_background"
+    android:layout_margin="8dp"
+    android:backgroundTint="@color/colorAccentTransperant"
+    >
+
+    <TextView
+        android:id="@+id/tvStudentIdlabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/antic"
+        android:text="@string/student_id_label"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/tvStudentNameLabel"
+        app:layout_constraintHorizontal_weight="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvStudentNameLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/antic"
+        android:text="@string/tv_student_name_label"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/btnMarkAttendance"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/tvStudentIdlabel"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvStudentId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/antic"
+        android:text="55"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/tvStudentName"
+        app:layout_constraintHorizontal_weight="0.1"
+        app:layout_constraintStart_toStartOf="@id/tvStudentIdlabel"
+        app:layout_constraintTop_toBottomOf="@id/tvStudentIdlabel"
+        app:layout_constraintBottom_toBottomOf="@+id/tvStudentName"/>
+
+    <TextView
+        android:id="@+id/tvStudentName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/antic"
+        android:text="Purvik Rana"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/btnMarkAttendance"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/tvStudentId"
+        app:layout_constraintTop_toBottomOf="@+id/tvStudentNameLabel" />
+
+    <Button
+        android:id="@+id/btnMarkAttendance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvStudentNameLabel"
+        app:layout_constraintTop_toTopOf="@+id/tvStudentNameLabel"
+        app:layout_constraintBottom_toBottomOf="@+id/tvStudentName"/>
+
+</android.support.constraint.ConstraintLayout>

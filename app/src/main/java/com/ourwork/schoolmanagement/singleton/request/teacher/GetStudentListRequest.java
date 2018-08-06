@@ -1,78 +1,60 @@
 
 package com.ourwork.schoolmanagement.singleton.request.teacher;
 
+import com.google.gson.annotations.SerializedName;
+
+
 @SuppressWarnings("unused")
 public class GetStudentListRequest {
 
+    
+    private Long classesID;
+    
+    private Long defaultschoolyearID;
+    @SerializedName("school_id")
+    private Long schoolId;
+    
+    private Long sectionID;
 
-    private String classesID;
-
-    private String date;
-
-    private String loginuserID;
-
-    private String schoolyearID;
-
-    private String sectionID;
-
-    private String username;
-
-    private String usertype;
-
-    public String getClassesID() {
+    public Long getClassesID() {
         return classesID;
     }
 
-    public void setClassesID(String classesID) {
+    public void setClassesID(Long classesID) {
         this.classesID = classesID;
     }
 
-    public String getDate() {
-        return date;
+    public Long getDefaultschoolyearID() {
+        return defaultschoolyearID;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDefaultschoolyearID(Long defaultschoolyearID) {
+        this.defaultschoolyearID = defaultschoolyearID;
     }
 
-    public String getLoginuserID() {
-        return loginuserID;
+    public Long getSchoolId() {
+        return schoolId;
     }
 
-    public void setLoginuserID(String loginuserID) {
-        this.loginuserID = loginuserID;
+    public void setSchoolId(Long schoolId) {
+        this.schoolId = schoolId;
     }
 
-    public String getSchoolyearID() {
-        return schoolyearID;
-    }
-
-    public void setSchoolyearID(String schoolyearID) {
-        this.schoolyearID = schoolyearID;
-    }
-
-    public String getSectionID() {
+    public Long getSectionID() {
         return sectionID;
     }
 
-    public void setSectionID(String sectionID) {
+    public void setSectionID(Long sectionID) {
         this.sectionID = sectionID;
     }
 
-    public String getUsername() {
-        return username;
+    @Override
+    public String toString() {
+        return "GetStudentListRequest{" +
+                "classesID=" + classesID +
+                ", defaultschoolyearID=" + defaultschoolyearID +
+                ", schoolId=" + schoolId +
+                ", sectionID=" + sectionID +
+                '}';
     }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUsertype() {
-        return usertype;
-    }
-
-    public void setUsertype(String usertype) {
-        this.usertype = usertype;
-    }
-
 }

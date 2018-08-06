@@ -110,7 +110,7 @@ public class StudentAttendanceActivity extends AppCompatActivity {
         if (studentParentResp.getUsertype().equalsIgnoreCase("student")) {
 
             /*
-            * Student Assignment API calls
+            * Student AdminAssignmentListNode API calls
             * */
 
 

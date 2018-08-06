@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ourwork.schoolmanagement.R;
-import com.ourwork.schoolmanagement.singleton.response.student.AssignmentNode;
+import com.ourwork.schoolmanagement.singleton.response.admin.AdminAssignmentListNode;
 
 import java.util.List;
 
@@ -22,9 +22,9 @@ import java.util.List;
 public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.ViewHolder> {
 
     Context mContext;
-    List<AssignmentNode> assignmentNodeList;
+    List<AdminAssignmentListNode> assignmentNodeList;
 
-    public AssignmentAdapter(Context mContext, List<AssignmentNode> assignmentNodeList) {
+    public AssignmentAdapter(Context mContext, List<AdminAssignmentListNode> assignmentNodeList) {
         this.mContext = mContext;
         this.assignmentNodeList = assignmentNodeList;
     }
@@ -50,7 +50,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(mContext).inflate(R.layout.item_homework, parent, false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.item_assignment, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -58,7 +58,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        AssignmentNode assignmentNode = assignmentNodeList.get(position);
+        AdminAssignmentListNode assignmentNode = assignmentNodeList.get(position);
 
         holder.title.setText(assignmentNode.getTitle());
         holder.subject.setText(assignmentNode.getSubject());

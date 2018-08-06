@@ -15,8 +15,13 @@ import android.widget.Toast;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.activities.AssignmentActivity;
 import com.ourwork.schoolmanagement.activities.HomeworkActivity;
+import com.ourwork.schoolmanagement.activities.NoticeBoardActivity;
 import com.ourwork.schoolmanagement.activities.SyllabusActivity;
 import com.ourwork.schoolmanagement.activities.TimeTableActivity;
+import com.ourwork.schoolmanagement.activities.admin.AdminAssignmentListActivity;
+import com.ourwork.schoolmanagement.activities.admin.AdminAttendanceActivity;
+import com.ourwork.schoolmanagement.activities.admin.StudentListActivity;
+import com.ourwork.schoolmanagement.activities.admin.SubjectListActivity;
 import com.ourwork.schoolmanagement.activities.admin.TeacherListActivity;
 import com.ourwork.schoolmanagement.activities.teacher.TeacherAttendanceActivity;
 import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
@@ -99,16 +104,47 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
                 case "Teachers":
 
-                    intent = new Intent(mContext, TeacherListActivity.class);
-                    intent.putExtra("loginResponse", mStudentParentResp);
-                    mContext.startActivity(intent);
-                    /*Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();*/
+                    if (mStudentParentResp.getUsertype().equalsIgnoreCase("admin")) {
+
+                        intent = new Intent(mContext, TeacherListActivity.class);
+                        intent.putExtra("loginResponse", mStudentParentResp);
+                        mContext.startActivity(intent);
+
+                    }else{
+                        Toast.makeText(mContext, "" + AppConstant.APP_USER_NOT_ACCESS, Toast.LENGTH_SHORT).show();
+                    }
 
                     break;
 
                 case "Students":
 
-                    Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+                    if (mStudentParentResp.getUsertype().equalsIgnoreCase("admin")) {
+
+                        intent = new Intent(mContext, StudentListActivity.class);
+                        intent.putExtra("loginResponse", mStudentParentResp);
+                        mContext.startActivity(intent);
+
+                    }else{
+                        Toast.makeText(mContext, "" + AppConstant.APP_USER_NOT_ACCESS, Toast.LENGTH_SHORT).show();
+                    }
+
+
+                    break;
+
+                case "Subjects":
+
+                    if (mStudentParentResp.getUsertype().equalsIgnoreCase("admin")) {
+
+                        intent = new Intent(mContext, SubjectListActivity.class);
+                        intent.putExtra("loginResponse", mStudentParentResp);
+                        mContext.startActivity(intent);
+
+//                        Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+
+                    }else{
+                        Toast.makeText(mContext, "" + AppConstant.APP_USER_NOT_ACCESS, Toast.LENGTH_SHORT).show();
+                    }
+
 
                     break;
 
@@ -138,10 +174,15 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
                 case "Assignments":
 
-                    intent = new Intent(mContext, AssignmentActivity.class);
-                    intent.putExtra("loginResponse", mStudentParentResp);
-                    mContext.startActivity(intent);
-
+                    if (mStudentParentResp.getUsertype() . equalsIgnoreCase( "admin")) {
+                        intent = new Intent(mContext, AdminAssignmentListActivity.class);
+                        intent.putExtra("loginResponse", mStudentParentResp);
+                        mContext.startActivity(intent);
+                    }else {
+                        intent = new Intent(mContext, AssignmentActivity.class);
+                        intent.putExtra("loginResponse", mStudentParentResp);
+                        mContext.startActivity(intent);
+                    }
                     break;
 
                 case "Attendance":
@@ -165,7 +206,16 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
                         //Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
-                    } else {
+                    } else if (mStudentParentResp.getUsertype().equalsIgnoreCase("admin")) {
+
+                        //Teacher Login
+                        intent = new Intent(mContext, AdminAttendanceActivity.class);
+                        intent.putExtra("loginResponse", mStudentParentResp);
+                        mContext.startActivity(intent);
+
+                        //Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+
+                    }else {
 
                         //Admin Login
                         Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
@@ -197,11 +247,11 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
                 case "Notice Board":
 
-                    /*intent = new Intent(mContext, ExamScheduleActivity.class);
+                    intent = new Intent(mContext, NoticeBoardActivity.class);
                     intent.putExtra("loginResponse", mStudentParentResp);
-                    mContext.startActivity(intent);*/
+                    mContext.startActivity(intent);
 
-                    Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mContext, "" + AppConstant.APP_NOT_DEVELOPED_YET, Toast.LENGTH_SHORT).show();
 
                     break;
 
@@ -240,7 +290,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
                 case "Notifications":
 
-                    /*intent = new Intent(mContext, NoticeActivity.class);
+                    /*intent = new Intent(mContext, NoticeBoardActivity.class);
                     intent.putExtra("loginResponse", mStudentParentResp);
                     mContext.startActivity(intent);*/
 

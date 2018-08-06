@@ -13,23 +13,44 @@
         android:layout_margin="5dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:drawableLeft="@drawable/ic_hw_dw_title"
-            android:drawablePadding="5dp"
-            android:drawableTint="@color/colorAccent"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
             android:paddingEnd="@dimen/hw_item_padding"
             android:paddingLeft="@dimen/hw_item_padding"
             android:paddingRight="@dimen/hw_item_padding"
-            android:paddingStart="@dimen/hw_item_padding"
-            android:text="Maths Assignment"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
+            android:paddingStart="@dimen/hw_item_padding">
 
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center_vertical"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_hw_dw_title"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/colorAccent"
+                android:text="Maths Assignment"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/uploader"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/ic_hw_dw_uploader"
+                android:drawableTint="@color/colorAccent"
+                android:gravity="center_vertical|end"
+                android:padding="2dp"
+                android:text="Marcus"
+                android:textSize="14sp" />
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -42,17 +63,15 @@
             android:paddingStart="@dimen/hw_item_padding">
 
             <TextView
-                android:id="@+id/uploader"
+                android:id="@+id/subject"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/ic_hw_dw_uploader"
-                android:drawablePadding="5dp"
-                android:drawableTint="@color/colorAccent"
+                android:textStyle="bold"
+                android:padding="8dp"
                 android:gravity="center_vertical|start"
-                android:padding="2dp"
                 android:text="Marcus"
-                android:textSize="12sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/deadline"

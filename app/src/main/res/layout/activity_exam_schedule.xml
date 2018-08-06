@@ -36,6 +36,35 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp" />
 
+        <LinearLayout
+            android:id="@+id/emptyDisplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/emptyListImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:layout_gravity="center"
+                android:background="@drawable/edt_background"
+                android:backgroundTint="#b0b0b0"
+                android:src="@drawable/ic_listempty_1"/>
+
+            <TextView
+                android:id="@+id/emptyTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@android:color/darker_gray"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
         <com.google.android.gms.ads.AdView
             xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/adView"

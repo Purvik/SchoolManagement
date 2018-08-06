@@ -41,6 +41,7 @@ public class ForceUpdateAsync extends AsyncTask<String, String, JSONObject> {
                     .select("div.hAyfc:nth-child(3) > span:nth-child(2) > div:nth-child(1) > span:nth-child(1)")
                     .first()
                     .ownText();
+
             Log.e("latestversion", "---" + latestVersion);
 
         } catch (IOException e) {

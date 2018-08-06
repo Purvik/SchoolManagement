@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ourwork.schoolmanagement.R;
-import com.ourwork.schoolmanagement.singleton.NoticeNode;
+import com.ourwork.schoolmanagement.singleton.response.NoticeNode;
 
 import java.util.ArrayList;
 
@@ -16,24 +16,24 @@ import java.util.ArrayList;
  * Created by Purvik Rana on 05-06-2018.
  */
 
-public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder> {
+public class NoticeNodeAdapter extends RecyclerView.Adapter<NoticeNodeAdapter.ViewHolder> {
 
     Context mContext;
     ArrayList<NoticeNode> noticeNodeArrayList;
 
-    public NoticeAdapter(Context mContext, ArrayList<NoticeNode> noticeNodeArrayList) {
+    public NoticeNodeAdapter(Context mContext, ArrayList<NoticeNode> noticeNodeArrayList) {
         this.mContext = mContext;
         this.noticeNodeArrayList = noticeNodeArrayList;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView title, desc, date;
+        TextView title, notice, date;
 
         public ViewHolder(View v) {
             super(v);
             title = v.findViewById(R.id.tv_notice_title);
-            desc = v.findViewById(R.id.tv_notice_details);
+            notice = v.findViewById(R.id.tv_notice_details);
             date = v.findViewById(R.id.tv_notice_date);
         }
     }
@@ -49,10 +49,10 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        final NoticeNode noticeNode= noticeNodeArrayList.get(position);
+        NoticeNode noticeNode= noticeNodeArrayList.get(position);
 
         holder.title.setText(noticeNode.getTitle());
-        holder.desc.setText(noticeNode.getNotice());
+        holder.notice.setText(noticeNode.getNotice());
         holder.date.setText(noticeNode.getDate());
     }
 

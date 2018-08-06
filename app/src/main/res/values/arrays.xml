@@ -10,7 +10,7 @@
         <item>@drawable/ic_attendance_new</item>
         <item>@drawable/ic_behaviour</item>
         <item>@drawable/ic_parents_meeting</item>
-        <item>@drawable/ic_notification_new</item>
+        <item>@drawable/ic_noticeboard</item>
         <item>@drawable/ic_exam</item>
         <item>@drawable/ic_result</item>
         <item>@drawable/ic_sports</item>
@@ -42,6 +42,7 @@
 
         <item>@drawable/ic_teacher_male</item>
         <item>@drawable/ic_student_male</item>
+        <item>@drawable/ic_subjects</item>
         <item>@drawable/ic_syllabus</item>
         <item>@drawable/ic_timetable</item>
         <item>@drawable/ic_homework</item>
