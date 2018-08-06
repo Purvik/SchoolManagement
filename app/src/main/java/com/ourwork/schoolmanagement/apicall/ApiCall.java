@@ -1,8 +1,6 @@
 package com.ourwork.schoolmanagement.apicall;
 
 
-import android.database.Observable;
-
 import com.ourwork.schoolmanagement.singleton.request.LoginRequest;
 import com.ourwork.schoolmanagement.singleton.request.NoticeBoardRequest;
 import com.ourwork.schoolmanagement.singleton.request.admin.AdminAssignmentListRequest;
@@ -43,7 +41,6 @@ import java.util.Map;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -132,7 +129,22 @@ public interface ApiCall {
 
     @Multipart
     @POST(AppConstant.URL_UPLOAD_ASSIGNMENT)
-    Observable<Response<Void>> add_assignment(
+    Call<AssignmentUploadResponseData> add_assignment(
+            @Part MultipartBody.Part file,
+            @Part("title") RequestBody titleR,
+            @Part("description") RequestBody descriptionR,
+            @Part("deadlinedate") RequestBody deadlinedateR,
+            @Part("classesID") RequestBody classesID_R,
+            @Part("sectionID") RequestBody sectionID_R,
+            @Part("subjectID") RequestBody subjectID_R,
+            @Part("school_id") RequestBody school_idR,
+            @Part("usertypeID") RequestBody usertypeID_R,
+            @Part("userID") RequestBody userID_R,
+            @Part("schoolyearID") RequestBody schoolyearID_R);
+
+    @Multipart
+    @POST(AppConstant.URL_UPLOAD_HOMEWORK)
+    Call<AssignmentUploadResponseData> add_homework(
             @Part MultipartBody.Part file,
             @Part("title") RequestBody titleR,
             @Part("description") RequestBody descriptionR,

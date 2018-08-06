@@ -23,12 +23,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.ourwork.schoolmanagement.R;
 import com.ourwork.schoolmanagement.singleton.request.admin.TeacherListRequest;
 import com.ourwork.schoolmanagement.singleton.request.teacher.GetSectionRequest;
 import com.ourwork.schoolmanagement.singleton.request.teacher.GetSubjectRequest;
-import com.ourwork.schoolmanagement.singleton.request.teacher.UploadAssignmentHomeworkRequest;
 import com.ourwork.schoolmanagement.singleton.response.StudentParentResp;
 import com.ourwork.schoolmanagement.singleton.response.teacher.AssignmentUploadResponseData;
 import com.ourwork.schoolmanagement.singleton.response.teacher.SectionListNode;
@@ -45,9 +43,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -83,6 +79,7 @@ public class AddAssignmentHomeworkActivity extends AppCompatActivity implements 
     private String addItemType;
     private String selectedFileName = "";
     private File selectedUploadFile;
+    private Uri selectedFileUri;
 
 
     @Override
@@ -229,7 +226,7 @@ public class AddAssignmentHomeworkActivity extends AppCompatActivity implements 
 
                     Log.e("Btn Click", title + "|" + description + " | " + formatter.format(parsedDate));
 
-                    UploadAssignmentHomeworkRequest uploadAssignmentHomeworkRequest = new UploadAssignmentHomeworkRequest();
+                    /*UploadAssignmentHomeworkRequest uploadAssignmentHomeworkRequest = new UploadAssignmentHomeworkRequest();
                     uploadAssignmentHomeworkRequest.setTitle(title);
                     uploadAssignmentHomeworkRequest.setDescription(description);
                     uploadAssignmentHomeworkRequest.setDeadlinedate(deadlinedate);
@@ -242,13 +239,91 @@ public class AddAssignmentHomeworkActivity extends AppCompatActivity implements 
 
                     String uploadReq = new Gson().toJson(uploadAssignmentHomeworkRequest);
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("data", uploadReq);
+                    params.put("data", uploadReq);*/
+
+                    RequestBody titleR = RequestBody.create(MultipartBody.FORM, title);
+                    RequestBody descriptionR = RequestBody.create(MultipartBody.FORM, description);
+                    RequestBody deadlinedateR = RequestBody.create(MultipartBody.FORM, deadlinedate);
+                    RequestBody classesID_R = RequestBody.create(MultipartBody.FORM, selectedTeacherClassNode.getClassesID());
+                    RequestBody sectionID_R = RequestBody.create(MultipartBody.FORM, selectedSectionListNode.getSectionID());
+                    RequestBody subjectID_R = RequestBody.create(MultipartBody.FORM, selectedSubjectNode.getSubjectID());
+                    RequestBody school_idR = RequestBody.create(MultipartBody.FORM, studentParentResp.getSchoolId());
+                    RequestBody usertypeID_R = RequestBody.create(MultipartBody.FORM, studentParentResp.getUsertypeID());
+                    RequestBody userID_R = RequestBody.create(MultipartBody.FORM, studentParentResp.getLoginuserID());
+                    RequestBody schoolyearID_R = RequestBody.create(MultipartBody.FORM, "1");
+
+                    RequestBody requestImageFile =
+                            RequestBody.create(
+                                    MediaType.parse(getContentResolver().getType(selectedFileUri)),
+                                    selectedUploadFile
+                            );
+
+                    MultipartBody.Part imageBody =
+                            MultipartBody.Part.createFormData("file", selectedUploadFile.getName(), requestImageFile);
 
 
                     //If uploading AdminAssignmentListNode
                     if (addItemType.equalsIgnoreCase("assignment")) {
 
-                        /*Call<AssignmentUploadResponseData> call = apiCall.upload_assignment(params);
+                        //Testing Code
+                        Call<AssignmentUploadResponseData> call = apiCall.add_assignment(imageBody, titleR, descriptionR, deadlinedateR, classesID_R, subjectID_R, sectionID_R, school_idR, schoolyearID_R, usertypeID_R, userID_R);
+                        call.enqueue(new Callback<AssignmentUploadResponseData>() {
+                            @Override
+                            public void onResponse(Call<AssignmentUploadResponseData> call, Response<AssignmentUploadResponseData> response) {
+
+                                Log.e("Assignment Upload", "onResponse: " + response.code());
+                                if (response.code() == AppConstant.RESPONSE_CODE_OK) {
+
+                                    AlertMessage.showMessage(mContext, "Pro-Pathshala says..",response.body().getMessage(), "OKAY", R.mipmap.ic_launcher);
+
+                                }else{
+
+                                    AlertMessage.showMessage(mContext, "Pro-Pathshala says..","Upload Failed. Try Again.", "OKAY", R.mipmap.ic_launcher);
+
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<AssignmentUploadResponseData> call, Throwable t) {
+
+                                Log.e("Assignment Upload", "onResponse: Failed to Upload" + t.getMessage() );
+                                AlertMessage.showMessage(mContext, "Pro-Pathshala says..","Upload Failed. Try Again.", "OKAY", R.mipmap.ic_launcher);
+                            }
+                        });
+
+                        //If uploading Homework
+                    } else if (addItemType.equalsIgnoreCase("homework")) {
+
+
+                        Call<AssignmentUploadResponseData> call = apiCall.add_homework(imageBody, titleR, descriptionR, deadlinedateR, classesID_R, subjectID_R, sectionID_R, school_idR, schoolyearID_R, usertypeID_R, userID_R);
+                        call.enqueue(new Callback<AssignmentUploadResponseData>() {
+                            @Override
+                            public void onResponse(Call<AssignmentUploadResponseData> call, Response<AssignmentUploadResponseData> response) {
+
+                                Log.e("Homewrok Upload", "onResponse: " + response.code());
+                                if (response.code() == AppConstant.RESPONSE_CODE_OK) {
+
+                                    AlertMessage.showMessage(mContext, "Pro-Pathshala says..",response.body().getMessage(), "OKAY", R.mipmap.ic_launcher);
+
+                                }else{
+
+                                    AlertMessage.showMessage(mContext, "Pro-Pathshala says..","Upload Failed. Try Again.", "OKAY", R.mipmap.ic_launcher);
+
+
+                                }
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<AssignmentUploadResponseData> call, Throwable t) {
+
+                                Log.e("Homewrok Upload", "onResponse: Failed to Upload" );
+                                AlertMessage.showMessage(mContext, "Pro-Pathshala says..","Upload Failed. Try Again.", "OKAY", R.mipmap.ic_launcher);
+                            }
+                        });
+
+                        /*Call<AssignmentUploadResponseData> call = apiCall.upload_homework(params);
                         call.enqueue(new Callback<AssignmentUploadResponseData>() {
                             @Override
                             public void onResponse(Call<AssignmentUploadResponseData> call, Response<AssignmentUploadResponseData> response) {
@@ -266,53 +341,7 @@ public class AddAssignmentHomeworkActivity extends AppCompatActivity implements 
                         });*/
 
 
-                        //Testing Code
-                        RequestBody requestImageFile =
-                                RequestBody.create(
-                                        MediaType.parse("file"),
-                                        selectedUploadFile
-                                );
-                        MultipartBody.Part imageBody =
-                                MultipartBody.Part.createFormData("file", selectedUploadFile.getName(), requestImageFile);
-
-                        RequestBody titleR = RequestBody.create(MultipartBody.FORM, title);
-                        RequestBody descriptionR = RequestBody.create(MultipartBody.FORM, description);
-                        RequestBody deadlinedateR = RequestBody.create(MultipartBody.FORM, deadlinedate);
-                        RequestBody classesID_R = RequestBody.create(MultipartBody.FORM,selectedTeacherClassNode.getClassesID() );
-                        RequestBody sectionID_R = RequestBody.create(MultipartBody.FORM,selectedSectionListNode.getSectionID());
-                        RequestBody subjectID = RequestBody.create(MultipartBody.FORM, selectedSubjectNode.getSubjectID());
-                        RequestBody school_idR = RequestBody.create(MultipartBody.FORM, studentParentResp.getSchoolId());
-                        RequestBody usertypeID_R = RequestBody.create(MultipartBody.FORM, studentParentResp.getUsertypeID());
-                        RequestBody userID_R = RequestBody.create(MultipartBody.FORM, studentParentResp.getLoginuserID());
-                        RequestBody schoolyearID = RequestBody.create(MultipartBody.FORM, "1");
-
-
-                        //If uploading Homework
-                    } else if (addItemType.equalsIgnoreCase("homework")) {
-
-
-
-                        Call<AssignmentUploadResponseData> call = apiCall.upload_homework(params);
-                        call.enqueue(new Callback<AssignmentUploadResponseData>() {
-                            @Override
-                            public void onResponse(Call<AssignmentUploadResponseData> call, Response<AssignmentUploadResponseData> response) {
-
-
-                                Log.e("Upload Resp", "onResponse: " + response.code());
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<AssignmentUploadResponseData> call, Throwable t) {
-
-                                Log.e("Upload Resp", t.getMessage() + "onResponse: " + t.toString());
-                            }
-                        });
-
-
                     }
-
-
 
 
                 }
@@ -343,7 +372,7 @@ public class AddAssignmentHomeworkActivity extends AppCompatActivity implements 
         btnUpload = findViewById(R.id.btnUpload);
         if (addItemType.equalsIgnoreCase("assignment")) {
             btnUpload.setText(getResources().getString(R.string.btn_label_assignment_upload));
-            toolbar.setTitle("Add New AdminAssignmentListNode");
+            toolbar.setTitle("Add New Assignment");
         } else {
             btnUpload.setText(getResources().getString(R.string.btn_label_homework_upload));
             toolbar.setTitle("Add New Homework");
@@ -359,8 +388,11 @@ public class AddAssignmentHomeworkActivity extends AppCompatActivity implements 
             /*Uri selectedImage = data.getData();
             File file = new File(getRealPathFromURI(selectedImage));*/
 
-            Uri uri = data.getData();
-            String uriString = uri.toString();
+            selectedFileUri = data.getData();
+
+
+            String uriString = selectedFileUri.toString();
+            Log.e("File String", "onActivityResult: " + uriString);
             selectedUploadFile = new File(uriString);
             selectedFileName = selectedUploadFile.getAbsolutePath();
             String displayName = null;
@@ -368,7 +400,7 @@ public class AddAssignmentHomeworkActivity extends AppCompatActivity implements 
             if (uriString.startsWith("content://")) {
                 Cursor cursor = null;
                 try {
-                    cursor = mContext.getContentResolver().query(uri, null, null, null, null);
+                    cursor = mContext.getContentResolver().query(selectedFileUri, null, null, null, null);
                     if (cursor != null && cursor.moveToFirst()) {
                         displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                     }
